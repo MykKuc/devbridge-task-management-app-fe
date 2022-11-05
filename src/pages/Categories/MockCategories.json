@@ -1,0 +1,8 @@
+{
+    "categories":[
+        {"id":"C-48624", "title":"Galvosūkis", "description":"Uždaviniai, susiję su galvosūkiais.", "creatorId":"U-4635", "creationDate":"2020-10-10"},
+        {"id":"C-51793", "title":"Java", "description":"Uždaviniai, susiję su programavimo kalba Java.", "creatorId":"U-9126", "creationDate":"2022-05-16"},
+        {"id":"C-68624", "title":"INTERCAL", "description":"Uždaviniai, susiję su programavimo kalba INTERCAL.", "creatorId":"U-9126", "creationDate":"2022-05-17"},
+        {"id":"C-91735", "title":"C#", "description":"Uždaviniai, susiję su programavimo kalba C#.", "creatorId":"U-4635", "creationDate":"2020-10-10"}
+    ]
+}
