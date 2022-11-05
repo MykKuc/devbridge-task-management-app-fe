@@ -1,14 +1,21 @@
 import React from 'react'
 import data from './MockCategories.json'
 import './CategoryList.css'
+import Category, {CreateCategory} from './Category.jsx'
+import {Link} from 'react-router-dom'
 
 
 function CategoryList() {   
+
   return (
-    <div id="wrapper">
+    <>
     <header>
-        <span>i am header</span>
-    </header>
+          <span>i am header</span><br/>
+          <nav>
+          <Link to={"/"}>home</Link><br/>
+          <Link to={"/categorylist"}>categories</Link><br/>
+          </nav>
+        </header>
     <div id="content">
       <div id="category-list">
         <header>
@@ -27,13 +34,7 @@ function CategoryList() {
                 <th style={{width:"10%"}}><span>Date</span></th>
                 <th style={{width:"10%"}}><span>Actions</span></th>
               </tr>
-              <tr>
-                <td><span>INTERCAL</span></td>
-                <td><span>Uždaviniai, susiję su programavimo kalba INTERCAL.</span></td>
-                <td><span>Jonas Jonaitis</span></td><td><span>2020-10-10</span></td>
-                <td><div className="btn-wrapper"><div className="preview-btn"></div><div className="edit-btn"></div><div className="delete-btn"></div></div>
-                </td>
-              </tr>
+              {data.categories.map(category=><CreateCategory id={category.id} title={category.title} description={category.description} creatorId={category.creatorId} creationDate={category.creationDate}/>)}
             </tbody>
           </table>
         </div>
@@ -42,9 +43,9 @@ function CategoryList() {
     <footer>
         <span>i am footer</span>
     </footer>
-    </div>
-    
+    </>
   )
 }
+
 
 export default CategoryList
