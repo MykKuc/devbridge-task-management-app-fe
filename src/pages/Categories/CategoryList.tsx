@@ -29,10 +29,10 @@ function CategoryList() {
             <tbody>
               <tr style={{width:"100%"}}>
                 <th style={{width:"15%"}}><span>Title</span></th>
-                <th style={{width:"50%"}}><span>Description</span></th>
+                <th style={{width:"45%"}}><span>Description</span></th>
                 <th style={{width:"15%"}}><span>Creator</span></th>
                 <th style={{width:"10%"}}><span>Date</span></th>
-                <th style={{width:"10%"}}><span>Actions</span></th>
+                <th style={{width:"15%"}}><span>Actions</span></th>
               </tr>
               {data.categories.map(category=><CreateCategory id={category.id} title={category.title} description={category.description} creatorId={category.creatorId} creationDate={category.creationDate}/>)}
             </tbody>

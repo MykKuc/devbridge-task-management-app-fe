@@ -11,7 +11,14 @@ class Category extends React.Component{
         <td><span>{description}</span></td>
         <td><span>{creatorId}</span></td>
         <td><span>{creationDate}</span></td>
-        <td><div className="btn-wrapper"><div className="preview-btn" onClick={function(){/*do something with id*/}}></div><div className="edit-btn" onClick={function(){/*do something with id*/}}></div><div className="delete-btn" onClick={function(){/*do something with id*/}}></div></div>
+        <td>
+          <div className="btn-inline-block">
+            <div className="btn-wrapper">
+              <div className="preview-btn" onClick={function(){/*do something with id*/}}></div>
+              <div className="edit-btn" onClick={function(){/*do something with id*/}}></div>
+              <div className="delete-btn" onClick={function(){/*do something with id*/}}></div>
+            </div>
+          </div>
         </td>
       </tr>
     )
@@ -27,7 +34,14 @@ export function CreateCategory(props) {
       <td><span>{description}</span></td>
       <td><span>{creatorId}</span></td>
       <td><span>{creationDate}</span></td>
-      <td><div className="btn-wrapper"><div className="preview-btn" onClick={function(){/*do something with id*/}}></div><div className="edit-btn" onClick={function(){/*do something with id*/}}></div><div className="delete-btn" onClick={function(){/*do something with id*/}}></div></div>
+      <td>
+        <div className="btn-inline-block">
+          <div className="btn-wrapper">
+            <div className="preview-btn" onClick={function(){/*do something with id*/}}></div>
+            <div className="edit-btn" onClick={function(){/*do something with id*/}}></div>
+            <div className="delete-btn" onClick={function(){/*do something with id*/}}></div>
+          </div>
+        </div>
       </td>
     </tr>
   )
