@@ -13,15 +13,39 @@ const style = {
   width: '70%',
   height: '70%',
   bgcolor: '#383838',
-  border: '2px solid #000',
-  borderRadius: 10,
+  borderRadius: 7,
   boxShadow: 24,
   p: 4,
 };
 
-const styleheader ={
+const styleheader = {
     position: 'absolute' as 'absolute',
     bgcolor: '#2BABD3',
+    top: 0,
+    width: '100%',
+    left: 0,
+    border: 0,
+    borderRadius: 7,
+    textAlign: 'center',
+    fontFamily: 'Inter',
+    color: 'white',
+    fontWeight: 'Bold'
+}
+
+const closebutton = {
+    color: 'white',
+    position: 'absolute' as 'absolute',
+    right: '0px',
+    top: '-5px',
+    fontSize: '20px',
+    zIndex: '3',
+    fontFamily: 'Inter',
+    fontWeight: '900'
+}
+
+const mainmodalbody = {
+    color: '#2BABD3',
+    fontFamily: 'Inter'
 }
 
 export default function EmptyModal() {
@@ -32,7 +56,7 @@ export default function EmptyModal() {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <Button onClick={handleOpen}>Empty Modal</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -40,13 +64,13 @@ export default function EmptyModal() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-            <Button>X</Button>
+            <Button onClick={handleClose} sx={closebutton}>X</Button>
           <Typography id="modal-modal-title" variant="h6" component="h2" sx={styleheader} >
-            Text in a modal
+            Text of the header
           </Typography>
 
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          <Typography id="modal-modal-description" sx={mainmodalbody}>
+            This is some content or Text inside the modal.
           </Typography>
         </Box>
       </Modal>
