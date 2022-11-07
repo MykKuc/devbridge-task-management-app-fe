@@ -113,11 +113,6 @@ td{
     color:white;
     font-size:12pt;
 }
-.category{
-    height:50px;
-    width:200px;
-    background-color: blue;
-}
 .btn-inline-block{
     display: inline-block;
     text-align: center;

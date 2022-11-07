@@ -7,10 +7,18 @@ class Category extends React.Component{
     const {id, title, description, creatorId, creationDate} = this.props;
     return(
       <tr>
-        <td><span>{title}</span></td>
-        <td><span>{description}</span></td>
-        <td><span>{creatorId}</span></td>
-        <td><span>{creationDate}</span></td>
+        <td>
+          <span>{title}</span>
+        </td>
+        <td>
+          <span>{description}</span>
+        </td>
+        <td>
+          <span>{creatorId}</span>
+        </td>
+        <td>
+          <span>{creationDate}</span>
+        </td>
         <td>
           <div className="btn-inline-block">
             <div className="btn-wrapper">
@@ -30,10 +38,18 @@ export function CreateCategory(props) {
    
   return(
     <tr>
-      <td><span>{title}</span></td>
-      <td><span>{description}</span></td>
-      <td><span>{creatorId}</span></td>
-      <td><span>{creationDate}</span></td>
+      <td>
+        <span>{title}</span>
+      </td>
+      <td>
+        <span>{description}</span>
+      </td>
+      <td>
+        <span>{creatorId}</span>
+      </td>
+      <td>
+        <span>{creationDate}</span>
+      </td>
       <td>
         <div className="btn-inline-block">
           <div className="btn-wrapper">
