@@ -16,6 +16,7 @@ export default function EmptyModal() {
   return (
     <div>
       <Button onClick={handleOpen}>Empty Modal</Button>
+
       <Modal
         open={open}
         onClose={handleClose}
@@ -26,7 +27,7 @@ export default function EmptyModal() {
           <Button onClick={handleClose} className='modal-close-button'><p className='modal-close-button-text'>X</p></Button>
 
           <Box className='modal-header'>
-            <Typography id="modal-modal-title" variant="h6" component="h2" align='center' className='modal-header-hidden'  >
+            <Typography id="modal-modal-title" variant="h6" component="h2" align='center' className='modal-header-hidden'>
               .
             </Typography>
           </Box>
