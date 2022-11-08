@@ -1,26 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Home from './pages/Home';
-import PageNotFound from './pages/PageNotFound';
+import Home from './features/menu/Home';
+import PageNotFound from './features/menu/PageNotFound';
 import { Route, Routes } from 'react-router-dom';
-import Navbar from './pages/Navbar';
-import Footer from './pages/Footer';
-
-
+import Navbar from './features/menu/Navbar';
+import Footer from './features/menu/Footer';
 
 function App() {
   return (
-    <>
-    <Navbar/>
-    <div className="App">
-  <Routes>
-      <Route path='/' element={<Home/>} />
-      <Route path='*' element={<PageNotFound/>} />
-    </Routes>
+    <div>
+      <Navbar />
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </div>
+      <Footer />
     </div>
-    <Footer/>
-    </>
   );
 }
 
