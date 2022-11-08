@@ -4,49 +4,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useState } from 'react';
+import './EmptyModal.css';
 
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '70%',
-  height: '70%',
-  bgcolor: '#383838',
-  borderRadius: 7,
-  boxShadow: 24,
-  p: 4,
-};
-
-const styleheader = {
-    position: 'absolute' as 'absolute',
-    bgcolor: '#2BABD3',
-    top: 0,
-    width: '100%',
-    left: 0,
-    border: 0,
-    borderRadius: 7,
-    textAlign: 'center',
-    fontFamily: 'Inter',
-    color: 'white',
-    fontWeight: 'Bold'
-}
-
-const closebutton = {
-    color: 'white',
-    position: 'absolute' as 'absolute',
-    right: '0px',
-    top: '-5px',
-    fontSize: '20px',
-    zIndex: '3',
-    fontFamily: 'Inter',
-    fontWeight: '900'
-}
-
-const mainmodalbody = {
-    color: '#2BABD3',
-    fontFamily: 'Inter'
-}
 
 export default function EmptyModal() {
 
@@ -63,13 +22,17 @@ export default function EmptyModal() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-            <Button onClick={handleClose} sx={closebutton}>X</Button>
-          <Typography id="modal-modal-title" variant="h6" component="h2" sx={styleheader} >
-            Text of the header
-          </Typography>
+        <Box className='empty-modal'>
+          <Button onClick={handleClose} className='modal-close-button'><p className='modal-close-button-text'>X</p></Button>
 
-          <Typography id="modal-modal-description" sx={mainmodalbody}>
+          <Box className='modal-header'>
+            <Typography id="modal-modal-title" variant="h6" component="h2" align='center' className='modal-header-hidden'  >
+              .
+            </Typography>
+          </Box>
+          <h2 className='modal-header-text'>Title</h2>
+
+          <Typography id="modal-modal-description" className='modal-main-body'>
             This is some content or Text inside the modal.
           </Typography>
         </Box>
