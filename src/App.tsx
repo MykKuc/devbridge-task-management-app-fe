@@ -1,19 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Home from './pages/Home';
-import PageNotFound from './pages/PageNotFound';
-import CategoryList from './pages/Categories/CategoryList'
+import Home from './features/menu/Home';
+import PageNotFound from './features/menu/PageNotFound';
 import { Route, Routes } from 'react-router-dom';
+import Navbar from './features/menu/Navbar';
+import Footer from './features/menu/Footer';
+import CategoryList from './pages/categories/CategoryList';
 
 function App() {
   return (
-    <div className="App">
-  <Routes>
-      <Route path='/' element={<Home/>} />
-      <Route path='*' element={<PageNotFound/>} />
-      <Route path="/categorylist" element={<CategoryList/>} />
-    </Routes>
+    <div>
+      <Navbar />
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<PageNotFound />} />
+          <Route path="categories" element={<CategoryList />} />
+        </Routes>
+      </div>
+      <Footer />
     </div>
   );
 }
