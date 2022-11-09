@@ -1,7 +1,7 @@
 import React from 'react';
 import data from './MockCategories.json';
 import './CategoryList.css';
-import Category, { CreateCategory } from './Category';
+import Category from './Category';
 
 function CategoryList() {
   return (
@@ -39,7 +39,8 @@ function CategoryList() {
                   </th>
                 </tr>
                 {data.categories.map((category) => (
-                  <CreateCategory
+                  <Category
+                    key={category.id}
                     id={category.id}
                     title={category.title}
                     description={category.description}
