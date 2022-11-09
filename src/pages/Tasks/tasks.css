@@ -1,0 +1,28 @@
+.inner-tasks-window {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  padding: 40px 70px;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 20px;
+  min-width: 800px;
+}
+
+.button-wrapper .create-button {
+  border-radius: 10px;
+  background-color: var(--accent-color);
+  min-width: 100px;
+}
+
+.tasks-table-wrapper {
+  height: 80%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  min-width: 800px;
+}

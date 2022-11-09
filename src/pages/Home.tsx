@@ -1,10 +1,10 @@
-import React from 'react'
+import Content from "../Components/Content"
 
 function Home() {
   return (
-    <div>
-        <span>Hello world</span>
-    </div>
+    <Content name={'Home'}>
+      <span style={{ color: 'white' }}>Hello world</span>
+    </Content>
   )
 }
 
