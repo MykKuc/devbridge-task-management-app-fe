@@ -21,8 +21,10 @@ const StyledDataGrid = styled(DataGrid)(() => ({
     borderTop: '2px solid var(--accent-color)',
     borderBottom: '2px solid var(--accent-color)',
     borderRadius: 0,
+  },
+  '& .MuiDataGrid-columnHeaderTitle': {
     fontSize: '1rem',
-    fontWeight: 900
+    fontWeight: 600
   },
   '& .MuiDataGrid-cell, & .MuiDataGrid-row--lastVisible': {
     borderBottom: '1px solid var(--accent-color)',
