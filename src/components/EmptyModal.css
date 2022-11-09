@@ -1,4 +1,4 @@
-/* This looks good */
+
 .empty-modal{
     position: absolute;
     top: 50%;
@@ -44,7 +44,7 @@
 }
 
 
-/* Looks good */
+
 .modal-close-button{
     position: absolute;
     top: 2%;
@@ -62,8 +62,6 @@
     font-family: 'Inter', sans-serif;
 }
 
-
-/* This is good */
 
 .modal-main-body{
     position: absolute;
