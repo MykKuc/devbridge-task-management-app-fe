@@ -1,8 +1,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavLink } from 'react-router-dom';
-import ProfileIcon from '@sourcery-admission-tool/public/profile-icon-white.png';
-import Logo from '@sourcery-admission-tool/public/logo.png';
+import ProfileIcon from './assets/profile-icon-white.png';
+import Logo from './assets/logo.png';
 
 export default function Navbar() {
   let activeStyle = {
