@@ -1,5 +1,4 @@
 import React from 'react'
-import EmptyModal from '../components/EmptyModal'
 import ModalOpenButton from '../components/ModalOpenButton'
 
 function Home() {
