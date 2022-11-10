@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import Navbar from './features/menu/Navbar';
 import Footer from './features/menu/Footer';
 import CategoryList from './pages/categories/CategoryList';
+import LoginPage from './features/Login/LoginPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="*" element={<PageNotFound />} />
           <Route path="categories" element={<CategoryList />} />
         </Routes>
