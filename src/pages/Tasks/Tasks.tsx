@@ -67,29 +67,27 @@ function Tasks() {
 
   return (
     <Content name={'Tasks'}>
-      <div className="inner-tasks-window">
-        <div className="button-wrapper">
-          <Button className="create-button" variant="contained">create</Button>
-        </div>
-        <div className="tasks-table-wrapper">
-          <StyledDataGrid
-            headerHeight={70}
-            rowHeight={60}
-            autoPageSize
-            disableColumnMenu
-            disableSelectionOnClick
-            columns={columns}
-            rows={tasksData}
-            components={{
-              Pagination: CustomPagination,
-            }}
-            initialState={{
-              sorting: {
-                sortModel: [{ field: 'votes', sort: 'desc' }],
-              },
-            }}
-          />
-        </div>
+      <div className="button-wrapper">
+        <Button className="create-button" variant="contained">create</Button>
+      </div>
+      <div className="tasks-table-wrapper">
+        <StyledDataGrid
+          headerHeight={70}
+          rowHeight={60}
+          autoPageSize
+          disableColumnMenu
+          disableSelectionOnClick
+          columns={columns}
+          rows={tasksData}
+          components={{
+            Pagination: CustomPagination,
+          }}
+          initialState={{
+            sorting: {
+              sortModel: [{ field: 'votes', sort: 'desc' }],
+            },
+          }}
+        />
       </div>
     </Content>
   )
