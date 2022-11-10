@@ -1,0 +1,11 @@
+{
+  "categories": [
+    {"name": "JAVA"},
+    {"name": "C#"},
+    {"name": "Logic"},
+    {"name": "OOP"},
+    {"name": "Database"},
+    {"name": "Javascript"},
+    {"name": "Miscellaneous"}
+  ]
+}

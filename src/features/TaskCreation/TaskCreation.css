@@ -1,0 +1,116 @@
+#outer-div {
+  width: 100%;
+  text-align: center;
+}
+#create-task-page {
+  display: inline-block;
+  margin: 0 auto;
+}
+#create-task-form {
+}
+#header {
+  height: 40px;
+  font-weight: bold;
+  color: white;
+  min-height: 30px;
+  background-color: rgb(43, 171, 211);
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  font-size: 19pt;
+}
+
+#create-btn {
+  height: 50px;
+  min-height: 30px;
+  width: 200px;
+  min-width: 66px;
+  position: relative;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border-radius: 50px;
+  font-size: 15pt;
+  color: white;
+  background-color: rgb(43, 171, 211);
+  border: rgb(43, 171, 211);
+  filter: drop-shadow(1px 5px 5px rgba(0, 0, 0, 0.25));
+}
+
+#small-label {
+  color: rgb(43, 171, 211);
+  float: left;
+  font-size: 20px;
+  margin-left: 5%;
+}
+
+#big-label {
+  color: rgb(43, 171, 211);
+  float: left;
+  font-size: 20px;
+  margin-left: 2.5%;
+}
+
+#category-dropdown {
+  height: 40px;
+  min-height: 30px;
+  width: 90%;
+  border-radius: 10px;
+  background-color: rgb(56, 56, 56);
+  border: 2.5px solid rgb(43, 171, 211);
+  color: rgb(43, 171, 211);
+}
+
+#big-input {
+  height: 40px;
+  min-height: 30px;
+  width: 95%;
+  border-radius: 10px;
+  background-color: rgb(56, 56, 56);
+  border: 2.5px solid rgb(43, 171, 211);
+  color: rgb(43, 171, 211);
+}
+
+#half-input {
+  padding-top: 20px;
+  display: inline-block;
+  margin: 0 auto;
+  min-width: 400px;
+  max-width: 20vw;
+  font-size: 20px;
+}
+
+#full-input {
+  padding-top: 20px;
+  display: inline-block;
+  margin: 0 auto;
+  min-width: 800px;
+  max-width: 800vw;
+  font-size: 20px;
+}
+
+#small-input {
+  height: 40px;
+  min-height: 30px;
+  width: 90%;
+  border-radius: 10px;
+  background-color: rgb(56, 56, 56);
+  border: 2.5px solid rgb(43, 171, 211);
+  color: rgb(43, 171, 211);
+}
+
+#main-section {
+  padding-top: 30px;
+}
+
+#reg {
+  margin-top: 10px;
+  color: white;
+}
+
+#error {
+  color: rgb(201, 43, 40);
+  font-size: 20px;
+  margin-left: 5px;
+}
