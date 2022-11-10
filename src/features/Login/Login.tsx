@@ -18,7 +18,7 @@ function Login() {
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     if (logins.email === 'testas@testas' && logins.password === 'testas') {
-      navigate('/');
+      navigate('/tasks');
     } else {
       setError('Incorrect username or password');
     }
@@ -62,8 +62,8 @@ function Login() {
           </button>
         </div>
         <br />
-        <NavLink className="registration-link" to="/register">
-          Don’t have an account? Click here to create one.
+        <NavLink id="reg" to="/register">
+          Don't have an account? Click here to create one.
         </NavLink>
       </form>
     </div>
