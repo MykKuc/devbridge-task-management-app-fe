@@ -26,13 +26,13 @@ function Login() {
 
   return (
     <div>
-      <form className="login-form" onSubmit={handleSubmit}>
-        {error ? <label id="error">{error}</label> : null}
-        <div id="input">
-          <label id="login-label">Email</label>
+      <form onSubmit={handleSubmit}>
+        {error ? <label className="login-error">{error}</label> : null}
+        <div className="login-input-wrapper">
+          <label className="login-label">Email</label>
           <br />
           <input
-            id="login-input"
+            className="login-input"
             type="email"
             name="email"
             placeholder="Email@email.com"
@@ -42,11 +42,11 @@ function Login() {
           />
         </div>
         <br />
-        <div id="input">
-          <label id="login-label">Password</label>
+        <div className="login-input-wrapper">
+          <label className="login-label">Password</label>
           <br />
           <input
-            id="login-input"
+            className="login-input"
             type="password"
             name="password"
             placeholder="Password"
@@ -56,13 +56,13 @@ function Login() {
           />
         </div>
         <br />
-        <div id="input">
-          <button id="login-btn" type="submit" className="button">
+        <div className="login-input-wrapper">
+          <button className="login-btn" type="submit">
             LOGIN
           </button>
         </div>
         <br />
-        <NavLink id="reg" to="/register">
+        <NavLink className="registration-link" to="/register">
           Don’t have an account? Click here to create one.
         </NavLink>
       </form>

@@ -4,9 +4,9 @@ import Login from './Login';
 
 function LoginPage() {
   return (
-    <div id="login-page">
-      <div id="header">Login</div>
-      <div id="main-section">
+    <div className="login-page">
+      <div className="login-header">Login</div>
+      <div className="main-section-login">
         <Login />
       </div>
     </div>
