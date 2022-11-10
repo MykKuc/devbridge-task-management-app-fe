@@ -62,7 +62,7 @@ function Login() {
           </button>
         </div>
         <br />
-        <NavLink id="reg" to="/register">
+        <NavLink className="registration-link" to="/register">
           Don't have an account? Click here to create one.
         </NavLink>
       </form>
