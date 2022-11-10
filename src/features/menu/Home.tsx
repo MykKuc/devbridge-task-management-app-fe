@@ -1,12 +1,13 @@
 import React from 'react';
-import ModalOpenButton from '../../components/ModalOpenButton';
+import Content from '../../Components/Content';
+import ModalOpenButton from '../../Components/ModalOpenButton';
 
 function Home() {
   return (
-    <div>
+    <Content name={'Home'} height={'60vh'}>
       <span>Hello world</span>
       <ModalOpenButton></ModalOpenButton>
-    </div>
+    </Content>
   );
 }
 
