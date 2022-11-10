@@ -63,7 +63,7 @@ function Login() {
         </div>
         <br />
         <NavLink id="reg" to="/register">
-          Don’t have an account? Click here to create one.
+          Don't have an account? Click here to create one.
         </NavLink>
       </form>
     </div>
