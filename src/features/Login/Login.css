@@ -58,6 +58,14 @@
   color: rgb(43, 171, 211);
 }
 
+.login-input:-webkit-autofill,
+.login-input:-webkit-autofill:hover,
+.login-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: rgb(43, 171, 211);
+  -webkit-box-shadow: 0 0 0px 1000px rgb(56, 56, 56) inset;
+  font-size: 20px;
+}
+
 .login-input-wrapper {
   padding-top: 25px;
   display: inline-block;
