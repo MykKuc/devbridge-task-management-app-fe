@@ -5,6 +5,7 @@ import PageNotFound from './features/menu/PageNotFound';
 import { Route, Routes } from 'react-router-dom';
 import Navbar from './features/menu/Navbar';
 import Footer from './features/menu/Footer';
+import CategoryList from './pages/categories/CategoryList';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="*" element={<PageNotFound />} />
+          <Route path="categories" element={<CategoryList />} />
         </Routes>
       </div>
       <Footer />
