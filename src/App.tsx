@@ -5,6 +5,7 @@ import PageNotFound from './features/menu/PageNotFound';
 import { Route, Routes } from 'react-router-dom';
 import Navbar from './features/menu/Navbar';
 import Footer from './features/menu/Footer';
+import Register from './features/register/Register';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>
