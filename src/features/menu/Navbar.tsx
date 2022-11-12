@@ -10,8 +10,8 @@ export default function Navbar() {
   };
   return (
     <nav
-      className="navbar navbar-expand-lg navbar-dark mb-5"
-      style={{ backgroundColor: '#2c2c2c', height: 100, boxShadow: '0px 20px 40px rgba(0, 0, 0, 0.35)' }}
+      className="navbar navbar-expand-lg navbar-dark"
+      style={{ backgroundColor: '#2c2c2c', height: 100, width: '100%', marginBottom: '40px', boxShadow: '0px 20px 40px rgba(0, 0, 0, 0.35)' }}
     >
       <div className="container-fluid ms-4" style={{ fontSize: 30 }}>
         <div className="row" style={{ width: '100%' }}>
