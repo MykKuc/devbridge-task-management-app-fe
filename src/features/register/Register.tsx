@@ -175,17 +175,23 @@ export default function Register() {
               <FormControl fullWidth>
                 <Select
                   id="demo-simple-select"
-                  placeholder="Select role"
                   name="role"
                   value={user.role}
                   className="label"
+                  style={{ boxShadow: '5px 20px 15px rgba(0, 0, 0, 0.25)' }}
                   onChange={handleInputChange}
+                  displayEmpty
+                  renderValue={(value) => (value !== '' ? value : 'Select role')}
                   sx={{
-                    '& .MuiSelect-root': {
-                      border: '2px solid #fff',
-                      color: 'var(--accent-color)',
+                    '.MuiSvgIcon-root ': {
+                      fill: '#2babd3',
                     },
-                    backgroundColor: '#fff',
+
+                    icon: {
+                      fill: 'white',
+                    },
+                    color: 'white',
+                    border: '2px solid #2babd3',
                     borderRadius: 2,
                   }}
                 >
