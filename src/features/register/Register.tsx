@@ -106,7 +106,7 @@ export default function Register() {
   }
 
   return (
-    <React.Fragment>
+    <div>
       <div className="d-flex justify-content-center">
         <div className="col-8 px-0 pb-3" style={{ backgroundColor: '#383838', borderRadius: '20px 20px 20px 20px' }}>
           <header className="text-light header py-2 mb-3">Register</header>
@@ -210,6 +210,6 @@ export default function Register() {
           </div>
         </div>
       </div>
-    </React.Fragment>
+    </div>
   );
 }
