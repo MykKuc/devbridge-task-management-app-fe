@@ -11,6 +11,7 @@ import LoginPage from './features/Login/LoginPage';
 import Register from './features/register/Register';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Task from './pages/Task/Task';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/task/:id" element={<Task />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<PageNotFound />} />

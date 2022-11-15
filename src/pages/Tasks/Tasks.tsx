@@ -11,9 +11,11 @@ import CustomPagination from '../../Components/Pagination';
 import GetTasks from './GetTasks';
 import './tasks.css';
 import Content from '../../Components/Content';
+import { useNavigate } from 'react-router-dom';
 
 function Tasks() {
   const tasksRes = GetTasks();
+  const navigate = useNavigate();
 
   const tasksData = useMemo(
     () =>
@@ -77,7 +79,7 @@ function Tasks() {
         <GridActionsCellItem
           className="task-action-button"
           icon={<VisibilityIcon />}
-          onClick={() => console.log(`View task with id ${params.id}`)}
+          onClick={() => navigate('/task/' + params.id)}
           label="View"
         />,
         <GridActionsCellItem
