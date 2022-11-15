@@ -1,5 +1,5 @@
 import React from 'react';
-import EmptyModal from '../../components/EmptyModal';
+import EmptyModal from '../../Components/EmptyModal';
 import TaskCreationForm from './TaskCreationForm';
 
 const TaskCreation = () => {

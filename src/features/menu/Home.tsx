@@ -1,13 +1,14 @@
 import React from 'react';
-import ModalOpenButton from '../../components/ModalOpenButton';
-import TaskCreation from '../TaskCreation/TaskCreation';
+
+import Content from '../../Components/Content';
+import ModalOpenButton from '../../Components/ModalOpenButton';
 
 function Home() {
   return (
-    <div>
+    <Content name={'Home'} height={'60vh'}>
       <span>Hello world</span>
-      <TaskCreation></TaskCreation>
-    </div>
+      <ModalOpenButton></ModalOpenButton>
+    </Content>
   );
 }
 
