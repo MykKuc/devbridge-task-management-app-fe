@@ -1,13 +1,12 @@
 import React from 'react';
 import EmptyModal from './EmptyModal';
 
-
 const ModalOpenButton = () => {
-    return(
-        <>
-           <EmptyModal/>
-        </>
-    )
-}
+  return (
+    <>
+      <EmptyModal />
+    </>
+  );
+};
 
 export default ModalOpenButton;
