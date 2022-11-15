@@ -1,14 +1,14 @@
-#outer-div {
+.outer-div {
   width: 100%;
   text-align: center;
 }
-#create-task-page {
+.create-task-page {
   display: inline-block;
   margin: 0 auto;
 }
-#create-task-form {
+.create-task-form {
 }
-#header {
+.header {
   height: 40px;
   font-weight: bold;
   color: white;
@@ -19,7 +19,7 @@
   font-size: 19pt;
 }
 
-#create-btn {
+.create-btn {
   height: 50px;
   min-height: 30px;
   width: 200px;
@@ -38,21 +38,21 @@
   filter: drop-shadow(1px 5px 5px rgba(0, 0, 0, 0.25));
 }
 
-#small-label {
+.small-label {
   color: rgb(43, 171, 211);
   float: left;
   font-size: 20px;
   margin-left: 5%;
 }
 
-#big-label {
+.big-label {
   color: rgb(43, 171, 211);
   float: left;
   font-size: 20px;
   margin-left: 2.5%;
 }
 
-#category-dropdown {
+.category-dropdown {
   height: 40px;
   min-height: 30px;
   width: 90%;
@@ -62,7 +62,7 @@
   color: rgb(43, 171, 211);
 }
 
-#big-input {
+.big-input {
   height: 40px;
   min-height: 30px;
   width: 95%;
@@ -72,7 +72,16 @@
   color: rgb(43, 171, 211);
 }
 
-#half-input {
+.multiple-input {
+  height: 40px;
+  min-height: 30px;
+  border-radius: 10px;
+  background-color: rgb(56, 56, 56);
+  border: 2.5px solid rgb(43, 171, 211);
+  color: rgb(43, 171, 211);
+}
+
+.half-input {
   padding-top: 20px;
   display: inline-block;
   margin: 0 auto;
@@ -81,16 +90,17 @@
   font-size: 20px;
 }
 
-#full-input {
+.full-input {
   padding-top: 20px;
   display: inline-block;
   margin: 0 auto;
-  min-width: 800px;
-  max-width: 800vw;
+  min-width: 400px;
+  width: 75%;
   font-size: 20px;
+  background-color: rgb(56, 56, 56);
 }
 
-#small-input {
+.small-input {
   height: 40px;
   min-height: 30px;
   width: 90%;
@@ -100,17 +110,23 @@
   color: rgb(43, 171, 211);
 }
 
-#main-section {
+.main-section {
   padding-top: 30px;
 }
 
-#reg {
+.reg {
   margin-top: 10px;
   color: white;
 }
 
-#error {
+.error {
   color: rgb(201, 43, 40);
   font-size: 20px;
   margin-left: 5px;
+}
+
+.multiple-checkbox {
+  background-color: rgb(56, 56, 56);
+  border-radius: 2px;
+  color: rgb(43, 171, 211);
 }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CheckBox } from '@mui/icons-material';
 import './TaskCreation.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { jsx } from '@emotion/react';
@@ -8,22 +9,29 @@ interface Props {
     text: string;
   }[];
   handleAnswerChange: any;
+  //handleNewAnswer: any;
+  //handleDelete: any;
 }
 
 const MultipleAnswer: React.FC<Props> = ({ answer, handleAnswerChange }) => {
   return (
-    <div id="full-input">
-      <label id="big-label">Correct answer</label>
-      <br />
-      <textarea
-        style={{ height: 100 }}
-        id="big-input"
-        name="description"
-        placeholder="Description"
-        required
-        value={answer[0].text}
-        //onChange={handleInput}
-      />
+    <div className="full-input">
+      <div key={'1'}>
+        <label className="big-label">Answer</label>
+        <label className="big-label">Correct</label>
+        <br />
+        <input
+          style={{ width: '600px', float: 'left' }}
+          className="multiple-input"
+          type="text"
+          name="summary"
+          placeholder="Summary"
+          value="Aaa"
+          //onChange={handleSummaryChange}
+        />
+
+        <CheckBox className="multiple-checkbox" />
+      </div>
     </div>
   );
 };

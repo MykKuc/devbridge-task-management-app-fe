@@ -8,7 +8,7 @@ import MultipleAnswer from './MultipleAnswer';
 const loadData = JSON.parse(JSON.stringify(jsonData));
 
 function TaskCreationForm() {
-  const initialAnswer = [{ text: 'Answer', correct: true }];
+  const initialAnswer = [{ text: '', correct: true }];
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [summary, setSummary] = React.useState('');
@@ -33,7 +33,7 @@ function TaskCreationForm() {
   };
 
   const handleSingleAnswerChange = (answer: string) => {
-    if (type === 'Text') {
+    if (type === 'text') {
       const newAnswer = [];
       newAnswer.push({ text: answer, correct: true });
       setAnswer(newAnswer);
@@ -54,13 +54,13 @@ function TaskCreationForm() {
   const handleSubmit = (event: { preventDefault: () => void }) => {};
 
   return (
-    <div id="task-form">
-      <form id="task-form" onSubmit={handleSubmit}>
-        <div id="half-input">
-          <label id="small-label">Title</label>
+    <div className="task-form">
+      <form className="task-form" onSubmit={handleSubmit}>
+        <div className="half-input">
+          <label className="small-label">Title</label>
           <br />
           <input
-            id="small-input"
+            className="small-input"
             type="text"
             name="title"
             placeholder="Title"
@@ -69,11 +69,11 @@ function TaskCreationForm() {
             value={title}
           />
         </div>
-        <div id="half-input">
-          <label id="small-label">Category</label>
+        <div className="half-input">
+          <label className="small-label">Category</label>
           <br />
           <select
-            id="category-dropdown"
+            className="category-dropdown"
             name="category"
             value={category}
             onChange={(event) => handleCategoryChange(event.target.value)}
@@ -88,12 +88,12 @@ function TaskCreationForm() {
           </select>
         </div>
         <br />
-        <div id="full-input">
-          <label id="big-label">Description</label>
+        <div className="full-input">
+          <label className="big-label">Description</label>
           <br />
           <textarea
             style={{ height: 100 }}
-            id="big-input"
+            className="big-input"
             name="description"
             placeholder="Description"
             required
@@ -102,11 +102,11 @@ function TaskCreationForm() {
           />
         </div>
         <br />
-        <div id="full-input">
-          <label id="big-label">Summary</label>
+        <div className="full-input">
+          <label className="big-label">Summary</label>
           <br />
           <input
-            id="big-input"
+            className="big-input"
             type="text"
             name="summary"
             placeholder="Summary"
@@ -115,11 +115,11 @@ function TaskCreationForm() {
           />
         </div>
         <br />
-        <div id="half-input">
-          <label id="small-label">Answer type</label>
+        <div className="half-input">
+          <label className="small-label">Answer type</label>
           <br />
           <select
-            id="category-dropdown"
+            className="category-dropdown"
             name="type"
             value={type}
             onChange={(event) => handleTypeChange(event.target.value)}
@@ -137,13 +137,10 @@ function TaskCreationForm() {
         </div>
         <br />
         {showTextAnswer && <TextAnswer answer={answer} handleAnswerChange={handleSingleAnswerChange} />}
-        {
-          showMultipleAnswer //&&
-          //<MultipleAnswer answer={answer} handleAnswerChange={handleAnswerChange} />
-        }
+        {showMultipleAnswer && <MultipleAnswer answer={answer} handleAnswerChange={handleSingleAnswerChange} />}
         <br />
-        <div id="full-input">
-          <button id="create-btn" type="submit" className="button">
+        <div className="full-input">
+          <button className="create-btn" type="submit">
             CREATE
           </button>
         </div>

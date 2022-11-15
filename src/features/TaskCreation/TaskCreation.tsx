@@ -6,7 +6,7 @@ const TaskCreation = () => {
   return (
     <>
       <EmptyModal title="Create task">
-        <div id="outer-div">
+        <div className="outer-div">
           <TaskCreationForm />
         </div>
       </EmptyModal>
