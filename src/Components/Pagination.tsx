@@ -1,13 +1,7 @@
-import {
-  gridPageCountSelector,
-  gridPageSelector,
-  useGridApiContext,
-  useGridSelector,
-} from '@mui/x-data-grid';
+import { gridPageCountSelector, gridPageSelector, useGridApiContext, useGridSelector } from '@mui/x-data-grid';
 
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
-
 
 function CustomPagination() {
   const apiRef = useGridApiContext();
@@ -23,13 +17,11 @@ function CustomPagination() {
       count={pageCount}
       // @ts-expect-error
       renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
-      onChange={(event: React.ChangeEvent<unknown>, value: number) =>
-        apiRef.current.setPage(value - 1)
-      }
+      onChange={(event: React.ChangeEvent<unknown>, value: number) => apiRef.current.setPage(value - 1)}
       sx={{
         '& .MuiPaginationItem-root': {
           border: '1px solid var(--accent-color)',
-          color: 'var(--accent-color)'
+          color: 'var(--accent-color)',
         },
         '& .MuiPaginationItem-root:hover': {
           backgroundColor: 'rgba(0, 0, 0, 0.2)',
@@ -46,4 +38,3 @@ function CustomPagination() {
 }
 
 export default CustomPagination;
-
