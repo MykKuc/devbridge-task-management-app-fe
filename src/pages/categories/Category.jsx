@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
+import CategoryEdit from './CategoryEdit';
 import './CategoryList.css';
 
 function Category(props) {
   const { id, title, description, creatorId, creationDate } = props;
+  const [titleState, setTitleState] = useState(title);
+  const [descriptionState, setDescriptionState] = useState(description);
+  function handleEditClick() {
+    console.log('open');
+    return <CategoryEdit />;
+  }
 
   return (
     <tr>
       <td>
-        <span>{title}</span>
+        <span>{titleState}</span>
       </td>
       <td>
-        <span>{description}</span>
+        <span>{descriptionState}</span>
       </td>
       <td>
         <span>{creatorId}</span>
@@ -27,12 +34,12 @@ function Category(props) {
                 /*do something with id*/
               }}
             ></div>
-            <div
-              className="edit-btn"
-              onClick={function () {
-                /*do something with id*/
-              }}
-            ></div>
+            <CategoryEdit
+              titleOld={titleState}
+              setTitleOld={setTitleState}
+              descriptionOld={descriptionState}
+              setDescriptionOld={setDescriptionState}
+            />
             <div
               className="delete-btn"
               onClick={function () {
