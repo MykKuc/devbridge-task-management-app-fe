@@ -2,10 +2,10 @@ import React from 'react';
 import EmptyModal from '../../Components/EmptyModal';
 import TaskCreationForm from './TaskCreationForm';
 
-const TaskCreation = () => {
+const TaskCreation = (setShow: any) => {
   return (
     <>
-      <EmptyModal title="Create task">
+      <EmptyModal setShow={setShow} title="Create task">
         <div className="outer-div">
           <TaskCreationForm />
         </div>

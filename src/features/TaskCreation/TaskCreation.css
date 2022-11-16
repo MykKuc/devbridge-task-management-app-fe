@@ -38,6 +38,25 @@
   filter: drop-shadow(1px 5px 5px rgba(0, 0, 0, 0.25));
 }
 
+.add-answer-button {
+  height: 50px;
+  min-height: 30px;
+  width: 50px;
+  min-width: 30px;
+  position: relative;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border-radius: 50px;
+  font-size: 15pt;
+  color: white;
+  background-color: rgb(43, 171, 211);
+  border: rgb(43, 171, 211);
+  filter: drop-shadow(1px 5px 5px rgba(0, 0, 0, 0.25));
+}
+
 .small-label {
   color: rgb(43, 171, 211);
   float: left;
@@ -79,6 +98,7 @@
   background-color: rgb(56, 56, 56);
   border: 2.5px solid rgb(43, 171, 211);
   color: rgb(43, 171, 211);
+  margin-left: 20px;
 }
 
 .half-input {
@@ -86,7 +106,7 @@
   display: inline-block;
   margin: 0 auto;
   min-width: 400px;
-  max-width: 20vw;
+  max-width: 30vw;
   font-size: 20px;
 }
 
@@ -95,7 +115,7 @@
   display: inline-block;
   margin: 0 auto;
   min-width: 400px;
-  width: 75%;
+  width: 68%;
   font-size: 20px;
   background-color: rgb(56, 56, 56);
 }
@@ -119,14 +139,17 @@
   color: white;
 }
 
-.error {
+.answer-delete-button {
   color: rgb(201, 43, 40);
-  font-size: 20px;
-  margin-left: 5px;
+  border: 1px solid rgb(201, 43, 40);
+  border-radius: 5px;
+  margin-left: 40px;
 }
 
 .multiple-checkbox {
   background-color: rgb(56, 56, 56);
-  border-radius: 2px;
+  border-radius: 10px;
   color: rgb(43, 171, 211);
+  font-size: 30px;
+  margin-left: 40px;
 }

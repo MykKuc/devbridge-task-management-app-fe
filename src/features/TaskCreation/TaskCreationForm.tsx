@@ -54,7 +54,7 @@ function TaskCreationForm() {
   const handleSubmit = (event: { preventDefault: () => void }) => {};
 
   return (
-    <div className="task-form">
+    <div className="create-task-form">
       <form className="task-form" onSubmit={handleSubmit}>
         <div className="half-input">
           <label className="small-label">Title</label>

@@ -6,8 +6,8 @@ import Modal from '@mui/material/Modal';
 import { ReactNode, useState } from 'react';
 import './EmptyModal.css';
 
-export default function EmptyModal({ title, children }: any) {
-  const [open, setOpen] = useState(false);
+export default function EmptyModal({ opens, title, children }: any) {
+  const [open, setOpen] = useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 

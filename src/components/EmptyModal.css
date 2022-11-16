@@ -8,6 +8,7 @@
   background-color: #383838;
   border-radius: 15px;
   box-shadow: 24;
+  overflow: auto;
 }
 
 .modal-header {
