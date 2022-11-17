@@ -1,118 +1,91 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle'
 import { NavLink } from 'react-router-dom';
 import ProfileIcon from './assets/profile-icon-white.png';
-import Logo from './assets/logo.png';
+import Logo from '../../logo_filled.svg';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import './navbar.css'
 
 export default function Navbar() {
-  let activeStyle = {
-    backgroundColor: '#383838',
-  };
   return (
-    <nav
-      className="navbar navbar-expand-lg navbar-dark"
-      style={{ backgroundColor: '#2c2c2c', height: 100, width: '100%', marginBottom: '40px', boxShadow: '0px 20px 40px rgba(0, 0, 0, 0.35)' }}
-    >
-      <div className="container-fluid ms-4" style={{ fontSize: 30 }}>
-        <div className="row" style={{ width: '100%' }}>
-          <div className="col-lg-2 col-sm-4 align-middle py-2">
-            <div className="d-none d-xxl-block">
+    <div className='navbar-container'>
+      <nav className="navbar navbar-expand-xl navbar-dark">
+        <div className="navbar-inner">
+          <div className="navbar-brand-wrapper">
+            <NavLink
+              className="navbar-brand"
+              to="/"
+              style={{ fontSize: 35, fontFamily: 'Julius' }}
+            >
+              ADMISSION TOOL
+            </NavLink>
+          </div>
+          <ul className="navbar-nav navbar-menu-wrapper d-none d-xl-flex">
+            <li className="logo-left nav-item">
               <NavLink
-                className="navbar-brand collapse navbar-collapse"
-                to="/"
-                style={{ fontSize: 35, fontFamily: 'Julius' }}
-                id="navbarSupportedContent"
+                className="nav-link text-white hover-underline"
+                to="/tasks"
               >
-                ADMISSION TOOL
+                Tasks
+              </NavLink>
+            </li>
+            <li className="logo-wrapper nav-item">
+              <NavLink to="/" className="nav-link">
+                <img className="logo expand" src={Logo} alt="logo" />
+              </NavLink>
+            </li>
+            <li className="logo-right nav-item">
+              <NavLink
+                className="nav-link text-white hover-underline"
+                aria-current="page"
+                to="/categories"
+              >
+                Categories
+              </NavLink>
+            </li>
+          </ul>
+          <div className="navbar-login-wrapper d-none d-xl-flex">
+            <div className="nav-item">
+              <NavLink
+                className="nav-link text-white"
+                aria-current="page"
+                to="/login"
+              >
+                <img src={ProfileIcon} alt="profile" className="px-1 pb-1" style={{ height: 35, fontSize: 30 }} />
+                Login
               </NavLink>
             </div>
-
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasDarkNavbar"
-              aria-controls="offcanvasDarkNavbar"
-            >
-              <span className="navbar-toggler-icon" />
-            </button>
           </div>
-          <div className="col">
-            <div
-              className="collapse navbar-collapse"
-              style={{ flexDirection: 'row-reverse' }}
-              id="navbarSupportedContent"
-            >
-              <ul className="navbar-nav">
-                <li className="nav-item">
-                  <NavLink
-                    className="nav-link text-white px-4 rounded-pill"
-                    aria-current="page"
-                    to="/add-task"
-                    style={({ isActive }) => (isActive ? activeStyle : undefined)}
-                  >
-                    Add Task
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink
-                    className="nav-link text-white px-4 rounded-pill"
-                    to="/tasks"
-                    style={({ isActive }) => (isActive ? activeStyle : undefined)}
-                  >
-                    Tasks
-                  </NavLink>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="col-1 ">
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <img src={Logo} alt="logo" style={{ height: 200, position: 'absolute', top: -11 }} />
-            </div>
-          </div>
-          <div className="col">
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                <li className="nav-item ">
-                  <NavLink
-                    className="nav-link text-white px-4 rounded-pill"
-                    aria-current="page"
-                    to="/categories"
-                    style={({ isActive }) => (isActive ? activeStyle : undefined)}
-                  >
-                    Categories
-                  </NavLink>
-                </li>
-                <li className="nav-item ">
-                  <NavLink
-                    className="nav-link text-white px-4 rounded-pill"
-                    to="/"
-                    style={({ isActive }) => (isActive ? activeStyle : undefined)}
-                  >
-                    Home
-                  </NavLink>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="col-lg-2 col-sm-4">
-            <ul className="navbar-nav me-auto" style={{ flexDirection: 'row-reverse' }}>
-              <li className="nav-item border rounded-pill px-1">
-                <NavLink
-                  className="nav-link active rounded-pill"
-                  aria-current="page"
-                  to="/login"
-                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
-                >
-                  <img src={ProfileIcon} alt="profile" className="px-1 pb-1" style={{ height: 35, fontSize: 30 }} />
-                  Login
-                </NavLink>
-              </li>
-            </ul>
-          </div>
+          <button className="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-toggle-menu" aria-controls="navbar-toggle-menu" aria-expanded="false" aria-label="Toggle navigation">
+            <ExpandMoreIcon />
+          </button>
+        </div>
+      </nav>
+      <div className="collapse d-xl-none" id="navbar-toggle-menu">
+        <div className="inner-toggle-menu p-4">
+          <NavLink
+            className="nav-link text-white hover-underline"
+            to="/tasks"
+          >
+            Tasks
+          </NavLink>
+          <NavLink
+            className="nav-link text-white hover-underline"
+            aria-current="page"
+            to="/categories"
+          >
+            Categories
+          </NavLink>
+          <NavLink
+            className="nav-link hover-underline"
+            aria-current="page"
+            to="/login"
+          >
+            Login
+          </NavLink>
         </div>
       </div>
-    </nav>
+    </div>
   );
 }
