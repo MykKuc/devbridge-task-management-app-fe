@@ -1,7 +1,7 @@
 import tasksData from './tasks.json';
 
 function GetTasks() {
-    return tasksData;
+  return tasksData;
 }
 
 export default GetTasks;
