@@ -2,13 +2,13 @@
   --blue: #2babd3;
   --grey: #383838;
   --white: #fff;
+  --red: #c92b28;
 }
 
 .button {
   width: 220.5px;
   height: 49px;
 
-  background: var(--blue);
   border-width: 0;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 40px;
@@ -18,8 +18,13 @@
   font-size: 18px;
   line-height: 22px;
   /* identical to box height */
-
   color: var(--white);
+}
+.blue {
+  background: var(--blue);
+}
+.red {
+  background: var(--red);
 }
 
 .input {
@@ -71,7 +76,8 @@
   background: #555;
 }
 
-input:focus {
+input,
+textarea:focus {
   background-color: var(--grey);
   border-color: var(--blue);
   border-width: 2px;

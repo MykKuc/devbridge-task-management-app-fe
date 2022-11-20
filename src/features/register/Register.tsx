@@ -202,7 +202,7 @@ export default function Register() {
 
               {!validation.roleValid && <p className="alert alert-danger">{validation.formErrors.role}</p>}
               <div className="text-center">
-                <button type="submit" onClick={handleFormSubmit} className="button my-5 text-center">
+                <button type="submit" onClick={handleFormSubmit} className="button blue my-5 text-center">
                   REGISTER
                 </button>
               </div>
