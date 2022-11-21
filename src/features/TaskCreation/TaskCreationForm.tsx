@@ -7,12 +7,12 @@ import MultipleAnswer from './MultipleAnswer';
 
 const loadData = JSON.parse(JSON.stringify(jsonData));
 
-function TaskCreationForm() {
+function TaskCreationForm(handleAdd: any) {
   const initialAnswer = [{ text: '', correct: true }];
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [summary, setSummary] = React.useState('');
-  const [category, setCategory] = React.useState('');
+  const [category, setCategory] = React.useState(jsonData.categories[0]);
   const [type, setType] = React.useState('');
   const [answer, setAnswer] = React.useState(initialAnswer);
 
@@ -24,8 +24,9 @@ function TaskCreationForm() {
     type === 'multiple' ? setShowMultipleAnswer(true) : setShowMultipleAnswer(false);
   });
 
-  const handleCategoryChange = (category: React.SetStateAction<string>) => {
-    setCategory(category);
+  const handleCategoryChange = (category: string) => {
+    const parsedCat = JSON.parse(category);
+    setCategory(parsedCat);
   };
 
   const handleTypeChange = (type: React.SetStateAction<string>) => {
@@ -36,6 +37,13 @@ function TaskCreationForm() {
     if (type === 'text') {
       const newAnswer = [];
       newAnswer.push({ text: answer, correct: true });
+      setAnswer(newAnswer);
+    }
+  };
+
+  const handleMultipleChange = (answer: any) => {
+    if (type === 'multiple') {
+      const newAnswer = [...answer];
       setAnswer(newAnswer);
     }
   };
@@ -51,7 +59,22 @@ function TaskCreationForm() {
     setSummary(summary.target.value);
   };
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {};
+  const handleSubmit = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    const today = new Date().toLocaleDateString();
+    const task = {
+      id: 100,
+      title: title,
+      category: category.name,
+      description: description,
+      creator: 'Default',
+      answer: answer,
+      date: today,
+      votes: 0,
+    };
+    console.log(task);
+    handleAdd(event, task);
+  };
 
   return (
     <div className="create-task-form">
@@ -75,12 +98,11 @@ function TaskCreationForm() {
           <select
             className="category-dropdown"
             name="category"
-            value={category}
             onChange={(event) => handleCategoryChange(event.target.value)}
           >
             {loadData.categories.map((category: any) => {
               return (
-                <option key={category.name} value={category.name}>
+                <option key={category.id} value={JSON.stringify(category)}>
                   {category.name}
                 </option>
               );
@@ -137,7 +159,7 @@ function TaskCreationForm() {
         </div>
         <br />
         {showTextAnswer && <TextAnswer answer={answer} handleAnswerChange={handleSingleAnswerChange} />}
-        {showMultipleAnswer && <MultipleAnswer answer={answer} handleAnswerChange={handleSingleAnswerChange} />}
+        {showMultipleAnswer && <MultipleAnswer answer={answer} handleMultipleChange={handleMultipleChange} />}
         <br />
         <div className="full-input">
           <button className="create-btn" type="submit">

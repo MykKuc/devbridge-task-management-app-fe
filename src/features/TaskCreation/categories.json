@@ -1,11 +1,11 @@
 {
   "categories": [
-    { "name": "JAVA" },
-    { "name": "C#" },
-    { "name": "Logic" },
-    { "name": "OOP" },
-    { "name": "Database" },
-    { "name": "Javascript" },
-    { "name": "Miscellaneous" }
+    { "id": 1, "name": "JAVA" },
+    { "id": 2, "name": "C#" },
+    { "id": 3, "name": "Logic" },
+    { "id": 4, "name": "OOP" },
+    { "id": 5, "name": "Database" },
+    { "id": 6, "name": "Javascript" },
+    { "id": 7, "name": "Miscellaneous" }
   ]
 }

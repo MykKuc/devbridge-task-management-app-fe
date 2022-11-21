@@ -19,10 +19,49 @@ function Tasks() {
   const [showModal, setShow] = useState(false);
   const navigate = useNavigate();
 
-  const handleAdd = (event: { preventDefault: () => void; }, task: { summary: string; actions: null; id: number; title: string; category: string; description: string; creator: string; answer: { id: number; text: string; isCorrect: boolean; }[]; date: string; votes: number; } | { summary: string; actions: null; id: number; title: string; category: string; description: string; creator: string; date: string; votes: number; answer?: undefined; } | { summary: string; actions: null; id: number; title: string; category: string; description: string; creator: string; date: string; votes: number; answer?: undefined; }) => {
+  const handleAdd = (
+    event: { preventDefault: () => void },
+    task:
+      | {
+          summary: string;
+          actions: null;
+          id: number;
+          title: string;
+          category: string;
+          description: string;
+          creator: string;
+          answer: { id: number; text: string; isCorrect: boolean }[];
+          date: string;
+          votes: number;
+        }
+      | {
+          summary: string;
+          actions: null;
+          id: number;
+          title: string;
+          category: string;
+          description: string;
+          creator: string;
+          date: string;
+          votes: number;
+          answer?: undefined;
+        }
+      | {
+          summary: string;
+          actions: null;
+          id: number;
+          title: string;
+          category: string;
+          description: string;
+          creator: string;
+          date: string;
+          votes: number;
+          answer?: undefined;
+        }
+  ) => {
     event.preventDefault();
     tasksData.push(task);
-  }
+  };
 
   const tasksData = useMemo(
     () =>
@@ -113,7 +152,7 @@ function Tasks() {
   return (
     <>
       <Content name={'Tasks'}>
-        {showModal && <TaskCreation setShow={showModal} handleAdd = {handleAdd}></TaskCreation>}
+        {showModal && <TaskCreation setShow={showModal} handleAdd={handleAdd}></TaskCreation>}
 
         <div className="button-wrapper">
           <Button

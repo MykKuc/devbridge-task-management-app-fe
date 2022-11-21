@@ -4,29 +4,31 @@ import './TaskCreation.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { jsx } from '@emotion/react';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { IconButton } from '@mui/material';
 
 interface Props {
   answer: {
     text: string;
     correct: boolean;
   }[];
-  handleAnswerChange: any;
-  //handleNewAnswer: any;
-  //handleDelete: any;
+  handleMultipleChange: any;
 }
 
-const MultipleAnswer: React.FC<Props> = ({ answer, handleAnswerChange }) => {
+const MultipleAnswer = (props: Props) => {
+  const { answer, handleMultipleChange } = props;
   const [answers, setAnswers] = useState(answer);
 
   const handleTextChange = (index: any, event: any) => {
     let data = [...answers];
     data[index]['text'] = event.target.value;
+    handleMultipleChange(data);
     setAnswers(data);
   };
 
   const handleChange = (index: any, event: React.ChangeEvent<HTMLInputElement>) => {
     let data = [...answers];
     data[index]['correct'] = !data[index]['correct'];
+    handleMultipleChange(data);
     setAnswers(data);
   };
 
@@ -34,13 +36,21 @@ const MultipleAnswer: React.FC<Props> = ({ answer, handleAnswerChange }) => {
     event.preventDefault();
     let data = [...answers];
     data.push({ text: '', correct: false });
+    handleMultipleChange(data);
+    setAnswers(data);
+  };
+
+  const handleDelete = (index: any) => {
+    let data = [...answers];
+    data.splice(index, 1);
+    handleMultipleChange(data);
     setAnswers(data);
   };
 
   return (
     <div className="full-input">
       <label className="big-label">Answers</label>
-      <label style={{ marginLeft: '73%' }} className="big-label">
+      <label style={{ marginLeft: '70%' }} className="big-label">
         Correct
       </label>
       <br />
@@ -62,7 +72,9 @@ const MultipleAnswer: React.FC<Props> = ({ answer, handleAnswerChange }) => {
               checked={answer.correct}
               onChange={(event) => handleChange(index, event)}
             />
-            <DeleteIcon className="answer-delete-button" />
+            <IconButton className="answer-delete-button" onClick={() => handleDelete(index)}>
+              <DeleteIcon className="answer-delete-button" />
+            </IconButton>
           </div>
         );
       })}

@@ -6,7 +6,7 @@ const ModalOpenButton = () => {
     <>
       <EmptyModal />
     </>
-  )
-}
+  );
+};
 
 export default ModalOpenButton;
