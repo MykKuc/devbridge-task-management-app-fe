@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './TaskCreation.css';
-import { NavLink, useNavigate } from 'react-router-dom';
 import jsonData from './categories.json';
 import TextAnswer from './TextAnswer';
 import MultipleAnswer from './MultipleAnswer';
 
 const loadData = JSON.parse(JSON.stringify(jsonData));
 
-function TaskCreationForm(handleAdd: any) {
+interface Props {
+  handleAdd: any;
+  close: () => void;
+}
+function TaskCreationForm(props: Props) {
   const initialAnswer = [{ text: '', correct: true }];
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
@@ -60,7 +63,6 @@ function TaskCreationForm(handleAdd: any) {
   };
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
-    event.preventDefault();
     const today = new Date().toLocaleDateString();
     const task = {
       id: 100,
@@ -73,7 +75,8 @@ function TaskCreationForm(handleAdd: any) {
       votes: 0,
     };
     console.log(task);
-    handleAdd(event, task);
+    props.handleAdd(event, task);
+    props.close();
   };
 
   return (

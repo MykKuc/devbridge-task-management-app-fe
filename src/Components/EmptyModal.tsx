@@ -6,23 +6,28 @@ import Modal from '@mui/material/Modal';
 import { ReactNode, useState } from 'react';
 import './EmptyModal.css';
 
-export default function EmptyModal({ opens, title, children }: any) {
+interface Props {
+  show: boolean;
+  close?: () => void;
+  title: string;
+  children: any;
+}
+
+export default function EmptyModal(props: Props) {
   const [open, setOpen] = useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <div>
-      <Button onClick={handleOpen}>Empty Modal</Button>
-
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={props.show}
+        onClose={props.close}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box className="empty-modal">
-          <Button onClick={handleClose} className="modal-close-button">
+          <Button onClick={props.close} className="modal-close-button">
             <p className="modal-close-button-text">X</p>
           </Button>
 
@@ -37,9 +42,9 @@ export default function EmptyModal({ opens, title, children }: any) {
               .
             </Typography>
           </Box>
-          <h2 className="modal-header-text">{title}</h2>
+          <h2 className="modal-header-text">{props.title}</h2>
 
-          {children}
+          {props.children}
         </Box>
       </Modal>
     </div>

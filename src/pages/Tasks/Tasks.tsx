@@ -15,53 +15,9 @@ import TaskCreation from '../../features/TaskCreation/TaskCreation';
 import { useNavigate } from 'react-router-dom';
 
 function Tasks() {
-  const tasksRes = GetTasks();
+  const [tasksRes, setTasksRes] = useState(GetTasks());
   const [showModal, setShow] = useState(false);
   const navigate = useNavigate();
-
-  const handleAdd = (
-    event: { preventDefault: () => void },
-    task:
-      | {
-          summary: string;
-          actions: null;
-          id: number;
-          title: string;
-          category: string;
-          description: string;
-          creator: string;
-          answer: { id: number; text: string; isCorrect: boolean }[];
-          date: string;
-          votes: number;
-        }
-      | {
-          summary: string;
-          actions: null;
-          id: number;
-          title: string;
-          category: string;
-          description: string;
-          creator: string;
-          date: string;
-          votes: number;
-          answer?: undefined;
-        }
-      | {
-          summary: string;
-          actions: null;
-          id: number;
-          title: string;
-          category: string;
-          description: string;
-          creator: string;
-          date: string;
-          votes: number;
-          answer?: undefined;
-        }
-  ) => {
-    event.preventDefault();
-    tasksData.push(task);
-  };
 
   const tasksData = useMemo(
     () =>
@@ -72,6 +28,13 @@ function Tasks() {
       })),
     [tasksRes]
   );
+
+  const handleAdd = (event: any, task: any) => {
+    const TasksResCopy = [...tasksRes];
+    TasksResCopy.push(task);
+    setTasksRes(TasksResCopy);
+    console.log(tasksRes);
+  };
 
   const columns: GridColumns = [
     {
@@ -152,7 +115,13 @@ function Tasks() {
   return (
     <>
       <Content name={'Tasks'}>
-        {showModal && <TaskCreation setShow={showModal} handleAdd={handleAdd}></TaskCreation>}
+        <TaskCreation
+          show={showModal}
+          close={() => {
+            setShow(false);
+          }}
+          handleAdd={handleAdd}
+        />
 
         <div className="button-wrapper">
           <Button
