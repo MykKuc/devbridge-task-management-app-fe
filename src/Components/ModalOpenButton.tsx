@@ -4,9 +4,9 @@ import EmptyModal from './EmptyModal';
 const ModalOpenButton = () => {
   return (
     <>
-      <EmptyModal children={<div>Empty</div>} />
+      <EmptyModal />
     </>
-  );
-};
+  )
+}
 
 export default ModalOpenButton;

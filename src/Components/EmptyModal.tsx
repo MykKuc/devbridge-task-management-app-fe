@@ -37,9 +37,9 @@ export default function EmptyModal({ opens, title, children }: any) {
               .
             </Typography>
           </Box>
-          <h2 className="modal-header-text">{title}</h2>
+            <h2 className="modal-header-text">{title}</h2>
 
-          {children}
+            {children}
         </Box>
       </Modal>
     </div>

@@ -12,10 +12,17 @@ import GetTasks from './GetTasks';
 import './tasks.css';
 import Content from '../../Components/Content';
 import TaskCreation from '../../features/TaskCreation/TaskCreation';
+import { useNavigate } from 'react-router-dom';
 
 function Tasks() {
   const tasksRes = GetTasks();
   const [showModal, setShow] = useState(false);
+  const navigate = useNavigate();
+
+  const handleAdd = (event: { preventDefault: () => void; }, task: { summary: string; actions: null; id: number; title: string; category: string; description: string; creator: string; answer: { id: number; text: string; isCorrect: boolean; }[]; date: string; votes: number; } | { summary: string; actions: null; id: number; title: string; category: string; description: string; creator: string; date: string; votes: number; answer?: undefined; } | { summary: string; actions: null; id: number; title: string; category: string; description: string; creator: string; date: string; votes: number; answer?: undefined; }) => {
+    event.preventDefault();
+    tasksData.push(task);
+  }
 
   const tasksData = useMemo(
     () =>
@@ -79,7 +86,7 @@ function Tasks() {
         <GridActionsCellItem
           className="task-action-button"
           icon={<VisibilityIcon />}
-          onClick={() => console.log(`View task with id ${params.id}`)}
+          onClick={() => navigate('/task/' + params.id)}
           label="View"
         />,
         <GridActionsCellItem
@@ -106,7 +113,7 @@ function Tasks() {
   return (
     <>
       <Content name={'Tasks'}>
-        {showModal && <TaskCreation setShow={showModal}></TaskCreation>}
+        {showModal && <TaskCreation setShow={showModal} handleAdd = {handleAdd}></TaskCreation>}
 
         <div className="button-wrapper">
           <Button
