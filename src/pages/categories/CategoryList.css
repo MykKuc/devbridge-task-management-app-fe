@@ -5,12 +5,6 @@
   min-width: 800px;
 }
 
-.button-wrapper .create-button {
-  border-radius: 10px;
-  background-color: var(--accent-color);
-  min-width: 100px;
-}
-
 .categories-table-wrapper {
   height: 80%;
   margin-top: 20px;

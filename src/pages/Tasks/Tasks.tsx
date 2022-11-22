@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { GridActionsCellItem, GridColumnHeaderParams, GridColumns, GridRowParams } from '@mui/x-data-grid';
-import { Button } from '@mui/material'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
@@ -68,7 +67,7 @@ function Tasks() {
   return (
     <Content name={'Tasks'}>
       <div className="button-wrapper">
-        <Button className="create-button" variant="contained">create</Button>
+        <button className="button-primary">Create</button>
       </div>
       <div className="tasks-table-wrapper">
         <StyledDataGrid

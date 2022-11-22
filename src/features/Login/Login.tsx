@@ -58,8 +58,8 @@ function Login() {
         </div>
         <br />
         <div className="login-input-wrapper">
-          <button className="login-btn" type="submit">
-            LOGIN
+          <button className="button-primary" type="submit">
+            Login
           </button>
         </div>
         <br />

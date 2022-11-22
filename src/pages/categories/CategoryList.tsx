@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { GridActionsCellItem, GridColumns, GridRowParams } from '@mui/x-data-grid';
-import { Button } from '@mui/material'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -54,7 +53,7 @@ function CategoryList() {
   return (
     <Content name={'Categories'}>
       <div className="button-wrapper">
-        <Button className="create-button" variant="contained">create</Button>
+        <button className="button-primary">Create</button>
       </div>
       <div className="categories-table-wrapper">
         <StyledDataGrid

@@ -1,17 +1,3 @@
-.login-btn {
-  height: 50px;
-  min-height: 30px;
-  width: 200px;
-  min-width: 66px;
-  margin: auto;
-  border-radius: 50px;
-  font-size: 15pt;
-  color: white;
-  background-color: var(--accent-color);
-  border: var(--accent-color);
-  filter: drop-shadow(1px 5px 5px rgba(0, 0, 0, 0.25));
-}
-
 .login-label {
   color: var(--accent-color);
   float: left;
