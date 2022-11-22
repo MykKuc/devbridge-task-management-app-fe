@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import CheckBox from '@mui/material/Checkbox';
 import './TaskCreation.css';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { jsx } from '@emotion/react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton } from '@mui/material';
+import { Row, Col } from 'react-grid-system';
 
 interface Props {
   answer: {
@@ -25,7 +24,7 @@ const MultipleAnswer = (props: Props) => {
     setAnswers(data);
   };
 
-  const handleChange = (index: any, event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (index: any) => {
     let data = [...answers];
     data[index]['correct'] = !data[index]['correct'];
     handleMultipleChange(data);
@@ -48,40 +47,60 @@ const MultipleAnswer = (props: Props) => {
   };
 
   return (
-    <div className="full-input">
-      <label className="big-label">Answers</label>
-      <label style={{ marginLeft: '70%' }} className="big-label">
-        Correct
-      </label>
-      <br />
+    <>
+      <Row>
+        <Col md={10}>
+          <label className="mult-label">
+            Answers<label className="required-star">*</label>
+          </label>
+        </Col>
+        <Col md={1}>
+          <label className="correct-label">Correct</label>
+        </Col>
+      </Row>
       {answers.map((answer, index) => {
         return (
-          <div key={index}>
-            <input
-              style={{ width: '600px', float: 'left' }}
-              className="multiple-input"
-              type="text"
-              name="answer"
-              placeholder="Answer"
-              value={answer.text}
-              onChange={(event) => handleTextChange(index, event)}
-            />
-            <CheckBox
-              className="multiple-checkbox"
-              name="correct"
-              checked={answer.correct}
-              onChange={(event) => handleChange(index, event)}
-            />
-            <IconButton className="answer-delete-button" onClick={() => handleDelete(index)}>
-              <DeleteIcon className="answer-delete-button" />
-            </IconButton>
-          </div>
+          <Row key={index}>
+            <Col md={10}>
+              <input
+                style={{ width: '95%' }}
+                className="multiple-input"
+                type="text"
+                required
+                name="answer"
+                placeholder="Answer"
+                value={answer.text}
+                onChange={(event) => handleTextChange(index, event)}
+              />
+            </Col>
+            <Col md={1}>
+              <CheckBox
+                className="multiple-checkbox"
+                name="correct"
+                checked={answer.correct}
+                onChange={(event) => handleChange(index, event)}
+              />
+            </Col>
+            <Col md={1}>
+              <IconButton
+                className="answer-delete-button"
+                style={{ float: 'right', marginRight: '2.5%' }}
+                onClick={() => handleDelete(index)}
+              >
+                <DeleteIcon className="answer-delete-button" />
+              </IconButton>
+            </Col>
+          </Row>
         );
       })}
-      <button className="add-answer-button" onClick={addNewAnswer}>
-        +
-      </button>
-    </div>
+      <Row align="center" style={{ height: '60px' }}>
+        <Col>
+          <button className="add-answer-button" onClick={addNewAnswer}>
+            +
+          </button>
+        </Col>
+      </Row>
+    </>
   );
 };
 

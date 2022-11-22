@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './TaskCreation.css';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { jsx } from '@emotion/react';
+import { Row, Col } from 'react-grid-system';
 
 interface Props {
   answer: {
@@ -11,25 +10,29 @@ interface Props {
 }
 
 const TextAnswer: React.FC<Props> = ({ answer, handleAnswerChange }) => {
-  const [ans, setAnswer] = React.useState(answer[0].text);
+  const [ans, setAnswer] = useState(answer[0].text);
   const handleInput = (answer: React.ChangeEvent<HTMLTextAreaElement>) => {
     handleAnswerChange(answer.target.value);
     setAnswer(answer.target.value);
   };
   return (
-    <div className="full-input">
-      <label className="big-label">Correct answer</label>
-      <br />
-      <textarea
-        style={{ height: 100 }}
-        className="big-input"
-        name="answer"
-        placeholder="Answer"
-        required
-        value={ans}
-        onChange={handleInput}
-      />
-    </div>
+    <Row>
+      <Col>
+        <label className="big-label">
+          Correct answer<label className="required-star">*</label>
+        </label>
+        <br />
+        <textarea
+          style={{ height: 100 }}
+          className="big-input"
+          name="answer"
+          placeholder="Answer"
+          required
+          value={ans}
+          onChange={handleInput}
+        />
+      </Col>
+    </Row>
   );
 };
 

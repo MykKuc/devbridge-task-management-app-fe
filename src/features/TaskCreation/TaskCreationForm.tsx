@@ -3,6 +3,7 @@ import './TaskCreation.css';
 import jsonData from './categories.json';
 import TextAnswer from './TextAnswer';
 import MultipleAnswer from './MultipleAnswer';
+import { Container, Row, Col } from 'react-grid-system';
 
 const loadData = JSON.parse(JSON.stringify(jsonData));
 
@@ -80,98 +81,117 @@ function TaskCreationForm(props: Props) {
   };
 
   return (
-    <div className="create-task-form">
-      <form className="task-form" onSubmit={handleSubmit}>
-        <div className="half-input">
-          <label className="small-label">Title</label>
-          <br />
-          <input
-            className="small-input"
-            type="text"
-            name="title"
-            placeholder="Title"
-            required
-            onChange={handleTitleChange}
-            value={title}
-          />
-        </div>
-        <div className="half-input">
-          <label className="small-label">Category</label>
-          <br />
-          <select
-            className="category-dropdown"
-            name="category"
-            onChange={(event) => handleCategoryChange(event.target.value)}
-          >
-            {loadData.categories.map((category: any) => {
-              return (
-                <option key={category.id} value={JSON.stringify(category)}>
-                  {category.name}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-        <br />
-        <div className="full-input">
-          <label className="big-label">Description</label>
-          <br />
-          <textarea
-            style={{ height: 100 }}
-            className="big-input"
-            name="description"
-            placeholder="Description"
-            required
-            onChange={handleDescriptionChange}
-            value={description}
-          />
-        </div>
-        <br />
-        <div className="full-input">
-          <label className="big-label">Summary</label>
-          <br />
-          <input
-            className="big-input"
-            type="text"
-            name="summary"
-            placeholder="Summary"
-            value={summary}
-            onChange={handleSummaryChange}
-          />
-        </div>
-        <br />
-        <div className="half-input">
-          <label className="small-label">Answer type</label>
-          <br />
-          <select
-            className="category-dropdown"
-            name="type"
-            value={type}
-            onChange={(event) => handleTypeChange(event.target.value)}
-          >
-            <option key="select" value="">
-              ---Select---
-            </option>
-            <option key="text" value="text">
-              Text
-            </option>
-            <option key="multiple" value="multiple">
-              Multiple choice
-            </option>
-          </select>
-        </div>
-        <br />
-        {showTextAnswer && <TextAnswer answer={answer} handleAnswerChange={handleSingleAnswerChange} />}
-        {showMultipleAnswer && <MultipleAnswer answer={answer} handleMultipleChange={handleMultipleChange} />}
-        <br />
-        <div className="full-input">
-          <button className="create-btn" type="submit">
-            CREATE
-          </button>
-        </div>
-        <br />
-      </form>
-    </div>
+    <>
+      <label className="required-label">required*</label>
+      <div className="create-task-form">
+        <form className="task-form" onSubmit={handleSubmit}>
+          <Container>
+            <Row align="end" style={{ height: '125px' }}>
+              <Col>
+                <label className="small-label">
+                  Title<label className="required-star">*</label>
+                </label>
+                <br />
+                <input
+                  className="small-input"
+                  type="text"
+                  name="title"
+                  placeholder="Title"
+                  required
+                  onChange={handleTitleChange}
+                  value={title}
+                />
+              </Col>
+
+              <Col>
+                <label className="small-label">
+                  Category<label className="required-star">*</label>
+                </label>
+                <br />
+                <select
+                  className="category-dropdown"
+                  name="category"
+                  onChange={(event) => handleCategoryChange(event.target.value)}
+                >
+                  {loadData.categories.map((category: any) => {
+                    return (
+                      <option key={category.id} value={JSON.stringify(category)}>
+                        {category.name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </Col>
+            </Row>
+            <Row align="center" style={{ height: '200px' }}>
+              <Col>
+                <label className="big-label">
+                  Description<label className="required-star">*</label>
+                </label>
+                <br />
+                <textarea
+                  style={{ height: 100 }}
+                  className="big-input"
+                  name="description"
+                  placeholder="Description"
+                  required
+                  onChange={handleDescriptionChange}
+                  value={description}
+                />
+              </Col>
+            </Row>
+            <Row align="center" style={{ height: '80px' }}>
+              <Col>
+                <label className="big-label">Summary</label>
+                <br />
+                <input
+                  className="big-input"
+                  type="text"
+                  name="summary"
+                  placeholder="Summary"
+                  value={summary}
+                  onChange={handleSummaryChange}
+                />
+              </Col>
+            </Row>
+            <Row align="center" style={{ height: '100px' }}>
+              <Col>
+                <label className="type-label">
+                  Answer type<label className="required-star">*</label>
+                </label>
+                <br />
+                <select
+                  className="type-dropdown"
+                  name="type"
+                  required
+                  value={type}
+                  onChange={(event) => handleTypeChange(event.target.value)}
+                >
+                  <option key="select" value="">
+                    ---Select---
+                  </option>
+                  <option key="text" value="text">
+                    Text
+                  </option>
+                  <option key="multiple" value="multiple">
+                    Multiple choice
+                  </option>
+                </select>
+              </Col>
+            </Row>
+            {showTextAnswer && <TextAnswer answer={answer} handleAnswerChange={handleSingleAnswerChange} />}
+            {showMultipleAnswer && <MultipleAnswer answer={answer} handleMultipleChange={handleMultipleChange} />}
+            <Row align="center" style={{ height: '100px' }}>
+              <Col>
+                <button className="create-btn" type="submit">
+                  CREATE
+                </button>
+              </Col>
+            </Row>
+          </Container>
+        </form>
+      </div>
+    </>
   );
 }
 
