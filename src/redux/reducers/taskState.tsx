@@ -1,24 +1,20 @@
-const currentState = {taskName: '', Score:0};
+const currentState = { taskName: '', Score: 0 };
 export const taskStateReducer = (state = currentState, action: any) => {
-
   switch (action.type) {
-    case'createState':
+    case 'createState':
+      return {
+        taskName: 'Logic task',
+        Score: 199,
+      };
 
-      return ({
-        taskName: "Logic task",
-        Score: 199
-      })
+    case 'updateState':
+      return {
+        taskName: 'Coding task',
+        Score: state.Score,
+      };
 
-    case'updateState':
-      return( {
-        taskName: "Coding task",
-        Score: state.Score}
-   )
-
-
-    case'removeState':
+    case 'removeState':
       return currentState;
-
 
     default:
       return state;
