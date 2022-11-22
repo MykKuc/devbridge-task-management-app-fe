@@ -7,7 +7,7 @@ function Home() {
   // dispatch(createTask());
   return (
     <Content name={'Home'} height={'60vh'}>
-      <span>Hello world </span>
+      <span>Hello world</span>
       <ModalOpenButton></ModalOpenButton>
     </Content>
   );
