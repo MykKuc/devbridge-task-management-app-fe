@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Login.css';
 import { NavLink, useNavigate } from 'react-router-dom';
+import Content from '../../Components/Content';
 
 function Login() {
   const [error, setError] = useState<string | null>(null);
@@ -25,7 +26,7 @@ function Login() {
   };
 
   return (
-    <div>
+    <Content name={'Login'} height={'450px'} styleClasses={'col-sm-12 col-12'} style={{ maxWidth: '600px' }}>
       <form onSubmit={handleSubmit}>
         {error ? <label className="login-error">{error}</label> : null}
         <div className="login-input-wrapper">
@@ -66,7 +67,7 @@ function Login() {
           Don't have an account? Click here to create one.
         </NavLink>
       </form>
-    </div>
+    </Content>
   );
 }
 
