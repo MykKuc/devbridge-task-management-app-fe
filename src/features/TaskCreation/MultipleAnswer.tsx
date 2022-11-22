@@ -78,7 +78,7 @@ const MultipleAnswer = (props: Props) => {
                 className="multiple-checkbox"
                 name="correct"
                 checked={answer.correct}
-                onChange={(event) => handleChange(index, event)}
+                onChange={() => handleChange(index)}
               />
             </Col>
             <Col md={1}>
