@@ -1,7 +1,7 @@
 .login-label {
   color: var(--accent-color);
   float: left;
-  font-size: 20px;
+  font-size: 1.25rem;
   margin-left: 5px;
 }
 
@@ -10,7 +10,7 @@
   min-height: 30px;
   width: 100%;
   border-radius: 15px;
-  background-color: rgb(56, 56, 56);
+  background-color: var(--main-shade-color);
   border: 2.5px solid var(--accent-color);
   color: var(--accent-color);
 }
@@ -21,14 +21,14 @@
   -webkit-text-fill-color: var(--accent-color);
   -webkit-box-shadow: 0 0 0px 1000px rgb(56, 56, 56) inset;
   box-shadow: 0 0 0px 1000px rgb(56, 56, 56) inset;
-  font-size: 20px;
+  font-size: 1.25rem;
 }
 
 .login-input-wrapper {
   display: inline-block;
   margin: 0 auto;
   width: 80%;
-  font-size: 20px;
+  font-size: 1.25rem;
 }
 
 .login-input-wrapper:not(.login-input-wrapper:first-child) {
@@ -42,6 +42,6 @@
 
 .login-error {
   color: rgb(201, 43, 40);
-  font-size: 20px;
+  font-size: 1.25rem;
   margin-left: 5px;
 }
