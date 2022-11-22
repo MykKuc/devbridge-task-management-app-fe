@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { GridActionsCellItem, GridColumnHeaderParams, GridColumns, GridRowParams } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -11,10 +11,12 @@ import CustomPagination from '../../Components/Pagination';
 import GetTasks from './GetTasks';
 import './tasks.css';
 import Content from '../../Components/Content';
+import TaskCreation from '../../features/TaskCreation/TaskCreation';
 import { useNavigate } from 'react-router-dom';
 
 function Tasks() {
-  const tasksRes = GetTasks();
+  const [tasksRes, setTasksRes] = useState(GetTasks());
+  const [showModal, setShow] = useState(false);
   const navigate = useNavigate();
 
   const tasksData = useMemo(
@@ -26,6 +28,13 @@ function Tasks() {
       })),
     [tasksRes]
   );
+
+  const handleAdd = (event: any, task: any) => {
+    const TasksResCopy = [...tasksRes];
+    TasksResCopy.push(task);
+    setTasksRes(TasksResCopy);
+    console.log(tasksRes);
+  };
 
   const columns: GridColumns = [
     {
@@ -104,32 +113,48 @@ function Tasks() {
   ];
 
   return (
-    <Content name={'Tasks'}>
-      <div className="button-wrapper">
-        <Button className="create-button" variant="contained">
-          create
-        </Button>
-      </div>
-      <div className="tasks-table-wrapper">
-        <StyledDataGrid
-          headerHeight={70}
-          rowHeight={60}
-          autoPageSize
-          disableColumnMenu
-          disableSelectionOnClick
-          columns={columns}
-          rows={tasksData}
-          components={{
-            Pagination: CustomPagination,
+    <>
+      <Content name={'Tasks'}>
+        <TaskCreation
+          show={showModal}
+          close={() => {
+            setShow(false);
           }}
-          initialState={{
-            sorting: {
-              sortModel: [{ field: 'votes', sort: 'desc' }],
-            },
-          }}
+          handleAdd={handleAdd}
         />
-      </div>
-    </Content>
+
+        <div className="button-wrapper">
+          <Button
+            className="create-button"
+            variant="contained"
+            onClick={() => {
+              setShow(true);
+            }}
+          >
+            create
+          </Button>
+        </div>
+        <div className="tasks-table-wrapper">
+          <StyledDataGrid
+            headerHeight={70}
+            rowHeight={60}
+            autoPageSize
+            disableColumnMenu
+            disableSelectionOnClick
+            columns={columns}
+            rows={tasksData}
+            components={{
+              Pagination: CustomPagination,
+            }}
+            initialState={{
+              sorting: {
+                sortModel: [{ field: 'votes', sort: 'desc' }],
+              },
+            }}
+          />
+        </div>
+      </Content>
+    </>
   );
 }
 
