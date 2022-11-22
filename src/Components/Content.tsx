@@ -4,9 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Typography } from '@mui/material';
 import './content.css'
 
-function Content({ name, height, children }: { name: String, height: string, children: any }) {
+function Content({ name, height, children, styleClasses }: { name: String, height: string, children: any, styleClasses: string }) {
   return (
-    <main id='content' className='col-xxl-8 col-xl-10 col-lg-11 col-md-12 col-sm-12 col-12' style={{ minHeight: height, maxHeight: height }}>
+    <main id='content' className={styleClasses} style={{ minHeight: height, maxHeight: height }}>
       <header className='content-header'>
         <Typography variant='h5' style={{ color: 'white' }}>
           {name}
@@ -20,7 +20,8 @@ function Content({ name, height, children }: { name: String, height: string, chi
 }
 
 Content.defaultProps = {
-  height: '74.7vh'
+  height: '74.7vh',
+  styleClasses: 'col-xxl-8 col-xl-10 col-lg-11 col-md-12 col-sm-12 col-12'
 };
 
 export default Content;

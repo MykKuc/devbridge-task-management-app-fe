@@ -1,7 +1,7 @@
 #content {
   display: flex;
   flex-direction: column;
-  background-color: var(--main-color);
+  background-color: var(--main-shade-color);
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0px 5px 25px;
