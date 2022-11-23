@@ -9,9 +9,9 @@ body,
 
 :root {
   --main-shade-color: #383838;
-  --main-color: #2C2C2C;
-  --accent-color: #2BABD3;
-  --accent-shade-color: #2289A9;
+  --main-color: #2c2c2c;
+  --accent-color: #2babd3;
+  --accent-shade-color: #2289a9;
   --shadow-color: rgba(0, 0, 0, 0.35);
 }
 
@@ -41,11 +41,11 @@ html {
   font-weight: 500;
   border: none;
   transition-property: background-color;
-  transition-duration: .5s;
+  transition-duration: 0.5s;
   box-shadow: 0px 3px 8px 1px var(--shadow-color);
   letter-spacing: 1px;
   min-width: 120px;
-  text-align: center;  
+  text-align: center;
 }
 
 .button-primary:hover {
