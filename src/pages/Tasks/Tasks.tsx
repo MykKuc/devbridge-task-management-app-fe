@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import { GridActionsCellItem, GridColumnHeaderParams, GridColumns, GridRowParams } from '@mui/x-data-grid';
-import { Button } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
@@ -113,48 +112,44 @@ function Tasks() {
   ];
 
   return (
-    <>
-      <Content name={'Tasks'}>
-        <TaskCreation
-          show={showModal}
-          close={() => {
-            setShow(false);
+    <Content name={'Tasks'}>
+      <TaskCreation
+        show={showModal}
+        close={() => {
+          setShow(false);
+        }}
+        handleAdd={handleAdd}
+      />
+      <div className="button-wrapper">
+        <button
+          className="button-primary"
+          onClick={() => {
+            setShow(true);
           }}
-          handleAdd={handleAdd}
+        >
+          Create
+        </button>
+      </div>
+      <div className="tasks-table-wrapper">
+        <StyledDataGrid
+          headerHeight={70}
+          rowHeight={60}
+          autoPageSize
+          disableColumnMenu
+          disableSelectionOnClick
+          columns={columns}
+          rows={tasksData}
+          components={{
+            Pagination: CustomPagination,
+          }}
+          initialState={{
+            sorting: {
+              sortModel: [{ field: 'votes', sort: 'desc' }],
+            },
+          }}
         />
-
-        <div className="button-wrapper">
-          <Button
-            className="create-button"
-            variant="contained"
-            onClick={() => {
-              setShow(true);
-            }}
-          >
-            create
-          </Button>
-        </div>
-        <div className="tasks-table-wrapper">
-          <StyledDataGrid
-            headerHeight={70}
-            rowHeight={60}
-            autoPageSize
-            disableColumnMenu
-            disableSelectionOnClick
-            columns={columns}
-            rows={tasksData}
-            components={{
-              Pagination: CustomPagination,
-            }}
-            initialState={{
-              sorting: {
-                sortModel: [{ field: 'votes', sort: 'desc' }],
-              },
-            }}
-          />
-        </div>
-      </Content>
-    </>
+      </div>
+    </Content>
   );
 }
 

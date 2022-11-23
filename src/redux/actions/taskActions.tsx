@@ -1,16 +1,16 @@
 export const createTask = () => {
   return {
-    type: 'createState'
+    type: 'createState',
   };
 };
 
 export const updateTask = () => {
   return {
-    type: 'updateState'
+    type: 'updateState',
   };
 };
 export const removeTask = () => {
   return {
-    type: 'removeState'
+    type: 'removeState',
   };
 };
