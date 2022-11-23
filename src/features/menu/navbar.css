@@ -88,7 +88,7 @@
 /* logo animation */
 
 .expand {
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .expand:hover {
@@ -97,10 +97,8 @@
 
 /* ------------- */
 
-
-
 .hover-underline::before {
-  content: "";
+  content: '';
   position: absolute;
   display: block;
   width: 100%;
@@ -119,7 +117,6 @@
 .hover-underline:hover::before {
   transform: scaleX(1);
 }
-
 
 /* toggle menu */
 
@@ -149,7 +146,7 @@
   align-items: center;
 }
 
-.inner-toggle-menu>* {
+.inner-toggle-menu > * {
   margin: 0 20px 0 20px;
 }
 
