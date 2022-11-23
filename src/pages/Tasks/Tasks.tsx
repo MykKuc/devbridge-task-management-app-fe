@@ -5,11 +5,11 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import StyledDataGrid from '../../Components/StyledDataGrid';
-import CustomPagination from '../../Components/Pagination';
+import StyledDataGrid from '../../components/StyledDataGrid';
+import CustomPagination from '../../components/Pagination';
 import GetTasks from './GetTasks';
 import './tasks.css';
-import Content from '../../Components/Content';
+import Content from '../../components/Content';
 import TaskCreation from '../../features/TaskCreation/TaskCreation';
 import { useNavigate } from 'react-router-dom';
 

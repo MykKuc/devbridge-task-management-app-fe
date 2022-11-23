@@ -1,5 +1,5 @@
 import React from 'react';
-import EmptyModal from '../../Components/EmptyModal';
+import EmptyModal from '../../components/EmptyModal';
 import TaskCreationForm from './TaskCreationForm';
 interface Props {
   show: boolean;
