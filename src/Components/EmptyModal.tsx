@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { ReactNode, useState } from 'react';
-import './Modal.css';
+import './EmptyModal.css';
 
 interface Props {
   show: boolean;
