@@ -7,8 +7,7 @@
   height: 70%;
   background-color: #383838;
   border-radius: 15px;
-  box-shadow: 2px 4px;
-  overflow: auto;
+  /*box-shadow: 24;*/
 }
 
 .modal-header {
