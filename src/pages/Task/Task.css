@@ -1,18 +1,17 @@
-.separation{
+.separation {
   height: 2px;
- background-color:#2babd3;
+  background-color: #2babd3;
   width: 100%;
 }
-p{
+p {
   padding: 0px;
-  color:white;
+  color: white;
   text-align: start;
 }
-label{
+label {
   font-weight: bold;
   color: #2babd3;
-
 }
-.border-2{
+.border-2 {
   background-color: black;
 }

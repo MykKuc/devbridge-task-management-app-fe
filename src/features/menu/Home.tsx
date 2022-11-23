@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Content from '../../Components/Content';
-import ModalOpenButton from '../../Components/ModalOpenButton';
 
 function Home() {
   const [show, setShow] = useState(false);
@@ -13,7 +12,6 @@ function Home() {
   return (
     <Content name={'Home'} height={'60vh'}>
       <span>Hello world</span>
-      <ModalOpenButton></ModalOpenButton>
       {show && <label>Veikia API</label>}
     </Content>
   );
