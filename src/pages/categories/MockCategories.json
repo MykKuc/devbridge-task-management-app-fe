@@ -7,6 +7,8 @@
 		{"id":"C-85439", "title":"Logika", "description":"Uždaviniai, susiję su galvosūkiais.", "creatorId":"U-4635", "creationDate":"2020-10-10"},
         {"id":"C-88025", "title":"Kriptografija", "description":"Uždaviniai, susiję kriptografija. Užduotyse būdinga duomenų konfidencialumo, duomenų vientisumo ir asmens išsiginamumo užtikrinimas.", "creatorId":"U-4635", "creationDate":"2020-10-10"},
         {"id":"C-88150", "title":"C++", "description":"Uždaviniai, susiję su programavimo kalba C++.", "creatorId":"U-9126", "creationDate":"2022-06-18"},
-        {"id":"C-91735", "title":"DBVS", "description":"Uždaviniai, susiję su duomenų bazių valdymo sistemomis.", "creatorId":"U-9126", "creationDate":"2022-06-20"}
+        {"id":"C-91735", "title":"DBVS", "description":"Uždaviniai, susiję su duomenų bazių valdymo sistemomis.", "creatorId":"U-9126", "creationDate":"2022-06-20"},
+        {"id":"C-91822", "title":"Algorithms", "description":"Uždaviniai, susiję su algoritmais.", "creatorId":"U-9126", "creationDate":"2022-06-20"},
+        {"id":"C-91962", "title":"Artificial intelligence", "description":"Uždaviniai, susiję su dirbtiniu intelektu.", "creatorId":"U-9126", "creationDate":"2022-06-20"}
     ]
 }

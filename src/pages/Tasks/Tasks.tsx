@@ -12,6 +12,7 @@ import GetTasks from './GetTasks';
 import './tasks.css';
 import Content from '../../Components/Content';
 import { useNavigate } from 'react-router-dom';
+import TaskEdit from './TaskEdit.jsx';
 
 function Tasks() {
   const tasksRes = GetTasks();
@@ -82,12 +83,7 @@ function Tasks() {
           onClick={() => navigate('/task/' + params.id)}
           label="View"
         />,
-        <GridActionsCellItem
-          className="task-action-button"
-          icon={<EditIcon />}
-          onClick={() => console.log(`Edit task with id ${params.id}`)}
-          label="Edit"
-        />,
+        <TaskEdit id={params.id} isInList={true} />,
         <GridActionsCellItem
           className="task-action-button"
           icon={<DeleteIcon />}
