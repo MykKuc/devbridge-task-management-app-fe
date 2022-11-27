@@ -1,7 +1,7 @@
 import categoriesData from './MockCategories.json';
 
 function GetCategories() {
-    return categoriesData;
+  return categoriesData;
 }
 
 export default GetCategories;
