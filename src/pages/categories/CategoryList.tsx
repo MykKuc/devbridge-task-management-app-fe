@@ -12,13 +12,17 @@ import Content from '../../components/Content';
 import CategoryCreation from './category-creation/CategoryCreation';
 
 function CategoryList() {
+  const categoriesResGet = GetCatogories();
+
   const [showModal, setShowModal] = useState(false);
+  const [categoriesRes, setCategoriesRes] = useState(categoriesResGet);
 
-  const handleAdd = () => {
-    //Some comment.
+  const handleAdd = (task: any) => {
+    const CategoryResCopy = [...categoriesRes];
+    CategoryResCopy.push(task);
+    setCategoriesRes(CategoryResCopy);
+    console.log(categoriesRes);
   };
-
-  const categoriesRes = GetCatogories();
 
   const categoriesData = useMemo(
     () =>
