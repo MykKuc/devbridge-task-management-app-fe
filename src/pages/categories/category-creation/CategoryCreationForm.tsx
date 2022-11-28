@@ -48,7 +48,7 @@ const CategoryCreationForm = (props: Props) => {
         <label id="title-label" htmlFor="category-title-input">
           Title<span className="important-asterisk">*</span>
         </label>
-        <input onChange={handleTitleChange} id="category-title-input" type="text" placeholder="Title"></input>
+        <input onChange={handleTitleChange} id="category-title-input" type="text" placeholder="Title" required></input>
 
         <label id="description-label" htmlFor="category-description-input">
           Description<span className="important-asterisk">*</span>
