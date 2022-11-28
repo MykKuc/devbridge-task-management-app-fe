@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { GridActionsCellItem, GridColumns, GridRowParams } from '@mui/x-data-grid';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
@@ -9,8 +9,15 @@ import CustomPagination from '../../components/Pagination';
 import GetCatogories from './GetCategories';
 import './CategoryList.css';
 import Content from '../../components/Content';
+import CategoryCreation from './category-creation/CategoryCreation';
 
 function CategoryList() {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleAdd = () => {
+    //Some comment.
+  };
+
   const categoriesRes = GetCatogories();
 
   const categoriesData = useMemo(
@@ -76,8 +83,17 @@ function CategoryList() {
 
   return (
     <Content name={'Categories'}>
+      <CategoryCreation
+        show={showModal}
+        close={() => {
+          setShowModal(false);
+        }}
+        handleAdd={handleAdd}
+      />
       <div className="button-wrapper">
-        <button className="button-primary">Create</button>
+        <button onClick={() => setShowModal(true)} className="button-primary">
+          Create
+        </button>
       </div>
       <div className="categories-table-wrapper">
         <StyledDataGrid
