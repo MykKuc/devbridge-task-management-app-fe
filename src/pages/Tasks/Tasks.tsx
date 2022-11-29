@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import { GridActionsCellItem, GridColumnHeaderParams, GridColumns, GridRowParams } from '@mui/x-data-grid';
-import { Button } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
@@ -11,11 +10,13 @@ import CustomPagination from '../../Components/Pagination';
 import GetTasks from './GetTasks';
 import './tasks.css';
 import Content from '../../Components/Content';
+import TaskCreation from '../../features/TaskCreation/TaskCreation';
 import { useNavigate } from 'react-router-dom';
-import TaskEdit from './TaskEdit.jsx';
+import TaskEdit from '../../features/TaskEdit/TaskEdit';
 
 function Tasks() {
-  const tasksRes = GetTasks();
+  const [tasksRes, setTasksRes] = useState(GetTasks());
+  const [showModal, setShow] = useState(false);
   const navigate = useNavigate();
 
   const tasksData = useMemo(
@@ -28,22 +29,24 @@ function Tasks() {
     [tasksRes]
   );
 
-  const [category, setCategory] = useState(tasksData?.category);
-  const [description, setDescription] = useState(tasksData?.description);
-  const [summary, setSummary] = useState(tasksData?.summary);
-  const [answers, setAnswers] = useState(initializeAnswers());
-
-  function initializeAnswers() {
-    if (tasksData?.answer === undefined) {
-      return [];
+  const handleAdd = (event: any, task: any) => {
+    const TasksResCopy = [...tasksRes];
+    TasksResCopy.push(task);
+    setTasksRes(TasksResCopy);
+    console.log(tasksRes);
+  };
+  const handleModify = (task: any) => {
+    let tasksResCopy = [...tasksRes];
+    for (let i = 0; i < tasksResCopy.length; i++) {
+      if (tasksResCopy[i].id === task.id) {
+        console.log('identical found.');
+        tasksResCopy[i] = task;
+        break;
+      }
     }
-    let values = [];
-    for (let i = 0; i < tasksData.answer.length; i++) {
-      let answer = tasksData.answer[i];
-      values.push(answer);
-    }
-    return values;
-  }
+    setTasksRes(tasksResCopy);
+    console.log('end');
+  };
 
   const columns: GridColumns = [
     {
@@ -100,7 +103,7 @@ function Tasks() {
           onClick={() => navigate('/task/' + params.id)}
           label="View"
         />,
-        <TaskEdit id={params.id} isInList={true} />,
+        <TaskEdit id={params.id as number} isInList={true} handleModify={handleModify} />,
         <GridActionsCellItem
           className="task-action-button"
           icon={<DeleteIcon />}
@@ -118,10 +121,22 @@ function Tasks() {
 
   return (
     <Content name={'Tasks'}>
+      <TaskCreation
+        show={showModal}
+        close={() => {
+          setShow(false);
+        }}
+        handleAdd={handleAdd}
+      />
       <div className="button-wrapper">
-        <Button className="create-button" variant="contained">
-          create
-        </Button>
+        <button
+          className="button-primary"
+          onClick={() => {
+            setShow(true);
+          }}
+        >
+          Create
+        </button>
       </div>
       <div className="tasks-table-wrapper">
         <StyledDataGrid
