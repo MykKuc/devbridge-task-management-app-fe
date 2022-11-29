@@ -12,7 +12,7 @@ import './tasks.css';
 import Content from '../../Components/Content';
 import TaskCreation from '../../features/TaskCreation/TaskCreation';
 import { useNavigate } from 'react-router-dom';
-import TaskEdit from '../../features/menu/Task Edit/TaskEdit';
+import TaskEdit from '../../features/menu/TaskEdit/TaskEdit';
 
 function Tasks() {
   const [tasksRes, setTasksRes] = useState(GetTasks());
