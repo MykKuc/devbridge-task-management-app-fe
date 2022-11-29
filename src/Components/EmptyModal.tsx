@@ -3,26 +3,31 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import './EmptyModal.css';
 
-export default function EmptyModal() {
-  const [open, setOpen] = useState(false);
+interface Props {
+  show: boolean;
+  close?: () => void;
+  title: string;
+  children: any;
+}
+
+export default function EmptyModal(props: Props) {
+  const [open, setOpen] = useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <div>
-      <Button onClick={handleOpen}>Empty Modal</Button>
-
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={props.show}
+        onClose={props.close}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box className="empty-modal">
-          <Button onClick={handleClose} className="modal-close-button">
+          <Button onClick={props.close} className="modal-close-button">
             <p className="modal-close-button-text">X</p>
           </Button>
 
@@ -37,11 +42,9 @@ export default function EmptyModal() {
               .
             </Typography>
           </Box>
-          <h2 className="modal-header-text">Title</h2>
+          <h2 className="modal-header-text">{props.title}</h2>
 
-          <Typography id="modal-modal-description" className="modal-main-body">
-            This is some content or Text inside the modal.
-          </Typography>
+          {props.children}
         </Box>
       </Modal>
     </div>
