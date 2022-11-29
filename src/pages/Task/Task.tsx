@@ -4,7 +4,7 @@ import './Task.css';
 import jsonData from '../Tasks/tasks.json';
 import { useNavigate, useParams } from 'react-router-dom';
 import Content from '../../Components/Content';
-import TaskEdit from '../Tasks/TaskEdit';
+import TaskEdit from '../../features/menu/Task Edit/TaskEdit';
 
 const Task = () => {
   const params = useParams();

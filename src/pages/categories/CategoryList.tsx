@@ -4,11 +4,11 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import StyledDataGrid from '../../components/StyledDataGrid';
-import CustomPagination from '../../components/Pagination';
+import StyledDataGrid from '../../Components/StyledDataGrid';
+import CustomPagination from '../../Components/Pagination';
 import GetCatogories from './GetCategories';
 import './CategoryList.css';
-import Content from '../../components/Content';
+import Content from '../../Components/Content';
 
 function CategoryList() {
   const categoriesRes = GetCatogories();

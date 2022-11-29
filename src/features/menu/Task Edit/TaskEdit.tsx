@@ -9,12 +9,12 @@ import { GridActionsCellItem } from '@mui/x-data-grid';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import Content from '../../Components/Content';
+import Content from '../../../Components/Content';
 
-import taskJsonData from './tasks.json';
-import categoryJsonData from '../categories/MockCategories.json';
-import TaskCreationForm from '../../features/TaskCreation/TaskCreationForm';
-import EmptyModal from '../../Components/EmptyModal';
+import taskJsonData from '../../../pages/Tasks/tasks.json';
+import categoryJsonData from '../../../pages/categories/MockCategories.json';
+import TaskCreationForm from '../../TaskCreation/TaskCreationForm';
+import EmptyModal from '../../../Components/EmptyModal';
 
 interface Props {
   id: number;
