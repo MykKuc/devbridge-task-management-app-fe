@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { GridActionsCellItem, GridColumnHeaderParams, GridColumns, GridRowParams } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -27,6 +27,23 @@ function Tasks() {
       })),
     [tasksRes]
   );
+
+  const [category, setCategory] = useState(tasksData?.category);
+  const [description, setDescription] = useState(tasksData?.description);
+  const [summary, setSummary] = useState(tasksData?.summary);
+  const [answers, setAnswers] = useState(initializeAnswers());
+
+  function initializeAnswers() {
+    if (tasksData?.answer === undefined) {
+      return [];
+    }
+    let values = [];
+    for (let i = 0; i < tasksData.answer.length; i++) {
+      let answer = tasksData.answer[i];
+      values.push(answer);
+    }
+    return values;
+  }
 
   const columns: GridColumns = [
     {

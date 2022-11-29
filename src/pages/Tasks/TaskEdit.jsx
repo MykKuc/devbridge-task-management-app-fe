@@ -67,15 +67,47 @@ function addAnswerRow(historicalRowCount) {
 
   answersDiv.appendChild(row);
 }
-export default function TaskEdit(props) {
-  const { id, isInList } = props;
+function initializeAnswers(currTask) {
+  if (currTask?.answer === undefined) {
+    return [];
+  }
+
+  let values = [];
+  for (let i = 0; i < currTask.answer.length; i++) {
+    let answer = currTask.answer[i];
+    values.push(answer.text);
+  }
+  return values;
+}
+
+export default function TaskEdit(
+  {
+    id,
+    isInList,
+    //categoryOld,
+    setCategoryeOld,
+    //descriptionOld,
+    setDescriptionOld,
+    //summaryOld,
+    setSummaryOld,
+    //answersOld,
+    setAnswersOld,
+  } /*: {
+  titleOld: string;
+  setTitleOld: Function;
+  descriptionOld: string;
+  setDescriptionOld: Function;
+}*/
+) {
   const currTask = taskJsonData && taskJsonData.find((e) => e.id === Number(id));
+  const [category, setCategory] = useState(currTask.category);
   const [summary, setSummary] = useState(currTask.summary);
   const [description, setDescription] = useState(currTask.description);
-  //const [answers, setAnswers]=useState(initializeAnswers());
+  const [answers, setAnswers] = useState(initializeAnswers(currTask));
 
-  const [descriptionValidation, setDescriptionValidation] = useState(0);
-  const [answerValidation, setAnswerValidation] = useState({ answerIds: [], answerErrors: [] });
+  const [descriptionValidation, setDescriptionValidation] = useState('');
+  const [invalidAnswerIds, setInvalidAnswerIds] = useState([]);
+  const [invalidAnswerErrors, setInvalidAnswerErrors] = useState([]);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
@@ -87,51 +119,66 @@ export default function TaskEdit(props) {
 
   let historicalAnswerCount = 0;
 
-  /*function initializeAnswers(){
-    let values = [];
-    for(let i = 0;i<currTask.answer.length;i++){
-      let answer = currTask[i];
-      values.push(answer.text);
+  function checkIfAnswerInvalid(idNum) {
+    for (let i = 0; i < invalidAnswerIds.length; i++) {
+      let invalidId = invalidAnswerIds[i];
+      if (invalidId === idNum) {
+        return true;
+      }
     }
-    return values;
-  }*/
-  const handleValidationChange = (newValue) => {
-    setDescriptionValidation(newValue);
-  };
+    return false;
+  }
   function saveTaskEditChanges() {
     const allIsValid = validateFields();
     if (allIsValid) {
       setNewValues();
-      //handleClose();
+      handleClose();
     }
   }
   function validateFields() {
     let allIsValid = true;
-    let answerInputs = document.getElementsByClassName('input answer');
 
     if (description.length === 0) {
-      setDescriptionValidation(1);
+      setDescriptionValidation('* Description is required');
       allIsValid = false;
     }
 
     let ids = [];
     let errors = [];
-    for (let i = 0; i < answerInputs.length; i++) {
-      let answer = answerInputs[i];
+    for (let i = 0; i < answers.length; i++) {
+      let answer = answers[i];
       if (answer === '') {
-        ids.push(answer.id);
+        ids.push(i);
         errors.push('* Answer text is required');
         if (allIsValid) {
           allIsValid = false;
         }
       }
     }
-    setAnswerValidation({ answerIds: ids, answerErrors: errors });
+    setInvalidAnswerIds(ids);
+    setInvalidAnswerErrors(errors);
 
     return allIsValid;
   }
   function setNewValues() {}
+  function handleAnswerChange(idNum, newValue) {
+    console.log('idNum: ' + idNum);
+    console.log('newValue: ' + newValue);
 
+    let newAnswers = [];
+    for (let i = 0; i < answers; i++) {
+      newAnswers.push(answers[i]);
+    }
+    newAnswers[idNum] = newValue;
+    setAnswers(newAnswers);
+  }
+  function handleCheckmarkClick(idNum) {
+    if (answers[idNum].isCorrect === true) {
+      answers[idNum].isCorrect = false;
+    } else {
+      answers[idNum].isCorrect = true;
+    }
+  }
   return (
     <div>
       {isInList ? (
@@ -160,6 +207,17 @@ export default function TaskEdit(props) {
         aria-describedby="modal-modal-description"
       >
         <Content name={currTask?.title}>
+          <p>
+            invalidAnswerIds[0]:{invalidAnswerIds[0]}, invalidAnswerErrors[0]:{invalidAnswerErrors[0]}
+          </p>
+          <button
+            onClick={function () {
+              setInvalidAnswerIds([0]);
+              setInvalidAnswerErrors(["Answer can't be null"]);
+            }}
+          >
+            btn
+          </button>
           <div className="row">
             <div className="col-lg-7 text-start ">
               <label> Summary</label>
@@ -176,13 +234,8 @@ export default function TaskEdit(props) {
                 />
               </div>
               <div>
-                {() => {
-                  if (descriptionValidation !== '') {
-                    console.error('! description is not valid !');
-                    return <label style={{ color: 'red' }}>{descriptionValidation}</label>;
-                  }
-                }}
                 <label> Description</label>
+                {descriptionValidation !== '' ? <span style={{ color: 'red' }}>{descriptionValidation}</span> : ''}
                 <textarea
                   onChange={(e) => setDescription(e.target.value)}
                   value={description}
@@ -233,80 +286,31 @@ export default function TaskEdit(props) {
                           historicalAnswerCount++;
 
                           if (currTask.answer.length === 1 || answer.isCorrect) {
-                            if (answerValidation.answerIds.includes(rowId)) {
-                              return (
-                                <>
-                                  <label style={{ color: 'red' }}>answerValidation.answerErrors[idNum]</label>
-                                  <div id={rowId} className={'row'} style={{ marginBottom: '5px' }}>
-                                    <div className={'col-7'}>
-                                      <input
-                                        className={'input answer'}
-                                        type={'text'}
-                                        key={answer.id}
-                                        value={answer.text}
-                                        style={{ borderRadius: '10px' }}
-                                      />
-                                    </div>
-                                    <div className={'col-sm'} style={{ textAlign: 'center' }}>
-                                      <input type={'checkbox'} name={answer.id} checked />
-                                    </div>
-                                    <div className={'col-sm'} style={{ textAlign: 'center' }}>
-                                      <button
-                                        className={'btn btn-danger'}
-                                        onClick={function () {
-                                          deleteAnswerRow(rowId);
-                                        }}
-                                      >
-                                        Delete
-                                      </button>
-                                    </div>
-                                  </div>
-                                </>
-                              );
-                            } else {
-                              return (
-                                <div id={rowId} className={'row'} style={{ marginBottom: '5px' }}>
-                                  <div className={'col-7'}>
-                                    <input
-                                      className={'input answer'}
-                                      type={'text'}
-                                      key={answer.id}
-                                      value={answer.text}
-                                      style={{ borderRadius: '10px' }}
-                                    />
-                                  </div>
-                                  <div className={'col-sm'} style={{ textAlign: 'center' }}>
-                                    <input type={'checkbox'} name={answer.id} checked />
-                                  </div>
-                                  <div className={'col-sm'} style={{ textAlign: 'center' }}>
-                                    <button
-                                      className={'btn btn-danger'}
-                                      onClick={function () {
-                                        deleteAnswerRow(rowId);
-                                      }}
-                                    >
-                                      Delete
-                                    </button>
-                                  </div>
-                                </div>
-                              );
-                            }
-                          } else if (answerValidation.answerIds.includes(rowId)) {
                             return (
                               <>
-                                <label style={{ color: 'red' }}>answerValidation.answerErrors[idNum]</label>
                                 <div id={rowId} className={'row'} style={{ marginBottom: '5px' }}>
+                                  {checkIfAnswerInvalid(idNum) ? (
+                                    <span style={{ color: 'red' }}>{invalidAnswerErrors[idNum]}</span>
+                                  ) : (
+                                    ''
+                                  )}
                                   <div className={'col-7'}>
                                     <input
+                                      onChange={(e) => handleAnswerChange(idNum, e.target.value)}
                                       className={'input answer'}
                                       type={'text'}
                                       key={answer.id}
-                                      value={answer.text}
+                                      value={answers[idNum]}
                                       style={{ borderRadius: '10px' }}
                                     />
                                   </div>
                                   <div className={'col-sm'} style={{ textAlign: 'center' }}>
-                                    <input type={'checkbox'} name={answer.id} />
+                                    <input
+                                      onClick={handleCheckmarkClick(idNum)}
+                                      type={'checkbox'}
+                                      name={answer.id}
+                                      checked
+                                    />
                                   </div>
                                   <div className={'col-sm'} style={{ textAlign: 'center' }}>
                                     <button
@@ -324,17 +328,23 @@ export default function TaskEdit(props) {
                           } else {
                             return (
                               <div id={rowId} className={'row'} style={{ marginBottom: '5px' }}>
+                                {checkIfAnswerInvalid(idNum) ? (
+                                  <span style={{ color: 'red' }}>{invalidAnswerErrors[idNum]}</span>
+                                ) : (
+                                  ''
+                                )}
                                 <div className={'col-7'}>
                                   <input
+                                    onChange={(e) => handleAnswerChange(idNum, e.target.value)}
                                     className={'input answer'}
                                     type={'text'}
                                     key={answer.id}
-                                    value={answer.text}
+                                    value={answers[idNum]}
                                     style={{ borderRadius: '10px' }}
                                   />
                                 </div>
                                 <div className={'col-sm'} style={{ textAlign: 'center' }}>
-                                  <input type={'checkbox'} name={answer.id} />
+                                  <input onClick={handleCheckmarkClick(idNum)} type={'checkbox'} name={answer.id} />
                                 </div>
                                 <div className={'col-sm'} style={{ textAlign: 'center' }}>
                                   <button
