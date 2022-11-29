@@ -1,6 +1,5 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { GridActionsCellItem, GridColumnHeaderParams, GridColumns, GridRowParams } from '@mui/x-data-grid';
-import { Button } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
@@ -11,11 +10,13 @@ import CustomPagination from '../../Components/Pagination';
 import GetTasks from './GetTasks';
 import './tasks.css';
 import Content from '../../Components/Content';
+import TaskCreation from '../../features/TaskCreation/TaskCreation';
 import { useNavigate } from 'react-router-dom';
 import TaskEdit from './TaskEdit.jsx';
 
 function Tasks() {
-  const tasksRes = GetTasks();
+  const [tasksRes, setTasksRes] = useState(GetTasks());
+  const [showModal, setShow] = useState(false);
   const navigate = useNavigate();
 
   const tasksData = useMemo(
@@ -27,6 +28,13 @@ function Tasks() {
       })),
     [tasksRes]
   );
+
+  const handleAdd = (event: any, task: any) => {
+    const TasksResCopy = [...tasksRes];
+    TasksResCopy.push(task);
+    setTasksRes(TasksResCopy);
+    console.log(tasksRes);
+  };
 
   const columns: GridColumns = [
     {
@@ -101,10 +109,22 @@ function Tasks() {
 
   return (
     <Content name={'Tasks'}>
+      <TaskCreation
+        show={showModal}
+        close={() => {
+          setShow(false);
+        }}
+        handleAdd={handleAdd}
+      />
       <div className="button-wrapper">
-        <Button className="create-button" variant="contained">
-          create
-        </Button>
+        <button
+          className="button-primary"
+          onClick={() => {
+            setShow(true);
+          }}
+        >
+          Create
+        </button>
       </div>
       <div className="tasks-table-wrapper">
         <StyledDataGrid

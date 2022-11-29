@@ -106,107 +106,103 @@ export default function Register() {
   }
 
   return (
-    <div>
-      <div className="d-flex justify-content-center">
-        <div className="col-8 px-0 pb-3" style={{ backgroundColor: '#383838', borderRadius: '20px 20px 20px 20px' }}>
-          <header className="text-light header py-2 mb-3">Register</header>
-          <div className={`py-5 d-flex justify-content-center ${scroll}`} id="form" style={{ maxHeight: 650 }}>
-            <div className="form-group col-4 text-start text-light">
-              <label className="ps-1 label" htmlFor="fullName">
-                Full name
-              </label>
-              <input
-                type="text"
-                placeholder="Full name"
-                className="input"
-                value={user.fullName}
-                onChange={handleInputChange}
-                onKeyPress={(event) => {
-                  if (/[0-9]/.test(event.key)) {
-                    event.preventDefault();
-                  }
-                }}
-                name="fullName"
-                id="fullName"
-              />
-              {!validation.fullNameValid && <p className="alert alert-danger">{validation.formErrors.fullName}</p>}
+    <div className="col-8 px-0 pb-3" style={{ backgroundColor: '#383838', borderRadius: '20px 20px 20px 20px' }}>
+      <header className="text-light header py-2 mb-3">Register</header>
+      <div className={`py-5 d-flex justify-content-center ${scroll}`} id="form" style={{ maxHeight: 650 }}>
+        <div className="form-group col-4 text-start text-light">
+          <label className="ps-1 label" htmlFor="fullName">
+            Full name
+          </label>
+          <input
+            type="text"
+            placeholder="Full name"
+            className="input"
+            value={user.fullName}
+            onChange={handleInputChange}
+            onKeyPress={(event) => {
+              if (/[0-9]/.test(event.key)) {
+                event.preventDefault();
+              }
+            }}
+            name="fullName"
+            id="fullName"
+          />
+          {!validation.fullNameValid && <p className="alert alert-danger">{validation.formErrors.fullName}</p>}
 
-              <label className="ps-1 mt-3 label" htmlFor="fullName">
-                Email
-              </label>
-              <input
-                type="text"
-                placeholder="Email"
-                className="input"
-                value={user.email}
-                onChange={handleInputChange}
-                name="email"
-                id="email"
-              />
-              {!validation.emailValid && <p className="alert alert-danger">{validation.formErrors.email}</p>}
+          <label className="ps-1 mt-3 label" htmlFor="fullName">
+            Email
+          </label>
+          <input
+            type="text"
+            placeholder="Email"
+            className="input"
+            value={user.email}
+            onChange={handleInputChange}
+            name="email"
+            id="email"
+          />
+          {!validation.emailValid && <p className="alert alert-danger">{validation.formErrors.email}</p>}
 
-              <label className="ps-1 mt-3 label" htmlFor="fullName">
-                Password
-              </label>
-              <input
-                type="password"
-                placeholder="Password"
-                className="input"
-                value={user.password}
-                onChange={handleInputChange}
-                name="password"
-                id="password"
-              />
-              {!validation.passwordValid && <p className="alert alert-danger">{validation.formErrors.password}</p>}
+          <label className="ps-1 mt-3 label" htmlFor="fullName">
+            Password
+          </label>
+          <input
+            type="password"
+            placeholder="Password"
+            className="input"
+            value={user.password}
+            onChange={handleInputChange}
+            name="password"
+            id="password"
+          />
+          {!validation.passwordValid && <p className="alert alert-danger">{validation.formErrors.password}</p>}
 
-              <label className="ps-1 mt-3 label" htmlFor="fullName">
-                Repeat password
-              </label>
-              <input
-                type="password"
-                placeholder="Repeat Password"
-                className="input"
-                value={user.passwordRepeat}
-                onChange={handleInputChange}
-                name="passwordRepeat"
-                id="passwordRepeat"
-              />
-              <Typography className="ps-1 mt-3 label">Role</Typography>
-              <FormControl fullWidth>
-                <Select
-                  id="demo-simple-select"
-                  name="role"
-                  value={user.role}
-                  className="label"
-                  style={{ boxShadow: '5px 20px 15px rgba(0, 0, 0, 0.25)' }}
-                  onChange={handleInputChange}
-                  displayEmpty
-                  renderValue={(value) => (value !== '' ? value : 'Select role')}
-                  sx={{
-                    '.MuiSvgIcon-root ': {
-                      fill: '#2babd3',
-                    },
+          <label className="ps-1 mt-3 label" htmlFor="fullName">
+            Repeat password
+          </label>
+          <input
+            type="password"
+            placeholder="Repeat Password"
+            className="input"
+            value={user.passwordRepeat}
+            onChange={handleInputChange}
+            name="passwordRepeat"
+            id="passwordRepeat"
+          />
+          <Typography className="ps-1 mt-3 label">Role</Typography>
+          <FormControl fullWidth>
+            <Select
+              id="demo-simple-select"
+              name="role"
+              value={user.role}
+              className="label"
+              style={{ boxShadow: '5px 20px 15px rgba(0, 0, 0, 0.25)' }}
+              onChange={handleInputChange}
+              displayEmpty
+              renderValue={(value) => (value !== '' ? value : 'Select role')}
+              sx={{
+                '.MuiSvgIcon-root ': {
+                  fill: '#2babd3',
+                },
 
-                    icon: {
-                      fill: 'white',
-                    },
-                    color: 'white',
-                    border: '2px solid #2babd3',
-                    borderRadius: 2,
-                  }}
-                >
-                  <MenuItem value={'Mentor'}>Mentor</MenuItem>
-                  <MenuItem value={'Employee'}>Employee</MenuItem>
-                </Select>
-              </FormControl>
+                icon: {
+                  fill: 'white',
+                },
+                color: 'white',
+                border: '2px solid #2babd3',
+                borderRadius: 2,
+              }}
+            >
+              <MenuItem value={'Mentor'}>Mentor</MenuItem>
+              <MenuItem value={'Employee'}>Employee</MenuItem>
+            </Select>
+          </FormControl>
 
-              {!validation.roleValid && <p className="alert alert-danger">{validation.formErrors.role}</p>}
-              <div className="text-center">
-                <button type="submit" onClick={handleFormSubmit} className="button blue my-5 text-center">
-                  REGISTER
-                </button>
-              </div>
-            </div>
+          {!validation.roleValid && <p className="alert alert-danger">{validation.formErrors.role}</p>}
+          <div className="text-center">
+            <button type="submit" onClick={handleFormSubmit} className="button blue my-5 text-center">
+              REGISTER
+            </button>
           </div>
         </div>
       </div>

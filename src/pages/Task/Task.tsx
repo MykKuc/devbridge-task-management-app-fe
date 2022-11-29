@@ -3,8 +3,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import './Task.css';
 import jsonData from '../Tasks/tasks.json';
 import { useNavigate, useParams } from 'react-router-dom';
-import Content from '../../Components/Content';
-import TaskEdit from '../Tasks/TaskEdit';
+import Content from '../../components/Content';
 
 const Task = () => {
   const params = useParams();
@@ -44,7 +43,7 @@ const Task = () => {
                   if (taskData?.answer.length === 1) {
                     return (
                       <p key={answer.id} style={{ color: '#2babd3' }}>
-                        {answer.text}{' '}
+                        {answer.text}
                       </p>
                     );
                   } else if (answer.isCorrect) {
@@ -92,7 +91,10 @@ const Task = () => {
               </div>
               <div className=" separation" />
               <div className="d-flex flex-row around justify-content-between py-1 ">
-                <TaskEdit id={taskData?.id} isInList={false} />
+                <button type="button" className=" btn btn-primary rounded-pill " style={{ width: '100px' }}>
+                  {' '}
+                  Edit
+                </button>
                 <button type="button" className=" btn btn-danger rounded-pill" style={{ width: '100px' }}>
                   {' '}
                   Delete
