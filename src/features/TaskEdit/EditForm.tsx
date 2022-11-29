@@ -1,17 +1,15 @@
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import categoryJsonData from '../../pages/categories/MockCategories.json';
 import * as React from 'react';
 import LeftMenu from './FormLeftPart/LeftMenu';
 import RightMenu from './FormRightPart/RightMenu';
 
 interface Props {
-  summary?: string;
+  summary: string;
   setSummary: Function;
   description?: string;
   setDescription: Function;
   descriptionValidation: string;
   historicalAnswerCount: number;
-  answers?: { id: number; text: string; isCorrect: boolean }[];
+  answers?: { id: Number; text: String; correct: boolean }[];
   handleAnswerChange: Function;
   handleCheckmarkClick: Function;
   invalidAnswerIds: number[];

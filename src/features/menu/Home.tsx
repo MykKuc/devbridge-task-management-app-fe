@@ -1,13 +1,18 @@
-import React from 'react';
-
-import Content from '../../Components/Content';
+import React, { useState } from 'react';
+import Content from '../../components/Content';
 
 function Home() {
-  // const dispatch=useDispatch();
-  // dispatch(createTask());
+  const [show, setShow] = useState(false);
+  fetch('http://localhost:8080/api/ok').then((response) => {
+    console.log(response);
+    if (response.status == 200) {
+      setShow(true);
+    }
+  });
   return (
     <Content name={'Home'} height={'60vh'}>
       <span>Hello world</span>
+      {show && <label>Veikia API</label>}
     </Content>
   );
 }

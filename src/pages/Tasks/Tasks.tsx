@@ -5,14 +5,43 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import StyledDataGrid from '../../Components/StyledDataGrid';
-import CustomPagination from '../../Components/Pagination';
+import StyledDataGrid from '../../components/StyledDataGrid';
+import CustomPagination from '../../components/Pagination';
 import GetTasks from './GetTasks';
 import './tasks.css';
-import Content from '../../Components/Content';
+import Content from '../../components/Content';
 import TaskCreation from '../../features/TaskCreation/TaskCreation';
 import { useNavigate } from 'react-router-dom';
 import TaskEdit from '../../features/TaskEdit/TaskEdit';
+import taskJsonData from './tasks.json';
+
+interface User {
+  id: Number;
+  name: String;
+}
+
+interface Category {
+  id: Number;
+  name: String;
+}
+
+interface Answer {
+  id: Number;
+  text: String;
+  correct: boolean;
+}
+
+interface TaskData {
+  id: Number;
+  title: String;
+  description: String;
+  summary: String;
+  creationDate: Date;
+  score: Number;
+  user: User;
+  category: Category;
+  answers: Answer[];
+}
 
 function Tasks() {
   const [tasksRes, setTasksRes] = useState(GetTasks());
@@ -40,12 +69,42 @@ function Tasks() {
     for (let i = 0; i < tasksResCopy.length; i++) {
       if (tasksResCopy[i].id === task.id) {
         console.log('identical found.');
+        task.creator = task.creator.name;
+        task.category = task.category.name;
         tasksResCopy[i] = task;
         break;
       }
     }
     setTasksRes(tasksResCopy);
     console.log('end');
+  };
+
+  const getMockData = (taskId: number) => {
+    const task = taskJsonData && taskJsonData.find((e) => e.id === Number(taskId));
+    const answers = task?.answer;
+    let convertedAnswers: Answer[] = [];
+    if (answers !== undefined) {
+      for (let i = 0; i < answers?.length; i++) {
+        convertedAnswers.push({
+          id: answers[i].id as Number,
+          text: answers[i].text as String,
+          correct: answers[i].isCorrect,
+        });
+      }
+    }
+    let convertedTask: TaskData = {
+      id: task?.id as Number,
+      title: task?.title as String,
+      description: task?.description as String,
+      summary: task?.summary as String,
+      creationDate: new Date(task?.date !== undefined ? task.date : ''),
+      score: task?.votes as Number,
+      user: { id: -1, name: task?.creator as String },
+      category: { id: -2, name: task?.category as String },
+      answers: convertedAnswers,
+    };
+
+    return convertedTask;
   };
 
   const columns: GridColumns = [
@@ -103,7 +162,12 @@ function Tasks() {
           onClick={() => navigate('/task/' + params.id)}
           label="View"
         />,
-        <TaskEdit id={params.id as number} isInList={true} handleModify={handleModify} />,
+        <TaskEdit
+          id={params.id as number}
+          isInList={true}
+          handleModify={handleModify}
+          task={getMockData(params.id as number)}
+        />,
         <GridActionsCellItem
           className="task-action-button"
           icon={<DeleteIcon />}

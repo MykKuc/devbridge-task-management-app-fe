@@ -4,11 +4,37 @@ import Modal from '@mui/material/Modal';
 import './TaskEdit.css';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import EditIcon from '@mui/icons-material/Edit';
-import Content from '../../Components/Content';
-
-import taskJsonData from '../../pages/Tasks/tasks.json';
+import Content from '../../components/Content';
 import EditForm from './EditForm';
 import EditButtons from './EditButtons';
+
+interface User {
+  id: Number;
+  name: String;
+}
+
+interface Category {
+  id: Number;
+  name: String;
+}
+
+interface Answer {
+  id: Number;
+  text: String;
+  correct: boolean;
+}
+
+interface TaskData {
+  id: Number;
+  title: String;
+  description: String;
+  summary: String;
+  creationDate: Date;
+  score: Number;
+  user: User;
+  category: Category;
+  answers: Answer[];
+}
 
 interface Props {
   id: number;
@@ -16,10 +42,9 @@ interface Props {
 
   handleModify?: Function;
 
-  setCategoryOld?: Function;
-  setSummaryOld?: Function;
-  setDescriptionOld?: Function;
-  setAnswersOld?: Function;
+  setTask?: Function;
+
+  task?: TaskData;
 }
 export default function TaskEdit(props: Props) {
   // Task's id
@@ -30,19 +55,21 @@ export default function TaskEdit(props: Props) {
   // Method for displaying changed values in task list
   const handleModify = props.handleModify;
 
+  // Method for displaying changed values in task view
+  const setTask = props.setTask;
   // useState instances for displaying changes values in specific task
-  const setCategoryOld = props.setCategoryOld;
+  /*const setCategoryOld = props.setCategoryOld;
   const setSummaryOld = props.setSummaryOld;
   const setDescriptionOld = props.setDescriptionOld;
-  const setAnswersOld = props.setAnswersOld;
+  const setAnswersOld = props.setAnswersOld;*/
 
   // Current task's data
-  const currTask = taskJsonData && taskJsonData.find((e) => e.id === Number(id));
+  const currTask = props.task;
 
   const [category, setCategory] = useState(currTask?.category);
   const [summary, setSummary] = useState(currTask?.summary);
   const [description, setDescription] = useState(currTask?.description);
-  const [answers, setAnswers] = useState(currTask?.answer);
+  const [answers, setAnswers] = useState(currTask?.answers);
 
   const [descriptionValidation, setDescriptionValidation] = useState('');
   const [invalidAnswerIds, setInvalidAnswerIds] = useState(Array<number>);
@@ -88,9 +115,9 @@ export default function TaskEdit(props: Props) {
         <div id={'main-container'}>
           <Content name={currTask !== undefined ? currTask.title : ''}>
             <EditForm
-              summary={summary !== null ? summary : ''}
+              summary={summary as string}
               setSummary={setSummary}
-              description={description}
+              description={description as string}
               setDescription={setDescription}
               descriptionValidation={descriptionValidation}
               historicalAnswerCount={historicalAnswerCount}
@@ -99,10 +126,10 @@ export default function TaskEdit(props: Props) {
               handleCheckmarkClick={handleCheckmarkClick}
               invalidAnswerIds={invalidAnswerIds}
               invalidAnswerErrors={invalidAnswerErrors}
-              votes={currTask?.votes}
-              creator={currTask?.creator}
-              date={currTask?.date}
-              category={category}
+              votes={currTask?.score as number}
+              creator={currTask?.user.name as string}
+              date={currTask?.creationDate.toString()}
+              category={category?.name as string}
               setCategory={setCategory}
             />
             <EditButtons handleClose={handleClose} saveTaskEditChanges={saveTaskEditChanges} />
@@ -115,7 +142,7 @@ export default function TaskEdit(props: Props) {
   // Handles changes to any of the answer's text
   function handleAnswerChange(idNum: number, newValue: string) {
     if (answers !== undefined) {
-      let newAnswers: { id: number; text: string; isCorrect: boolean }[] = [];
+      let newAnswers: { id: Number; text: String; correct: boolean }[] = [];
       for (let i = 0; i < answers.length; i++) {
         newAnswers.push(answers[i]);
       }
@@ -127,12 +154,11 @@ export default function TaskEdit(props: Props) {
   function handleCheckmarkClick(idNum: number) {
     if (answers !== undefined) {
       let answer = answers[idNum];
-      if (answer.isCorrect === true) {
-        answer.isCorrect = false;
+      if (answer.correct) {
+        answer.correct = false;
       } else {
-        answer.isCorrect = true;
+        answer.correct = true;
       }
-      console.log('answer.isCorrect: ' + answer.isCorrect);
     }
   }
   // Saves edited information
@@ -187,27 +213,13 @@ export default function TaskEdit(props: Props) {
         category: category,
         description: description,
         summary: summary,
-        creator: currTask?.creator,
+        creator: currTask?.user,
         answers: answers,
-        date: currTask?.date,
-        votes: currTask?.votes,
+        date: currTask?.creationDate,
+        votes: currTask?.score,
       });
-    } else if (
-      !isInList &&
-      setCategoryOld !== undefined &&
-      setSummaryOld !== undefined &&
-      setDescriptionOld !== undefined &&
-      setAnswersOld !== undefined
-    ) {
-      setCategoryOld(category);
-      setSummaryOld(summary);
-      setDescriptionOld(description);
-      setAnswersOld(answers);
-      if (answers !== undefined) {
-        for (let i = 0; i < answers.length; i++) {
-          console.log(answers[i].isCorrect);
-        }
-      }
+    } else if (!isInList && setTask !== null) {
+      //setTaskaaa()
     }
   }
 }

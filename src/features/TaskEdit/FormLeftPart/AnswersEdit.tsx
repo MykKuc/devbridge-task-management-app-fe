@@ -3,7 +3,7 @@ import AnswerField from './AnswerField';
 
 interface Props {
   historicalAnswerCount: number;
-  answers?: { id: number; text: string; isCorrect: boolean }[];
+  answers?: { id: Number; text: String; correct: boolean }[];
   invalidAnswerIds: number[];
   invalidAnswerErrors: string[];
   handleAnswerChange: Function;

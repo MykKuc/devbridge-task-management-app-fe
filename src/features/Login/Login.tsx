@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Login.css';
 import { NavLink, useNavigate } from 'react-router-dom';
-import Content from '../../Components/Content';
+import Content from '../../components/Content';
 
 function Login() {
   const [error, setError] = useState<string | null>(null);

@@ -12,7 +12,7 @@ interface Props {
   descriptionValidation: string;
 
   historicalAnswerCount: number;
-  answers?: { id: number; text: string; isCorrect: boolean }[];
+  answers?: { id: Number; text: String; correct: boolean }[];
   handleAnswerChange: Function;
   handleCheckmarkClick: Function;
   invalidAnswerIds: number[];

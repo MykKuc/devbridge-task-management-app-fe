@@ -1,29 +1,60 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import './Task.css';
-import jsonData from '../Tasks/tasks.json';
 import { useNavigate, useParams } from 'react-router-dom';
-import Content from '../../Components/Content';
+import Content from '../../components/Content';
 import TaskEdit from '../../features/TaskEdit/TaskEdit';
+
+interface User {
+  id: Number;
+  name: String;
+}
+
+interface Category {
+  id: Number;
+  name: String;
+}
+
+interface Answer {
+  id: Number;
+  text: String;
+  correct: boolean;
+}
+
+interface TaskData {
+  id: Number;
+  title: String;
+  description: String;
+  summary: String;
+  creationDate: Date;
+  score: Number;
+  user: User;
+  category: Category;
+  answers: Answer[];
+}
 
 const Task = () => {
   const params = useParams();
   const navigate = useNavigate();
-  let taskName: string = 'task name';
-  const taskData = jsonData && jsonData.find((e) => e.id === Number(params.id));
 
-  const [category, setCategory] = useState(taskData?.category);
-  const [description, setDescription] = useState(taskData?.description);
-  const [summary, setSummary] = useState(taskData?.summary);
-  const [answers, setAnswers] = useState(taskData?.answer);
+  const [task, setTask] = useState<TaskData>();
 
+  const url = 'http://localhost:8080/api/tasks/' + params.id;
+
+  const taskName = task?.title ?? 'Task';
   useEffect(() => {
-    if (taskData?.id === undefined) {
-      navigate('/*');
-    }
-  });
-  if (taskData?.title !== undefined) taskName = taskData.title;
-
+    fetch(url)
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          navigate('/*');
+        }
+      })
+      .then((data) => {
+        setTask(data);
+      });
+  }, []);
   return (
     <>
       <Content name={taskName}>
@@ -32,33 +63,33 @@ const Task = () => {
             <label> Summary</label>
             <div className="separation " />
             <div className="overflow-auto " style={{ height: '100px' }}>
-              <p className="text-start"> {summary}</p>
+              <p className="text-start"> {task?.summary}</p>
             </div>
             <div>
               <label> Description</label>
               <div className="separation" />
               <div className="overflow-auto " style={{ height: '100px' }}>
-                <p className="text-star overflow-auto"> {description} </p>
+                <p className="text-star overflow-auto"> {task?.description} </p>
               </div>
             </div>
             <div>
               <label style={{ paddingTop: '10px' }}> Answer </label>
               <div className="separation" />
               <div className="overflow-auto " style={{ height: '100px' }}>
-                {answers?.map((answer) => {
-                  if (answers.length === 1) {
+                {task?.answers.map((answer: Answer) => {
+                  if (task?.answers.length === 1) {
                     return (
-                      <p key={answer.id} style={{ color: '#2babd3' }}>
+                      <p key={answer.id.toString()} style={{ color: '#2babd3' }}>
                         {answer.text}
                       </p>
                     );
-                  } else if (answer.isCorrect) {
+                  } else if (answer.correct) {
                     return (
-                      <p key={answer.id} style={{ color: '#2babd3' }}>
+                      <p key={answer.id.toString()} style={{ color: '#2babd3' }}>
                         {answer.text}{' '}
                       </p>
                     );
-                  } else return <p key={answer.id}> {answer.text}</p>;
+                  } else return <p key={answer.id.toString()}> {answer.text}</p>;
                 })}
               </div>
             </div>
@@ -76,35 +107,28 @@ const Task = () => {
               <div style={{ color: 'white' }}>
                 <ThumbUpIcon />
               </div>
-              <p style={{ textAlign: 'center' }}>{taskData?.votes}</p>
+              <p style={{ textAlign: 'center' }}>{task?.score.toString()}</p>
               <div className=" separation" />
               <div className="d-flex flex-row around justify-content-between">
                 <label>Task author</label>
 
-                <p>{taskData?.creator}</p>
+                <p>{task?.user.name}</p>
               </div>
               <div className=" separation" />
               <div className="d-flex flex-row around justify-content-between">
                 <label>Date of creation</label>
 
-                <p>{taskData?.date}</p>
+                <p>{task?.creationDate.toString().split('T')[0]}</p>
               </div>
               <div className=" separation" />
               <div className="d-flex flex-row around justify-content-between ">
                 <label>Category</label>
 
-                <p>{category}</p>
+                <p>{task?.category.name}</p>
               </div>
               <div className=" separation" />
               <div className="d-flex flex-row around justify-content-between py-1 ">
-                <TaskEdit
-                  id={taskData?.id as number}
-                  isInList={false}
-                  setCategoryOld={setCategory}
-                  setAnswersOld={setAnswers}
-                  setSummaryOld={setSummary}
-                  setDescriptionOld={setDescription}
-                />
+                <TaskEdit id={task?.id as number} isInList={true} setTask={setTask} task={task} />
                 <button type="button" className=" btn btn-danger rounded-pill" style={{ width: '100px' }}>
                   {' '}
                   Delete
