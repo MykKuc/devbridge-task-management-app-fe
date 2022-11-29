@@ -1,3 +1,9 @@
+#main-container {
+  position: absolute;
+  top: 20%;
+  left: 16.67%;
+  right: -16.67%;
+}
 .empty-modal {
   position: absolute;
   top: 50%;

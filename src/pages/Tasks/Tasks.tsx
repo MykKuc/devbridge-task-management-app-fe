@@ -12,7 +12,7 @@ import './tasks.css';
 import Content from '../../Components/Content';
 import TaskCreation from '../../features/TaskCreation/TaskCreation';
 import { useNavigate } from 'react-router-dom';
-import TaskEdit from './TaskEdit.jsx';
+import TaskEdit from './TaskEdit';
 
 function Tasks() {
   const [tasksRes, setTasksRes] = useState(GetTasks());
@@ -34,6 +34,18 @@ function Tasks() {
     TasksResCopy.push(task);
     setTasksRes(TasksResCopy);
     console.log(tasksRes);
+  };
+  const handleModify = (task: any) => {
+    let tasksResCopy = [...tasksRes];
+    for (let i = 0; i < tasksResCopy.length; i++) {
+      if (tasksResCopy[i].id === task.id) {
+        console.log('identical found.');
+        tasksResCopy[i] = task;
+        break;
+      }
+    }
+    setTasksRes(tasksResCopy);
+    console.log('end');
   };
 
   const columns: GridColumns = [
@@ -91,7 +103,7 @@ function Tasks() {
           onClick={() => navigate('/task/' + params.id)}
           label="View"
         />,
-        <TaskEdit id={params.id} isInList={true} />,
+        <TaskEdit id={params.id as number} isInList={true} handleModify={handleModify} />,
         <GridActionsCellItem
           className="task-action-button"
           icon={<DeleteIcon />}
