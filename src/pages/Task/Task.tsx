@@ -3,7 +3,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import './Task.css';
 import jsonData from '../Tasks/tasks.json';
 import { useNavigate, useParams } from 'react-router-dom';
-import Content from '../../Components/Content';
+import Content from '../../components/Content';
 import TaskEdit from '../../features/menu/TaskEdit/TaskEdit';
 
 const Task = () => {
