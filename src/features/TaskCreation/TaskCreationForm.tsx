@@ -70,10 +70,10 @@ function TaskCreationForm(props: Props) {
       title: title,
       category: category.name,
       description: description,
-      creator: 'Default',
+      author: 'Default',
       answer: answer,
-      date: today,
-      votes: 0,
+      creationDate: today,
+      score: 0,
     };
     console.log(task);
     props.handleAdd(event, task);
