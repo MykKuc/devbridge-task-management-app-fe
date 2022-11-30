@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { GridActionsCellItem, GridColumnHeaderParams, GridColumns, GridRowParams } from '@mui/x-data-grid';
+import {
+  GridActionsCellItem,
+  GridColumnHeaderParams,
+  GridColumns,
+  GridRowParams,
+  GridValueGetterParams,
+} from '@mui/x-data-grid';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
@@ -13,6 +19,11 @@ import Content from '../../components/Content';
 import TaskCreation from '../../features/TaskCreation/TaskCreation';
 import { useNavigate } from 'react-router-dom';
 
+interface Category {
+  id: Number;
+  name: String;
+}
+
 interface TaskData {
   id: Number;
   title: String;
@@ -21,7 +32,7 @@ interface TaskData {
   creationDate: Date;
   score: Number;
   author: String;
-  category: String;
+  category: Category;
 }
 
 function Tasks() {
@@ -40,10 +51,9 @@ function Tasks() {
       })
       .then((data: TaskData[]) => {
         if (data.length !== 0) {
-          data.map((t) => ({
+          data = data.map((t) => ({
             ...t,
-            summary: t.summary == null ? formatDescription(t.description) : t.summary,
-            actions: null,
+            summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
           }));
         }
         setTasks(data);
@@ -52,7 +62,7 @@ function Tasks() {
 
   const handleAdd = (event: any, task: any) => {
     const tasksCopy = [...tasks];
-    task.summary = task.summary == null ? formatDescription(task.description) : task.summary;
+    task.summary = task.summary == null || task.summary === '' ? formatDescription(task.description) : task.summary;
     tasksCopy.push(task);
     setTasks(tasksCopy);
   };
@@ -72,7 +82,14 @@ function Tasks() {
       align: 'left',
     },
     { field: 'title', headerName: 'Title', flex: 2, headerAlign: 'left', align: 'left', minWidth: 100 },
-    { field: 'category', headerName: 'Category', flex: 2, headerAlign: 'left', align: 'left' },
+    {
+      field: 'category',
+      headerName: 'Category',
+      valueGetter: (params: GridValueGetterParams) => params.row.category.name,
+      flex: 2,
+      headerAlign: 'left',
+      align: 'left',
+    },
     {
       field: 'summary',
       headerName: 'Description',

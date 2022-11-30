@@ -68,7 +68,7 @@ function TaskCreationForm(props: Props) {
     const task = {
       id: 100,
       title: title,
-      category: category.name,
+      category: category,
       description: description,
       author: 'Default',
       answer: answer,
