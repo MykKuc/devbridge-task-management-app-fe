@@ -14,7 +14,10 @@ export default function CategoryEdit(props: Props) {
       <label>Category</label>
       <select
         onChange={(e) => {
+          console.log('before: ' + category);
+          console.log('e.target.value: ' + e.target.value);
           setCategory(e.target.value);
+          console.log('after: ' + category);
         }}
         className={'form-select-sm'}
         style={{ margin: '3px' }}

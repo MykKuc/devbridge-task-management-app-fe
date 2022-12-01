@@ -66,7 +66,9 @@ export default function TaskEdit(props: Props) {
   // Current task's data
   const currTask = props.task;
 
-  const [category, setCategory] = useState(currTask?.category);
+  const category = currTask?.category;
+
+  const [categoryName, setCategoryName] = useState(category?.name);
   const [summary, setSummary] = useState(currTask?.summary);
   const [description, setDescription] = useState(currTask?.description);
   const [answers, setAnswers] = useState(currTask?.answers);
@@ -129,8 +131,8 @@ export default function TaskEdit(props: Props) {
               votes={currTask?.score as number}
               creator={currTask?.user.name as string}
               date={currTask?.creationDate.toString()}
-              category={category?.name as string}
-              setCategory={setCategory}
+              category={categoryName as string}
+              setCategory={setCategoryName}
             />
             <EditButtons handleClose={handleClose} saveTaskEditChanges={saveTaskEditChanges} />
           </Content>
@@ -210,7 +212,7 @@ export default function TaskEdit(props: Props) {
       handleModify({
         id: id,
         title: currTask?.title,
-        category: category,
+        category: { id: category?.id, name: categoryName },
         description: description,
         summary: summary,
         creator: currTask?.user,
