@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './TaskCreation.css';
 import jsonData from './categories.json';
 import TextAnswer from './TextAnswer';
@@ -12,6 +12,18 @@ interface Props {
   close: () => void;
 }
 function TaskCreationForm(props: Props) {
+  // Fetch categories from the backend.
+  const [categories, setCategories] = useState([]);
+  fetch('http://localhost:8080/api/categories/', {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => setCategories(data))
+    .catch((error) => console.log(error));
+
   const initialAnswer = [{ text: '', correct: true }];
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
@@ -113,7 +125,7 @@ function TaskCreationForm(props: Props) {
                   name="category"
                   onChange={(event) => handleCategoryChange(event.target.value)}
                 >
-                  {loadData.categories.map((category: any) => {
+                  {categories.map((category: any) => {
                     return (
                       <option key={category.id} value={JSON.stringify(category)}>
                         {category.name}
