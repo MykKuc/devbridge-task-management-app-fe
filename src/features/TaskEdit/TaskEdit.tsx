@@ -107,7 +107,6 @@ export default function TaskEdit(props: Props) {
           Edit
         </button>
       )}
-
       <Modal
         open={open}
         onClose={handleClose}
@@ -156,11 +155,7 @@ export default function TaskEdit(props: Props) {
   function handleCheckmarkClick(idNum: number) {
     if (answers !== undefined) {
       let answer = answers[idNum];
-      if (answer.correct) {
-        answer.correct = false;
-      } else {
-        answer.correct = true;
-      }
+      answer.correct = !answer.correct;
     }
   }
   // Saves edited information
@@ -176,11 +171,11 @@ export default function TaskEdit(props: Props) {
       return true;
     }
 
-    let emptNumArr: number[] = [];
-    let emptStrArr: string[] = [];
+    let emptyNumArr: number[] = [];
+    let emptyStrArr: string[] = [];
     setDescriptionValidation('');
-    setInvalidAnswerIds(emptNumArr);
-    setInvalidAnswerErrors(emptStrArr);
+    setInvalidAnswerIds(emptyNumArr);
+    setInvalidAnswerErrors(emptyStrArr);
 
     let allIsValid = true;
 
@@ -221,7 +216,7 @@ export default function TaskEdit(props: Props) {
         votes: currTask?.score,
       });
     } else if (!isInList && setTask !== null) {
-      //setTaskaaa()
+      // TODO: need non-mock data change
     }
   }
 }

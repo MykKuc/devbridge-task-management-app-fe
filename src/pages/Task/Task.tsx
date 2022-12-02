@@ -4,6 +4,7 @@ import './Task.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import Content from '../../components/Content';
 import TaskEdit from '../../features/TaskEdit/TaskEdit';
+import mockTasks from '../Tasks/tasks.json';
 
 interface User {
   id: Number;
@@ -128,7 +129,7 @@ const Task = () => {
               </div>
               <div className=" separation" />
               <div className="d-flex flex-row around justify-content-between py-1 ">
-                <TaskEdit id={task?.id as number} isInList={true} setTask={setTask} task={task} />
+                <TaskEdit id={task?.id as number} isInList={false} setTask={setTask} task={task} />
                 <button type="button" className=" btn btn-danger rounded-pill" style={{ width: '100px' }}>
                   {' '}
                   Delete
