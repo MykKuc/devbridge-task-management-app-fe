@@ -68,12 +68,12 @@ function TaskCreationForm(props: Props) {
     const task = {
       id: 100,
       title: title,
-      category: category.name,
+      category: category,
       description: description,
-      creator: 'Default',
+      author: 'Default',
       answer: answer,
-      date: today,
-      votes: 0,
+      creationDate: today,
+      score: 0,
     };
     console.log(task);
     props.handleAdd(event, task);
