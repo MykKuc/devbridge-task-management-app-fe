@@ -86,11 +86,10 @@ function TaskCreationForm(props: Props) {
       <form className="create-task-form" onSubmit={handleSubmit}>
         <Container>
           <Row align="end" style={{ marginBottom: '10px' }}>
-            <Col>
+            <Col className="input-column">
               <label className="small-label">
                 Title<label className="required-star">*</label>
               </label>
-              <br />
               <input
                 className="small-input"
                 type="text"
@@ -102,11 +101,10 @@ function TaskCreationForm(props: Props) {
               />
             </Col>
 
-            <Col>
+            <Col className="input-column">
               <label className="small-label">
                 Category<label className="required-star">*</label>
               </label>
-              <br />
               <select
                 className="category-dropdown"
                 name="category"
@@ -123,11 +121,10 @@ function TaskCreationForm(props: Props) {
             </Col>
           </Row>
           <Row align="center" style={{ marginBottom: '10px' }}>
-            <Col>
+            <Col className="input-column">
               <label className="big-label">
                 Description<label className="required-star">*</label>
               </label>
-              <br />
               <textarea
                 className="big-input"
                 name="description"
@@ -139,9 +136,8 @@ function TaskCreationForm(props: Props) {
             </Col>
           </Row>
           <Row align="center" style={{ marginBottom: '10px' }}>
-            <Col>
+            <Col className="input-column">
               <label className="big-label">Summary</label>
-              <br />
               <input
                 className="big-input summary-input"
                 type="text"
@@ -153,11 +149,10 @@ function TaskCreationForm(props: Props) {
             </Col>
           </Row>
           <Row align="center" style={{ marginBottom: '10px' }}>
-            <Col>
-              <label className="type-label">
+            <Col className="input-column">
+              <label className="type-label" style={{ alignSelf: 'center' }}>
                 Answer type<label className="required-star">*</label>
               </label>
-              <br />
               <select
                 className="type-dropdown"
                 name="type"

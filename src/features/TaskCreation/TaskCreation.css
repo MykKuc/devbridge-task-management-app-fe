@@ -3,6 +3,17 @@
   text-align: center;
 }
 
+.input-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-column > label {
+  align-self: flex-start;
+}
+
 /* plus icon because the normal + character aligns the same way as a non-capital letter would - a bit lower from the middle line */
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
