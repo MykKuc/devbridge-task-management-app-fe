@@ -1,3 +1,7 @@
+:root {
+  --content-header-height: 56px;
+}
+
 #content {
   display: flex;
   flex-direction: column;
@@ -8,13 +12,23 @@
 }
 
 #content .content-header {
+  position: relative;
   background-color: var(--accent-color);
-  height: 55px;
+  height: var(--content-header-height);
   box-shadow: 0px 10px 20px 5px var(--shadow-color);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
+}
+
+.content-header .content-close-button {
+  position: absolute;
+  font-size: 2rem;
+  top: calc(var(--content-header-height) / 2);
+  right: calc(var(--content-header-height) / 2);
+  transform: translate(50%, -50%);
+  cursor: pointer;
 }
 
 #content .content-inner {

@@ -26,7 +26,7 @@ function Login() {
   };
 
   return (
-    <Content name={'Login'} height={'450px'} styleClasses={'col-sm-12 col-12'} style={{ maxWidth: '600px' }}>
+    <Content name={'Login'} height={'450px'} bootstrapColumnBreaks={'col-sm-12 col-12'} style={{ maxWidth: '600px' }}>
       <form onSubmit={handleSubmit}>
         {error ? <label className="login-error">{error}</label> : null}
         <div className="login-input-wrapper">

@@ -23,7 +23,6 @@ const TextAnswer: React.FC<Props> = ({ answer, handleAnswerChange }) => {
         </label>
         <br />
         <textarea
-          style={{ height: 100 }}
           className="big-input"
           name="answer"
           placeholder="Answer"
