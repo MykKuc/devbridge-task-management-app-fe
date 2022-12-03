@@ -3,6 +3,17 @@
   text-align: center;
 }
 
+.input-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-column > label {
+  align-self: flex-start;
+}
+
 .big-label {
   color: var(--accent-color);
   float: left;

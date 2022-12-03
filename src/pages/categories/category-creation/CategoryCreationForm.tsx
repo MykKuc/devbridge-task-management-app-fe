@@ -47,11 +47,10 @@ const CategoryCreationForm = (props: Props) => {
       <form className="create-category-form" onSubmit={handleSubmit}>
         <Container>
           <Row align="center" style={{ marginBottom: '10px' }}>
-            <Col>
+            <Col className="input-column">
               <label className="big-label">
                 Title<label className="required-star">*</label>
               </label>
-              <br />
               <input
                 className="big-input title-input"
                 type="text"
@@ -64,11 +63,10 @@ const CategoryCreationForm = (props: Props) => {
             </Col>
           </Row>
           <Row align="center" style={{ marginBottom: '10px' }}>
-            <Col>
+            <Col className="input-column">
               <label className="big-label">
                 Description<label className="required-star">*</label>
               </label>
-              <br />
               <textarea
                 className="big-input"
                 name="description"
