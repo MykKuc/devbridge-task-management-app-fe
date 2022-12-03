@@ -143,7 +143,7 @@ function TaskCreationForm(props: Props) {
               <label className="big-label">Summary</label>
               <br />
               <input
-                className="big-input"
+                className="big-input summary-input"
                 type="text"
                 name="summary"
                 placeholder="Summary"
