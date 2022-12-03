@@ -1,121 +1,43 @@
-/* Input fields */
-#category-title-input {
-  position: absolute;
-  top: 25%;
-  left: 30%;
-  height: 40px;
+.create-category-form {
+  margin-top: 10px;
+  text-align: center;
+}
 
-  width: 50%;
+.big-label {
+  color: var(--accent-color);
+  float: left;
+  font-size: 1.25rem;
+}
+
+.big-input {
+  height: 60px;
+  min-height: 60px;
+  max-height: 150px;
+  width: 95%;
   border-radius: 10px;
-  background-color: rgb(56, 56, 56);
-  border: 2.5px solid rgb(43, 171, 211);
-  color: rgb(43, 171, 211);
+  background-color: var(--main-shade-color);
+  border: 2.5px solid var(--accent-color);
+  color: var(--accent-color);
 }
 
-#category-description-input {
-  position: absolute;
-  top: 45%;
-  left: 30%;
-  height: 100px;
-  width: 50%;
-  border-radius: 10px;
-  background-color: rgb(56, 56, 56);
-  border: 2.5px solid rgb(43, 171, 211);
-  color: rgb(43, 171, 211);
-}
-
-#title-label {
-  position: absolute;
-  top: 20%;
-  left: 30%;
-}
-
-#description-label {
-  position: absolute;
-  top: 40%;
-  left: 30%;
-}
-
-.modal-main-body {
-  position: absolute;
-  top: 10%;
-  color: #2babd3;
-  font-family: 'Inter', sans-serif;
-}
-
-/* Category creation fields */
-.category-creation-form {
-  position: absolute;
-  top: 3%;
-  left: 25%;
-}
-
-.important-asterisk {
-  color: red;
-}
-
-.category-creation-required {
-  color: red;
-}
-
-.create-category-title-input {
-  position: absolute;
-  width: 500px;
-  color: white;
-}
-
-.create-category-description-input {
-  position: absolute;
-  width: 500px;
-  color: white;
-}
-
-/* Label styling */
-.create-category-labels {
-  color: #2babd3;
-}
-
-.category-creation-title {
-  color: #c42b33;
-}
-
-/* Buttons of the category creation modal */
-
-.category-creation-submit-button {
-  position: absolute;
-  top: 75%;
-  left: 30%;
-  width: 150.5px;
+.big-input.title-input {
   height: 40px;
-
-  background: #2babd3;
-  border-width: 0;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 40px;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 22px;
-  color: white;
+  min-height: 0;
+  max-height: none;
 }
 
-.category-creation-cancel-button {
-  position: absolute;
-  top: 76%;
-  left: 65%;
-  width: 150.5px;
-  height: 40px;
-  background: #c42b33;
-  border-width: 0;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 40px;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 22px;
-  color: white;
+.required-star {
+  color: rgb(201, 43, 40);
 }
 
-.category-input-error {
-  color: red;
+.required-label {
+  position: relative;
+  float: left;
+  margin-left: 1%;
+  color: rgb(201, 43, 40);
+  font-size: 1rem;
+}
+
+.category-creation-buttons {
+  gap: 10px;
 }

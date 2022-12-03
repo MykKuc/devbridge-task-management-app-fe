@@ -82,11 +82,7 @@ const MultipleAnswer = (props: Props) => {
               />
             </Col>
             <Col md={1} sm={2} xs={2}>
-              <IconButton
-                className="answer-delete-button"
-                style={{ float: 'right' }}
-                onClick={() => handleDelete(index)}
-              >
+              <IconButton style={{ float: 'right' }} onClick={() => handleDelete(index)}>
                 <DeleteIcon className="answer-delete-button" />
               </IconButton>
             </Col>
@@ -95,8 +91,8 @@ const MultipleAnswer = (props: Props) => {
       })}
       <Row align="center" style={{ marginBottom: '10px' }}>
         <Col>
-          <button className="add-answer-button" onClick={addNewAnswer}>
-            +
+          <button className="button-primary add-answer-button" onClick={addNewAnswer}>
+            <span className="material-symbols-outlined">add</span>
           </button>
         </Col>
       </Row>
