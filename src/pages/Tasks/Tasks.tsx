@@ -19,7 +19,6 @@ import Content from '../../components/Content';
 import TaskCreation from '../../features/TaskCreation/TaskCreation';
 import { useNavigate } from 'react-router-dom';
 import TaskEdit from '../../features/TaskEdit/TaskEdit';
-import taskJsonData from './tasks.json';
 
 interface User {
   id: Number;
@@ -37,7 +36,7 @@ interface Answer {
   correct: boolean;
 }
 
-interface TaskData {
+interface FullTaskData {
   id: Number;
   title: String;
   description: String;
@@ -68,6 +67,9 @@ interface TaskData {
 function Tasks() {
   const [tasks, setTasks] = useState<TaskData[]>([]);
   const [showModal, setShow] = useState(false);
+  const [showModifyModal, setShowModifyModal] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(0);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -100,47 +102,23 @@ function Tasks() {
   const formatDescription = (description: String) => {
     return description.length > 100 ? description.substring(0, 97) + '...' : description;
   };
-  const handleModify = (task: any) => {
-    let tasksResCopy = [...tasksRes];
-    for (let i = 0; i < tasksResCopy.length; i++) {
-      if (tasksResCopy[i].id === task.id) {
-        console.log('identical found.');
-        task.creator = task.creator.name;
-        task.category = task.category.name;
-        tasksResCopy[i] = task;
+  const handleModify = (task: FullTaskData) => {
+    let tempTasks = [...tasks];
+    for (let i = 0; i < tasks.length; i++) {
+      if (tempTasks[i].id === task.id) {
+        tempTasks[i].author = task.user.name;
+        tempTasks[i].id = task.id;
+        tempTasks[i].title = task.title;
+        tempTasks[i].description = task.description;
+        tempTasks[i].summary = formatDescription(task.summary);
+        tempTasks[i].creationDate = task.creationDate;
+        tempTasks[i].score = task.score;
+        tempTasks[i].category = task.category;
+
+        setTasks(tempTasks);
         break;
       }
     }
-    setTasksRes(tasksResCopy);
-    console.log('end');
-  };
-
-  const getMockData = (taskId: number) => {
-    const task = taskJsonData && taskJsonData.find((e) => e.id === Number(taskId));
-    const answers = task?.answer;
-    let convertedAnswers: Answer[] = [];
-    if (answers !== undefined) {
-      for (let i = 0; i < answers?.length; i++) {
-        convertedAnswers.push({
-          id: answers[i].id as Number,
-          text: answers[i].text as String,
-          correct: answers[i].isCorrect,
-        });
-      }
-    }
-    let convertedTask: TaskData = {
-      id: task?.id as Number,
-      title: task?.title as String,
-      description: task?.description as String,
-      summary: task?.summary as String,
-      creationDate: new Date(task?.date !== undefined ? task.date : ''),
-      score: task?.votes as Number,
-      user: { id: -1, name: task?.creator as String },
-      category: { id: -2, name: task?.category as String },
-      answers: convertedAnswers,
-    };
-
-    return convertedTask;
   };
 
   const columns: GridColumns = [
@@ -205,11 +183,14 @@ function Tasks() {
           onClick={() => navigate('/task/' + params.id)}
           label="View"
         />,
-        <TaskEdit
-          id={params.id as number}
-          isInList={true}
-          handleModify={handleModify}
-          task={getMockData(params.id as number)}
+        <GridActionsCellItem
+          className="task-action-button"
+          icon={<EditIcon />}
+          onClick={() => {
+            setSelectedTask(params.id as number);
+            setShowModifyModal(true);
+          }}
+          label="Edit"
         />,
         <GridActionsCellItem
           className="task-action-button"
@@ -228,6 +209,14 @@ function Tasks() {
 
   return (
     <Content name={'Tasks'}>
+      <TaskEdit
+        show={showModifyModal}
+        close={() => {
+          setShowModifyModal(false);
+        }}
+        handleModify={handleModify}
+        id={selectedTask}
+      />
       <TaskCreation
         show={showModal}
         close={() => {
