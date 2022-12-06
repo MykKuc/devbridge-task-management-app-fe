@@ -29,16 +29,16 @@ html {
   justify-content: space-between;
 }
 
-.button-primary {
+.button-primary,
+.button-secondary {
+  box-sizing: border-box;
   cursor: pointer;
   border-radius: 20px;
   padding: 0 16px;
   height: 40px;
   line-height: 1;
   font-size: 1.1rem;
-  background-color: var(--accent-color);
-  color: white;
-  font-weight: 500;
+  font-weight: 600;
   border: none;
   transition-property: background-color;
   transition-duration: 0.5s;
@@ -46,8 +46,26 @@ html {
   letter-spacing: 1px;
   min-width: 120px;
   text-align: center;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.button-primary {
+  background-color: var(--accent-color);
+  color: white;
 }
 
 .button-primary:hover {
   background-color: var(--accent-shade-color);
+}
+
+.button-secondary {
+  background-color: white;
+  border: solid 2px var(--accent-color);
+  color: var(--accent-color);
+}
+
+.button-secondary:hover {
+  background-color: #d6d6d6;
 }
