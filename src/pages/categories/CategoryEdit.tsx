@@ -19,35 +19,32 @@ export default function CategoryEdit({
   description: string;
   handleEdit: Function;
 }) {
-  const [open, setOpen] = useState(show);
   const [titleInput, setTitleInput] = useState(title);
   const [descriptionInput, setDescriptionInput] = useState(description);
 
   const handleOpen = () => {
-    setOpen(true);
+    setShow(true);
   };
   const handleClose = () => {
-    setOpen(false);
     setShow(false);
   };
 
   function saveCategory() {
     //SET NEW VALUES TO DATABASE INSTEAD:
     handleEdit(id, titleInput, descriptionInput);
-    setOpen(false);
     setShow(false);
   }
 
   function handleSubmit(e: any) {
     e.preventDefault();
     saveCategory();
-    setOpen(false);
+    setShow(false);
   }
 
   return (
     <div>
       <div className="edit-btn" onClick={handleOpen}></div>
-      <EmptyModal show={open} title={'Edit Category'} close={handleClose}>
+      <EmptyModal show={show} title={'Edit Category'} close={handleClose}>
         <div className="d-flex justify-content-center">
           <form className="col-6 mt-5" onSubmit={handleSubmit}>
             <label htmlFor="title" className="ps-2 label">
