@@ -13,7 +13,7 @@ const CategoryCreation = (props: Props) => {
       <EmptyModal
         show={props.show}
         close={props.close}
-        title="Create Cateogry"
+        title="Create Category"
         height="40vh"
         bootstrapColumnBreaks="col-xxl-5 col-xl-6 col-lg-7 col-md-9 col-sm-11 col-12"
       >
