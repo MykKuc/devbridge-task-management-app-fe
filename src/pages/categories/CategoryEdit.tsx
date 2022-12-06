@@ -27,8 +27,6 @@ export default function CategoryEdit({
     setOpen(true);
   };
   const handleClose = () => {
-    setTitleInput(title);
-    setDescriptionInput(description);
     setOpen(false);
     setShow(false);
   };
@@ -79,7 +77,9 @@ export default function CategoryEdit({
             />
             <div className="d-flex justify-content-center">
               <button className="submit button blue my-5 text-center me-3">SAVE</button>
-              <button className="submit button red my-5 text-center ">CANCEL</button>
+              <button className="button red my-5 text-center " onClick={handleClose}>
+                CANCEL
+              </button>
             </div>
           </form>
         </div>
