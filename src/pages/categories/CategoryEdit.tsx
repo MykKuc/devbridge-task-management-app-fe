@@ -1,26 +1,27 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+import EmptyModal from 'components/EmptyModal';
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import './CategoryEdit.css';
+import 'components/EmptyModal.css';
 
 export default function CategoryEdit({
-  titleOld,
-  setTitleOld,
-  descriptionOld,
-  setDescriptionOld,
+  show,
+  setShow,
+  id,
+  title,
+  description,
+  handleEdit,
 }: {
-  titleOld: string;
-  setTitleOld: Function;
-  descriptionOld: string;
-  setDescriptionOld: Function;
+  show: boolean;
+  setShow: Function;
+  id: string;
+  title: string;
+  description: string;
+  handleEdit: Function;
 }) {
-  const [open, setOpen] = useState(false);
-  const [titleInput, setTitleInput] = useState(titleOld);
-  const [descriptionInput, setDescriptionInput] = useState(descriptionOld);
+  const [open, setOpen] = useState(show);
+  const [titleInput, setTitleInput] = useState(title);
+  const [descriptionInput, setDescriptionInput] = useState(description);
   const [formValid, setFormValid] = useState(false);
   const [validationChecked, setValidationChecked] = useState(false);
   const [validation, SetValidation] = useState({
@@ -35,9 +36,10 @@ export default function CategoryEdit({
     validation.formErrors = { title: '', description: '' };
     validation.titleValid = true;
     validation.descriptionValid = true;
-    setTitleInput(titleOld);
-    setDescriptionInput(descriptionOld);
+    setTitleInput(title);
+    setDescriptionInput(description);
     setOpen(false);
+    setShow(false);
   };
 
   function validateFields() {
@@ -59,11 +61,12 @@ export default function CategoryEdit({
   }
   function saveCategory() {
     //SET NEW VALUES TO DATABASE INSTEAD:
-    setTitleOld(titleInput);
-    setDescriptionOld(descriptionInput);
+    handleEdit(id, titleInput, descriptionInput);
+    setOpen(false);
+    setShow(false);
   }
   useEffect(() => {
-    if (formValid) {
+    if (formValid && validationChecked) {
       saveCategory();
       setOpen(false);
     }
@@ -82,79 +85,54 @@ export default function CategoryEdit({
   return (
     <div>
       <div className="edit-btn" onClick={handleOpen}></div>
-
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box className="empty-modal">
-          <Button onClick={handleClose} className="modal-close-button">
-            <p className="modal-close-button-text">X</p>
-          </Button>
-
-          <Box className="modal-header">
-            <Typography
-              id="modal-modal-title"
-              variant="h6"
-              component="h2"
-              align="center"
-              className="modal-header-hidden"
-            >
-              .
-            </Typography>
-          </Box>
-          <h2 className="modal-header-text">Edit Category</h2>
-
-          <Typography id="modal-modal-description" className="modal-main-body">
-            <div>
-              <label htmlFor="title" className="ps-2 label">
-                Title
-              </label>
-              <input
-                type="text"
-                placeholder="Title"
-                className="input"
-                value={titleInput}
-                onChange={(e) => setTitleInput(e.target.value)}
-                id="title"
-              />
-              {!validation.titleValid && <p className="alert alert-danger">{validation.formErrors.title}</p>}
-              <br />
-              <label htmlFor="description" className="ps-2 label">
-                Description
-              </label>
-              <textarea
-                style={{ height: '200px' }}
-                placeholder="Description"
-                className="input"
-                value={descriptionInput}
-                onChange={(e) => setDescriptionInput(e.target.value)}
-                id="description"
-              />
-              {!validation.descriptionValid && (
-                <p className="alert alert-danger">{validation.formErrors.description}</p>
-              )}
-              <div className="d-flex justify-content-center">
-                <button onClick={handleSumbit} className="button blue my-5 text-center me-3">
-                  SAVE
-                </button>
-                <button onClick={handleClose} className="button red my-5 text-center ">
-                  CANCEL
-                </button>
-              </div>
+      <EmptyModal show={open} title={'Edit Category'} close={handleClose}>
+        <div className="d-flex justify-content-center">
+          <div className="col-6 mt-5">
+            <label htmlFor="title" className="ps-2 label">
+              Title<span style={{ color: 'red' }}>*</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Title"
+              className="input"
+              value={titleInput}
+              onChange={(e) => setTitleInput(e.target.value)}
+              id="title"
+            />
+            {!validation.titleValid && <p className="alert alert-danger">{validation.formErrors.title}</p>}
+            <br />
+            <label htmlFor="description" className="ps-2 label">
+              Description<span style={{ color: 'red' }}>*</span>
+            </label>
+            <textarea
+              style={{ height: '200px' }}
+              placeholder="Description"
+              className="input"
+              value={descriptionInput}
+              onChange={(e) => setDescriptionInput(e.target.value)}
+              id="description"
+            />
+            {!validation.descriptionValid && <p className="alert alert-danger">{validation.formErrors.description}</p>}
+            <div className="d-flex justify-content-center">
+              <button onClick={handleSumbit} className="button blue my-5 text-center me-3">
+                SAVE
+              </button>
+              <button onClick={handleClose} className="button red my-5 text-center ">
+                CANCEL
+              </button>
             </div>
-          </Typography>
-        </Box>
-      </Modal>
+          </div>
+        </div>
+      </EmptyModal>
     </div>
   );
 }
 
 CategoryEdit.propTypes = {
+  show: PropTypes.bool.isRequired,
+  setShow: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  setTitle: PropTypes.func.isRequired,
   description: PropTypes.string.isRequired,
-  setDescription: PropTypes.func.isRequired,
+  handleEdit: PropTypes.func.isRequired,
 };
