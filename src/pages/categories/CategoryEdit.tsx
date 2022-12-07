@@ -43,7 +43,6 @@ export default function CategoryEdit({
 
   return (
     <div>
-      <div className="edit-btn" onClick={handleOpen}></div>
       <EmptyModal show={show} title={'Edit Category'} close={handleClose}>
         <div className="d-flex justify-content-center">
           <form className="col-6 mt-5" onSubmit={handleSubmit}>
