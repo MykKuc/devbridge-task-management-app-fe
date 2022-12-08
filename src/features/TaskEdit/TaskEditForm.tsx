@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './TaskEdit.css';
 import jsonData from './categories.json';
 import TextAnswer from './TextAnswer';
@@ -50,6 +50,19 @@ interface Props {
   id: number;
 }
 function TaskCreationForm(props: Props) {
+  const [categoriesFromDb, setCategories] = useState<any[]>([]);
+  useEffect(() => {
+    fetch('http://localhost:8080/api/categories/', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setCategories(data.categories))
+      .catch((error) => console.log(error));
+  });
+
   const initialAnswer = [{ id: 0, text: '', correct: true }];
   let url = 'http://localhost:8080/api/tasks/' + props.id;
 
@@ -187,7 +200,7 @@ function TaskCreationForm(props: Props) {
                   name="category"
                   onChange={(event) => handleCategoryChange(event.target.value)}
                 >
-                  {loadData.categories.map((category: any) => {
+                  {categoriesFromDb.map((category: any) => {
                     return (
                       <option key={category.id} value={JSON.stringify(category)}>
                         {category.name}
