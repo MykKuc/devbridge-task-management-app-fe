@@ -18,6 +18,7 @@ import './tasks.css';
 import Content from '../../components/Content';
 import TaskCreation from '../../features/TaskCreation/TaskCreation';
 import { useNavigate } from 'react-router-dom';
+import DeleteConfirmation from './DeleteTask/DeleteConfirmation';
 
 interface Category {
   id: Number;
@@ -39,6 +40,8 @@ function Tasks() {
   const [tasks, setTasks] = useState<TaskData[]>([]);
   const [showModal, setShow] = useState(false);
   const navigate = useNavigate();
+  const [showDelete, setShowDelete] = useState(false);
+  const [deleteId, setDeleteId] = useState(-1);
 
   useEffect(() => {
     fetch('http://localhost:8080/api/tasks/')
@@ -58,13 +61,21 @@ function Tasks() {
         }
         setTasks(data);
       });
-  }, []);
+  }, [showDelete]);
 
   const handleAdd = (event: any, task: any) => {
     const tasksCopy = [...tasks];
     task.summary = task.summary == null || task.summary === '' ? formatDescription(task.description) : task.summary;
     tasksCopy.push(task);
     setTasks(tasksCopy);
+  };
+
+  const handleDelete = (id: any) => {
+    const url = 'http://localhost:8080/api/tasks/' + id;
+    fetch(url, {
+      method: 'DELETE',
+      mode: 'cors',
+    });
   };
 
   const formatDescription = (description: String) => {
@@ -142,7 +153,10 @@ function Tasks() {
         <GridActionsCellItem
           className="task-action-button"
           icon={<DeleteIcon />}
-          onClick={() => console.log(`Delete task with id ${params.id}`)}
+          onClick={() => {
+            setDeleteId(Number(params.id));
+            setShowDelete(true);
+          }}
           label="Delete"
         />,
       ],
@@ -162,6 +176,14 @@ function Tasks() {
           setShow(false);
         }}
         handleAdd={handleAdd}
+      />
+      <DeleteConfirmation
+        show={showDelete}
+        close={() => {
+          setShowDelete(false);
+        }}
+        handleDelete={handleDelete}
+        id={deleteId}
       />
       <div className="button-wrapper">
         <button
