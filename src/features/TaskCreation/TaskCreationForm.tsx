@@ -4,6 +4,7 @@ import jsonData from './categories.json';
 import TextAnswer from './TextAnswer';
 import MultipleAnswer from './MultipleAnswer';
 import { Container, Row, Col } from 'react-grid-system';
+import config from '../../config';
 
 const loadData = JSON.parse(JSON.stringify(jsonData));
 
@@ -64,20 +65,43 @@ function TaskCreationForm(props: Props) {
   };
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+
     const today = new Date().toLocaleDateString();
     const task = {
-      id: 100,
-      title: title,
-      category: category,
-      description: description,
-      author: 'Default',
-      answer: answer,
-      creationDate: today,
-      score: 0,
+      title: title.toString(),
+      categoryId: category.id,
+      description: description.toString(),
+      summary: summary.toString(),
+      answers: answer,
     };
     console.log(task);
-    props.handleAdd(event, task);
-    props.close();
+    try {
+      fetch(config.backendURL + '/tasks/', {
+        method: 'POST',
+        body: JSON.stringify(task),
+        headers: { 'Content-Type': 'application/json' },
+      }).then((response) => {
+        if (response.status === 201) {
+          console.log('Task created successfully');
+          props.close();
+        } else if (response.status === 401) {
+          console.error('Unauthorized while creating task');
+        } else if (response.status === 403) {
+          console.error('Forbidden while creating task');
+        } else if (response.status === 404) {
+          console.error('Not found while creating task');
+        } else {
+          console.error('Unexpected error while creating task');
+        }
+      });
+    } catch (e) {
+      if (typeof e === 'string') {
+        console.error(e.toUpperCase());
+      } else if (e instanceof Error) {
+        console.error(e.message);
+      }
+    }
   };
 
   return (
