@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './TaskCreation.css';
+import jsonData from './categories.json';
 import TextAnswer from './TextAnswer';
 import MultipleAnswer from './MultipleAnswer';
 import { Container, Row, Col } from 'react-grid-system';
+
+const loadData = JSON.parse(JSON.stringify(jsonData));
 
 interface Props {
   handleAdd: any;
