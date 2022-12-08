@@ -18,6 +18,35 @@ import './tasks.css';
 import Content from '../../components/Content';
 import TaskCreation from '../../features/TaskCreation/TaskCreation';
 import { useNavigate } from 'react-router-dom';
+import TaskEdit from '../../features/TaskEdit/TaskEdit';
+
+interface User {
+  id: Number;
+  name: String;
+}
+
+interface Category {
+  id: Number;
+  name: String;
+}
+
+interface Answer {
+  id: Number;
+  text: String;
+  correct: boolean;
+}
+
+interface FullTaskData {
+  id: Number;
+  title: String;
+  description: String;
+  summary: String;
+  creationDate: Date;
+  score: Number;
+  user: User;
+  category: Category;
+  answers: Answer[];
+}
 
 interface Category {
   id: Number;
@@ -38,6 +67,9 @@ interface TaskData {
 function Tasks() {
   const [tasks, setTasks] = useState<TaskData[]>([]);
   const [showModal, setShow] = useState(false);
+  const [showModifyModal, setShowModifyModal] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(0);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,6 +101,24 @@ function Tasks() {
 
   const formatDescription = (description: String) => {
     return description.length > 100 ? description.substring(0, 97) + '...' : description;
+  };
+  const handleModify = (task: FullTaskData) => {
+    let tempTasks = [...tasks];
+    for (let i = 0; i < tasks.length; i++) {
+      if (tempTasks[i].id === task.id) {
+        tempTasks[i].author = task.user.name;
+        tempTasks[i].id = task.id;
+        tempTasks[i].title = task.title;
+        tempTasks[i].description = task.description;
+        tempTasks[i].summary = formatDescription(task.summary);
+        tempTasks[i].creationDate = task.creationDate;
+        tempTasks[i].score = task.score;
+        tempTasks[i].category = task.category;
+
+        setTasks(tempTasks);
+        break;
+      }
+    }
   };
 
   const columns: GridColumns = [
@@ -136,7 +186,10 @@ function Tasks() {
         <GridActionsCellItem
           className="task-action-button"
           icon={<EditIcon />}
-          onClick={() => console.log(`Edit task with id ${params.id}`)}
+          onClick={() => {
+            setSelectedTask(params.id as number);
+            setShowModifyModal(true);
+          }}
           label="Edit"
         />,
         <GridActionsCellItem
@@ -156,6 +209,14 @@ function Tasks() {
 
   return (
     <Content name={'Tasks'}>
+      <TaskEdit
+        show={showModifyModal}
+        close={() => {
+          setShowModifyModal(false);
+        }}
+        handleModify={handleModify}
+        id={selectedTask}
+      />
       <TaskCreation
         show={showModal}
         close={() => {
