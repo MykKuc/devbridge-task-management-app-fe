@@ -1,7 +1,7 @@
 variables:
   # Change
   TEAM_NAME: "admission-tool"
-  HOST: "admission-toolfe.devbstaging.com"
+  HOST: "admission-tool.devbstaging.com"
   DEPLOYMENT_BRANCH: "master"
 
   # DO NOT CHANGE

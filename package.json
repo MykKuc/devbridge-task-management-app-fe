@@ -22,6 +22,7 @@
     "axios": "^1.2.0",
     "bootstrap": "^5.2.2",
     "eslint": "^8.26.0",
+    "loglevel": "^1.8.1",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

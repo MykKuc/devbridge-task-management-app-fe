@@ -18,6 +18,7 @@ import './tasks.css';
 import Content from '../../components/Content';
 import TaskCreation from '../../features/TaskCreation/TaskCreation';
 import { useNavigate } from 'react-router-dom';
+import config from '../../config';
 
 interface Category {
   id: Number;
@@ -41,7 +42,7 @@ function Tasks() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/tasks/')
+    fetch(config.backendURL + '/tasks/')
       .then((response) => {
         if (response.status === 200) {
           return response.json();
