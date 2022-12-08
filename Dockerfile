@@ -5,7 +5,7 @@ FROM node:16-alpine
 RUN mkdir /app
 WORKDIR /app
 # Copy src files
-COPY /src /app
+COPY . /app
 # ==== BUILD =====
 # Install dependencies (npm ci makes sure the exact versions in the lockfile gets installed)
 RUN npm ci
