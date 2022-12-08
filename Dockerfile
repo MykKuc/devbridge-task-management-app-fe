@@ -1,10 +1,11 @@
 # ==== CONFIGURE =====
 # Use a Node 16 base image
 FROM node:16-alpine
-# Set the working directory to /src inside the container
-WORKDIR /src
+# Set the working directory to /app inside the container
+RUN mkdir /app && chown app:app /app
+WORKDIR /app
 # Copy src files
-COPY . .
+COPY /src /app
 # ==== BUILD =====
 # Install dependencies (npm ci makes sure the exact versions in the lockfile gets installed)
 RUN npm ci
