@@ -67,12 +67,11 @@ function TaskCreationForm(props: Props) {
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
-    const today = new Date().toLocaleDateString();
     const task = {
-      title: title.toString(),
+      title: title,
       categoryId: category.id,
-      description: description.toString(),
-      summary: summary.toString(),
+      description: description,
+      summary: summary,
       answers: answer,
     };
     console.log(task);
