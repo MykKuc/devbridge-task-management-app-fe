@@ -62,7 +62,7 @@ function Tasks() {
         }
         setTasks(data);
       });
-  }, [showDelete]);
+  }, []);
 
   const handleAdd = (event: any, task: any) => {
     const tasksCopy = [...tasks];
@@ -72,10 +72,28 @@ function Tasks() {
   };
 
   const handleDelete = (id: any) => {
-    const url = 'http://localhost:8080/api/tasks/' + id;
+    const url = config.backendURL + '/tasks/' + id;
     fetch(url, {
       method: 'DELETE',
       mode: 'cors',
+    }).then(() => {
+      fetch(config.backendURL + '/tasks/')
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            return [];
+          }
+        })
+        .then((data: TaskData[]) => {
+          if (data.length !== 0) {
+            data = data.map((t) => ({
+              ...t,
+              summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
+            }));
+          }
+          setTasks(data);
+        });
     });
   };
 
