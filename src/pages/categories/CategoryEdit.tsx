@@ -1,8 +1,10 @@
 import * as React from 'react';
 import EmptyModal from 'components/EmptyModal';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import 'components/EmptyModal.css';
+import './category-creation/CategoryForm.css';
+import { Col, Container, Row } from 'react-grid-system';
 
 export default function CategoryEdit({
   show,
@@ -22,9 +24,6 @@ export default function CategoryEdit({
   const [titleInput, setTitleInput] = useState(title);
   const [descriptionInput, setDescriptionInput] = useState(description);
 
-  const handleOpen = () => {
-    setShow(true);
-  };
   const handleClose = () => {
     setShow(false);
   };
@@ -43,40 +42,58 @@ export default function CategoryEdit({
 
   return (
     <div>
-      <EmptyModal show={show} title={'Edit Category'} close={handleClose}>
-        <div className="d-flex justify-content-center">
-          <form className="col-6 mt-5" onSubmit={handleSubmit}>
-            <label htmlFor="title" className="ps-2 label">
-              Title<span style={{ color: 'red' }}>*</span>
-            </label>
-            <input
-              type="text"
-              required
-              placeholder="Title"
-              className="input"
-              value={titleInput}
-              onChange={(e) => setTitleInput(e.target.value)}
-              id="title"
-            />
-            <br />
-            <label htmlFor="description" className="ps-2 label">
-              Description<span style={{ color: 'red' }}>*</span>
-            </label>
-            <textarea
-              style={{ height: '200px' }}
-              required
-              placeholder="Description"
-              className="input"
-              value={descriptionInput}
-              onChange={(e) => setDescriptionInput(e.target.value)}
-              id="description"
-            />
-            <div className="d-flex justify-content-center">
-              <button className="submit button blue my-5 text-center me-3">SAVE</button>
-              <button className="button red my-5 text-center " onClick={handleClose}>
-                CANCEL
-              </button>
-            </div>
+      <EmptyModal
+        show={show}
+        close={handleClose}
+        title={'Edit Category'}
+        height="40vh"
+        bootstrapColumnBreaks="col-xxl-5 col-xl-6 col-lg-7 col-md-9 col-sm-11 col-12"
+      >
+        <div className="category-form-wrapper">
+          <label className="required-label">required*</label>
+
+          <form className="category-form" onSubmit={handleSubmit}>
+            <Container>
+              <Row align="center" style={{ marginBottom: '10px' }}>
+                <Col className="input-column">
+                  <label className="input-label">
+                    Title<label className="required-star">*</label>
+                  </label>
+                  <input
+                    className="big-input title-input"
+                    type="text"
+                    name="title"
+                    placeholder="Title"
+                    required
+                    onChange={(e) => setTitleInput(e.target.value)}
+                    value={titleInput}
+                  />
+                </Col>
+              </Row>
+              <Row align="center" style={{ marginBottom: '10px' }}>
+                <Col className="input-column">
+                  <label className="input-label">
+                    Description<label className="required-star">*</label>
+                  </label>
+                  <textarea
+                    className="big-input"
+                    name="description"
+                    placeholder="Description"
+                    required
+                    onChange={(e) => setDescriptionInput(e.target.value)}
+                    value={descriptionInput}
+                  />
+                </Col>
+              </Row>
+              <Row className="category-buttons" align="center" justify="center">
+                <button type="submit" className="button-primary">
+                  Save
+                </button>
+                <button onClick={handleClose} className="button-secondary">
+                  Cancel
+                </button>
+              </Row>
+            </Container>
           </form>
         </div>
       </EmptyModal>

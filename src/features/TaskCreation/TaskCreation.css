@@ -3,21 +3,21 @@
   text-align: center;
 }
 
-.input-column {
+.create-task-form .input-column {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
 
-.input-column > label {
+.create-task-form .input-column > label {
   align-self: flex-start;
 }
 
 /* plus icon because the normal + character aligns the same way as a non-capital letter would - a bit lower from the middle line */
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
-.add-answer-button {
+.create-task-form .add-answer-button {
   position: relative;
   padding: 0;
   min-width: unset;
@@ -25,7 +25,7 @@
   border-radius: 50%;
 }
 
-.add-answer-button > * {
+.create-task-form .add-answer-button > * {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -34,19 +34,19 @@
   font-weight: 400;
 }
 
-.small-label {
+.create-task-form .small-label {
   color: var(--accent-color);
   float: left;
   font-size: 1.25rem;
   margin-left: 5%;
 }
 
-.type-label {
+.create-task-form .type-label {
   color: var(--accent-color);
   font-size: 1.25rem;
 }
 
-.required-label {
+.task-required-label {
   position: relative;
   float: left;
   margin-left: 1%;
@@ -54,25 +54,25 @@
   font-size: 1rem;
 }
 
-.required-star {
+.create-task-form .required-star {
   color: rgb(201, 43, 40);
 }
 
-.big-label {
+.create-task-form .big-label {
   color: var(--accent-color);
   float: left;
   font-size: 1.25rem;
   margin-left: 2.5%;
 }
 
-.mult-label {
+.create-task-form .mult-label {
   color: var(--accent-color);
   float: left;
   font-size: 1.25rem;
   margin-left: 2.5%;
 }
 
-.correct-label {
+.create-task-form .correct-label {
   color: var(--accent-color);
   padding: 0;
   font-size: 1.25rem;
@@ -82,7 +82,7 @@
   width: auto;
 }
 
-.category-dropdown {
+.create-task-form .category-dropdown {
   height: 40px;
   width: 90%;
   border-radius: 10px;
@@ -92,7 +92,7 @@
   box-shadow: 0px 3px 8px 1px var(--shadow-color);
 }
 
-.type-dropdown {
+.create-task-form .type-dropdown {
   height: 40px;
   width: 50%;
   max-width: 350px;
@@ -103,7 +103,7 @@
   box-shadow: 0px 3px 8px 1px var(--shadow-color);
 }
 
-.big-input {
+.create-task-form .big-input {
   height: 60px;
   min-height: 60px;
   max-height: 150px;
@@ -114,13 +114,17 @@
   color: var(--accent-color);
 }
 
-.big-input.summary-input {
+.create-task-form .big-input.summary-input {
   height: 40px;
   min-height: 0;
   max-height: none;
 }
 
-.multiple-input {
+.create-task-form textarea.big-input {
+  overflow: hidden;
+}
+
+.create-task-form .multiple-input {
   height: 40px;
   border-radius: 10px;
   background-color: var(--main-shade-color);
@@ -128,24 +132,7 @@
   color: var(--accent-color);
 }
 
-.half-input {
-  padding-top: 20px;
-  display: inline-block;
-  margin: 0 auto;
-  min-width: 400px;
-  max-width: 30vw;
-  font-size: 1.25rem;
-}
-
-.full-input {
-  padding-top: 20px;
-  display: inline-block;
-  width: 100%;
-  font-size: 1.25rem;
-  background-color: var(--main-shade-color);
-}
-
-.small-input {
+.create-task-form .small-input {
   height: 40px;
   width: 90%;
   border-radius: 10px;
@@ -154,13 +141,13 @@
   color: var(--accent-color);
 }
 
-.answer-delete-button {
+.create-task-form .answer-delete-button {
   color: rgb(201, 43, 40);
   border: 1px solid rgb(201, 43, 40);
   border-radius: 5px;
 }
 
-.multiple-checkbox {
+.create-task-form .multiple-checkbox {
   background-color: var(--main-shade-color);
   border-radius: 10px;
   color: var(--accent-color);
