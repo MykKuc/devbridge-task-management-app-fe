@@ -19,6 +19,7 @@ import Content from '../../components/Content';
 import TaskCreation from '../../features/TaskCreation/TaskCreation';
 import { useNavigate } from 'react-router-dom';
 import DeleteConfirmation from './DeleteTask/DeleteConfirmation';
+import config from '../../config';
 
 interface Category {
   id: Number;
@@ -44,7 +45,7 @@ function Tasks() {
   const [deleteId, setDeleteId] = useState(-1);
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/tasks/')
+    fetch(config.backendURL + '/tasks/')
       .then((response) => {
         if (response.status === 200) {
           return response.json();

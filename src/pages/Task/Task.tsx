@@ -3,6 +3,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import './Task.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import Content from '../../components/Content';
+import config from '../../config';
 
 interface User {
   id: Number;
@@ -38,7 +39,7 @@ const Task = () => {
 
   const [task, setTask] = useState<TaskData>();
 
-  const url = 'http://localhost:8080/api/tasks/' + params.id;
+  const url = config.backendURL + '/tasks/' + params.id;
 
   const taskName = task?.title ?? 'Task';
   useEffect(() => {
