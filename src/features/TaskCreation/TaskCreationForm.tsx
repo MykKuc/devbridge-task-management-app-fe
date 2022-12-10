@@ -96,7 +96,7 @@ function TaskCreationForm(props: Props) {
 
   return (
     <>
-      <label className="required-label">required*</label>
+      <label className="task-required-label">required*</label>
       <form className="create-task-form" onSubmit={handleSubmit}>
         <Container>
           <Row align="end" style={{ marginBottom: '10px' }}>

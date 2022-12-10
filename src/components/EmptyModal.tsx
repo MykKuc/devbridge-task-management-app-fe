@@ -1,5 +1,4 @@
 import Modal from '@mui/material/Modal';
-import { useState } from 'react';
 import Content from './Content';
 import './EmptyModal.css';
 
@@ -13,10 +12,6 @@ interface Props {
 }
 
 export default function EmptyModal(props: Props) {
-  const [open, setOpen] = useState(true);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   return (
     <Modal
       open={props.show}

@@ -19,6 +19,8 @@ import Content from '../../components/Content';
 import TaskCreation from '../../features/TaskCreation/TaskCreation';
 import { useNavigate } from 'react-router-dom';
 import TaskEdit from '../../features/TaskEdit/TaskEdit';
+import DeleteConfirmation from './DeleteTask/DeleteConfirmation';
+import config from '../../config';
 
 interface User {
   id: Number;
@@ -48,11 +50,6 @@ interface FullTaskData {
   answers: Answer[];
 }
 
-interface Category {
-  id: Number;
-  name: String;
-}
-
 interface TaskData {
   id: Number;
   title: String;
@@ -71,9 +68,11 @@ function Tasks() {
   const [selectedTask, setSelectedTask] = useState(0);
 
   const navigate = useNavigate();
+  const [showDelete, setShowDelete] = useState(false);
+  const [deleteId, setDeleteId] = useState(-1);
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/tasks/')
+    fetch(config.backendURL + '/tasks/')
       .then((response) => {
         if (response.status === 200) {
           return response.json();
@@ -97,6 +96,32 @@ function Tasks() {
     task.summary = task.summary == null || task.summary === '' ? formatDescription(task.description) : task.summary;
     tasksCopy.push(task);
     setTasks(tasksCopy);
+  };
+
+  const handleDelete = (id: any) => {
+    const url = config.backendURL + '/tasks/' + id;
+    fetch(url, {
+      method: 'DELETE',
+      mode: 'cors',
+    }).then(() => {
+      fetch(config.backendURL + '/tasks/')
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            return [];
+          }
+        })
+        .then((data: TaskData[]) => {
+          if (data.length !== 0) {
+            data = data.map((t) => ({
+              ...t,
+              summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
+            }));
+          }
+          setTasks(data);
+        });
+    });
   };
 
   const formatDescription = (description: String) => {
@@ -195,7 +220,10 @@ function Tasks() {
         <GridActionsCellItem
           className="task-action-button"
           icon={<DeleteIcon />}
-          onClick={() => console.log(`Delete task with id ${params.id}`)}
+          onClick={() => {
+            setDeleteId(Number(params.id));
+            setShowDelete(true);
+          }}
           label="Delete"
         />,
       ],
@@ -223,6 +251,14 @@ function Tasks() {
           setShow(false);
         }}
         handleAdd={handleAdd}
+      />
+      <DeleteConfirmation
+        show={showDelete}
+        close={() => {
+          setShowDelete(false);
+        }}
+        handleDelete={handleDelete}
+        id={deleteId}
       />
       <div className="button-wrapper">
         <button
