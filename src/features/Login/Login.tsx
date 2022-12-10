@@ -18,7 +18,6 @@ function Login() {
     setLogins({ ...logins, [event.target.name]: event.target.value });
   };
 
-  // Login. TODO: Encrypt password, because it can be seen.
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
