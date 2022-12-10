@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Login.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Content from '../../components/Content';
+import config from '../../config';
 
 function Login() {
   const [error, setError] = useState<string | null>(null);
@@ -16,13 +17,41 @@ function Login() {
     setLogins({ ...logins, [event.target.name]: event.target.value });
   };
 
+  // Login
+  const [jwt, setJwt] = useState('');
+
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    if (logins.email === 'testas@testas' && logins.password === 'testas') {
-      navigate('/tasks');
-    } else {
-      setError('Incorrect username or password');
-    }
+    // This request body I will have to send.
+    const loginRequestBody = {
+      email: logins.email,
+      password: logins.password,
+    };
+    console.log(config.backend + '/users/login');
+    fetch(config.backend + '/users/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(loginRequestBody),
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          setError(null);
+          return response.json();
+        } else {
+          setError('Incorrect Username or Password.');
+          return Promise.reject('Incorrect username or password.');
+        }
+      })
+      .then((body) => {
+        console.log(body);
+        setJwt(`${body.tokenType}${body.accessToken}`);
+        console.log(jwt);
+        //Redirecting to some other page after login.
+        window.location.href = 'tasks';
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
