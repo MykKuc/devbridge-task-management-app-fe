@@ -6,11 +6,6 @@ import MultipleAnswer from './MultipleAnswer';
 import { Container, Row, Col } from 'react-grid-system';
 import { taskCancelled } from '@reduxjs/toolkit/dist/listenerMiddleware/exceptions';
 
-//
-//  TODO: Redagavimo metu gali keistis atsakymų kiekis. Kuriant PUT API gali prireikti sukurti naujas "answer" eiles. Nauji atsakymai yra su id = -1
-//
-
-const loadData = JSON.parse(JSON.stringify(jsonData));
 interface User {
   id: Number;
   name: String;
@@ -52,16 +47,16 @@ interface Props {
 function TaskCreationForm(props: Props) {
   const [categoriesFromDb, setCategories] = useState<any[]>([]);
   useEffect(() => {
-    fetch('http://localhost:8080/api/categories/', {
+    fetch('https://admission-tool.devbstaging.com/api/categories/options', {
       method: 'GET',
       headers: {
         Accept: 'application/json',
       },
     })
       .then((response) => response.json())
-      .then((data) => setCategories(data.categories))
+      .then((data) => setCategories(data))
       .catch((error) => console.log(error));
-  });
+  }, []);
 
   const initialAnswer = [{ id: 0, text: '', correct: true }];
   let url = 'http://localhost:8080/api/tasks/' + props.id;

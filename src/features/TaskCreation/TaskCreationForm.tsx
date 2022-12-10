@@ -5,8 +5,6 @@ import TextAnswer from './TextAnswer';
 import MultipleAnswer from './MultipleAnswer';
 import { Container, Row, Col } from 'react-grid-system';
 
-const loadData = JSON.parse(JSON.stringify(jsonData));
-
 interface Props {
   handleAdd: any;
   close: () => void;
@@ -15,16 +13,16 @@ function TaskCreationForm(props: Props) {
   // Fetch categories from the backend.
   const [categoriesFromDb, setCategories] = useState<any[]>([]);
   useEffect(() => {
-    fetch('http://localhost:8080/api/categories/', {
+    fetch('https://admission-tool.devbstaging.com/api/categories/options', {
       method: 'GET',
       headers: {
         Accept: 'application/json',
       },
     })
       .then((response) => response.json())
-      .then((data) => setCategories(data.categories))
+      .then((data) => setCategories(data))
       .catch((error) => console.log(error));
-  });
+  }, []);
 
   const initialAnswer = [{ text: '', correct: true }];
   const [title, setTitle] = React.useState('');
