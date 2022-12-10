@@ -3,6 +3,7 @@ import './Login.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Content from '../../components/Content';
 import config from '../../config';
+import bcrypt from 'bcryptjs';
 
 function Login() {
   const [error, setError] = useState<string | null>(null);
@@ -17,12 +18,10 @@ function Login() {
     setLogins({ ...logins, [event.target.name]: event.target.value });
   };
 
-  // Login
-  const [jwt, setJwt] = useState('');
-
+  // Login. TODO: Encrypt password, because it can be seen.
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    // This request body I will have to send.
+
     const loginRequestBody = {
       email: logins.email,
       password: logins.password,
@@ -45,9 +44,7 @@ function Login() {
         }
       })
       .then((body) => {
-        console.log(body);
-        setJwt(`${body.tokenType}${body.accessToken}`);
-        console.log(jwt);
+        sessionStorage.setItem('token', `${body.accessToken}`);
         //Redirecting to some other page after login.
         window.location.href = 'tasks';
       })
