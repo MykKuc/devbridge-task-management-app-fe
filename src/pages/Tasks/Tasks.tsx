@@ -129,10 +129,7 @@ function Tasks() {
   };
   const handleModify = (task: FullTaskData) => {
     let tempTasks = [...tasks];
-    console.log(tempTasks[1]);
-    debugger;
     const findIndexOfBoth = tempTasks.findIndex(({ id }) => id === task.id);
-    // console.log(found!);
 
     tempTasks[findIndexOfBoth].author = task.user.name;
     tempTasks[findIndexOfBoth].id = task.id;
