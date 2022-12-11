@@ -4,6 +4,7 @@ import './Task.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import Content from '../../components/Content';
 import TaskEdit from '../../features/TaskEdit/TaskEdit';
+import config from '../../config';
 
 interface User {
   id: Number;
@@ -40,7 +41,7 @@ const Task = () => {
   const [task, setTask] = useState<TaskData>();
   const [showModifyModal, setShowModifyModal] = useState(false);
 
-  const url = 'http://localhost:8080/api/tasks/' + params.id;
+  const url = config.backendURL + '/tasks/' + params.id;
 
   const handleModify = (newTask: TaskData) => {
     setTask(newTask);

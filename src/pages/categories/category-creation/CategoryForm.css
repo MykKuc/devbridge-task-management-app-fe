@@ -1,0 +1,68 @@
+.category-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 600px;
+  width: 100%;
+  align-self: center;
+}
+
+.category-form {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.category-form .input-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.category-form .input-column > label {
+  align-self: flex-start;
+}
+
+.category-form .input-label {
+  color: var(--accent-color);
+  float: left;
+  font-size: 1.25rem;
+  margin-left: 2.5%;
+}
+
+.category-form .big-input {
+  height: 60px;
+  min-height: 60px;
+  max-height: 150px;
+  width: 95%;
+  border-radius: 10px;
+  background-color: var(--main-shade-color);
+  border: 2.5px solid var(--accent-color);
+  color: var(--accent-color);
+}
+
+.category-form .big-input.title-input {
+  height: 40px;
+  min-height: 0;
+  max-height: none;
+}
+
+.category-form textarea.big-input {
+  overflow: hidden;
+}
+
+.category-form .required-star {
+  color: rgb(201, 43, 40);
+}
+
+.category-form-wrapper .required-label {
+  position: relative;
+  float: left;
+  margin-left: 1%;
+  color: rgb(201, 43, 40);
+  font-size: 1rem;
+}
+
+.category-form .category-buttons {
+  gap: 10px;
+}

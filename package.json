@@ -21,7 +21,7 @@
     "@types/react-dom": "^18.0.8",
     "axios": "^1.2.0",
     "bootstrap": "^5.2.2",
-    "eslint": "^8.26.0",
+    "loglevel": "^1.8.1",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -33,7 +33,6 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "eslint": "^8.26.0",
     "husky": "^8.0.2",
     "prettier": "^2.7.1",
     "pretty-quick": "^3.1.3",
@@ -44,7 +43,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prepare": "husky install",
+    "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx --cache",
     "pretty-quick": "pretty-quick",
     "prettier:check": "prettier --config .prettierrc.json --check \"src/features/**/*.{js,ts,jsx,tsx,css,scss,html,json}\"",
     "prettier:write": "prettier --config .prettierrc.json --write \"src/features/**/*.{js,ts,jsx,tsx,css,scss,html,json}\""

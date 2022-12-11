@@ -49,19 +49,19 @@ const MultipleAnswer = (props: Props) => {
   return (
     <>
       <Row>
-        <Col md={10}>
+        <Col md={10} sm={8} xs={8}>
           <label className="mult-label">
             Answers<label className="required-star">*</label>
           </label>
         </Col>
-        <Col md={1}>
+        <Col md={1} sm={2} xs={2}>
           <label className="correct-label">Correct</label>
         </Col>
       </Row>
       {answers.map((answer, index) => {
         return (
-          <Row key={index}>
-            <Col md={10}>
+          <Row key={index} style={{ marginBottom: '10px' }}>
+            <Col md={10} sm={8} xs={8}>
               <input
                 style={{ width: '95%' }}
                 className="multiple-input"
@@ -73,7 +73,7 @@ const MultipleAnswer = (props: Props) => {
                 onChange={(event) => handleTextChange(index, event)}
               />
             </Col>
-            <Col md={1}>
+            <Col md={1} sm={2} xs={2} style={{ paddingLeft: 0, paddingRight: 0 }}>
               <CheckBox
                 className="multiple-checkbox"
                 name="correct"
@@ -81,22 +81,18 @@ const MultipleAnswer = (props: Props) => {
                 onChange={() => handleChange(index)}
               />
             </Col>
-            <Col md={1}>
-              <IconButton
-                className="answer-delete-button"
-                style={{ float: 'right', marginRight: '2.5%' }}
-                onClick={() => handleDelete(index)}
-              >
+            <Col md={1} sm={2} xs={2}>
+              <IconButton style={{ float: 'right' }} onClick={() => handleDelete(index)} disabled={answers.length <= 2}>
                 <DeleteIcon className="answer-delete-button" />
               </IconButton>
             </Col>
           </Row>
         );
       })}
-      <Row align="center" style={{ height: '60px' }}>
+      <Row align="center" style={{ marginBottom: '10px' }}>
         <Col>
-          <button className="add-answer-button" onClick={addNewAnswer}>
-            +
+          <button className="button-primary add-answer-button" onClick={addNewAnswer}>
+            <span className="material-symbols-outlined">add</span>
           </button>
         </Col>
       </Row>

@@ -1,7 +1,7 @@
-import { title } from 'process';
 import React from 'react';
 import { useState } from 'react';
-import './CategoryCreationForm.css';
+import './CategoryForm.css';
+import { Container, Row, Col } from 'react-grid-system';
 
 interface Props {
   handleAdd: any;
@@ -41,33 +41,53 @@ const CategoryCreationForm = (props: Props) => {
   };
 
   return (
-    <>
-      <p className="category-creation-required">required *</p>
+    <div className="category-form-wrapper">
+      <label className="required-label">required*</label>
 
-      <form onSubmit={handleSubmit}>
-        <label id="title-label" htmlFor="category-title-input">
-          Title<span className="important-asterisk">*</span>
-        </label>
-        <input onChange={handleTitleChange} id="category-title-input" type="text" placeholder="Title" required></input>
-
-        <label id="description-label" htmlFor="category-description-input">
-          Description<span className="important-asterisk">*</span>
-        </label>
-        <textarea
-          onChange={handleDescriptionChange}
-          id="category-description-input"
-          required
-          placeholder="Description"
-        ></textarea>
-
-        <button type="submit" className="category-creation-submit-button">
-          SAVE
-        </button>
-        <button onClick={handleCancel} className="category-creation-cancel-button">
-          CANCEL
-        </button>
+      <form className="category-form" onSubmit={handleSubmit}>
+        <Container>
+          <Row align="center" style={{ marginBottom: '10px' }}>
+            <Col className="input-column">
+              <label className="input-label">
+                Title<label className="required-star">*</label>
+              </label>
+              <input
+                className="big-input title-input"
+                type="text"
+                name="title"
+                placeholder="Title"
+                required
+                onChange={handleTitleChange}
+                value={categoryTitle}
+              />
+            </Col>
+          </Row>
+          <Row align="center" style={{ marginBottom: '10px' }}>
+            <Col className="input-column">
+              <label className="input-label">
+                Description<label className="required-star">*</label>
+              </label>
+              <textarea
+                className="big-input"
+                name="description"
+                placeholder="Description"
+                required
+                onChange={handleDescriptionChange}
+                value={description}
+              />
+            </Col>
+          </Row>
+          <Row className="category-buttons" align="center" justify="center">
+            <button type="submit" className="button-primary">
+              Save
+            </button>
+            <button onClick={handleCancel} className="button-secondary">
+              Cancel
+            </button>
+          </Row>
+        </Container>
       </form>
-    </>
+    </div>
   );
 };
 

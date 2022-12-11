@@ -17,13 +17,11 @@ const TextAnswer: React.FC<Props> = ({ answer, handleAnswerChange }) => {
   };
   return (
     <Row>
-      <Col>
+      <Col className="input-column">
         <label className="big-label">
           Correct answer<label className="required-star">*</label>
         </label>
-        <br />
         <textarea
-          style={{ height: 100 }}
           className="big-input"
           name="answer"
           placeholder="Answer"

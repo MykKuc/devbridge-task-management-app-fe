@@ -1,209 +1,155 @@
-.outer-div {
-  width: 100%;
+.create-task-form {
+  margin-top: 30px;
   text-align: center;
 }
-.create-task-page {
-  display: inline-block;
-  margin: 0 auto;
-}
-.create-task-form {
-  padding-right: 10%;
-  padding-left: 10%;
-}
-.header {
-  height: 40px;
-  font-weight: bold;
-  color: white;
-  min-height: 30px;
-  background-color: rgb(43, 171, 211);
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  font-size: 19pt;
+
+.create-task-form .input-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.create-btn {
-  height: 50px;
-  min-height: 30px;
-  width: 200px;
-  min-width: 66px;
+.create-task-form .input-column > label {
+  align-self: flex-start;
+}
+
+/* plus icon because the normal + character aligns the same way as a non-capital letter would - a bit lower from the middle line */
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+.create-task-form .add-answer-button {
   position: relative;
-  right: 0;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  border-radius: 50px;
-  font-size: 15pt;
-  color: white;
-  background-color: rgb(43, 171, 211);
-  border: rgb(43, 171, 211);
-  filter: drop-shadow(1px 5px 5px rgba(0, 0, 0, 0.25));
+  padding: 0;
+  min-width: unset;
+  width: 40px;
+  border-radius: 50%;
 }
 
-.add-answer-button {
-  height: 50px;
-  min-height: 30px;
-  width: 50px;
-  min-width: 30px;
-  position: relative;
-  right: 0;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  border-radius: 50px;
-  font-size: 15pt;
-  color: white;
-  background-color: rgb(43, 171, 211);
-  border: rgb(43, 171, 211);
-  filter: drop-shadow(1px 5px 5px rgba(0, 0, 0, 0.25));
+.create-task-form .add-answer-button > * {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.3rem;
+  font-weight: 400;
 }
 
-.small-label {
-  color: rgb(43, 171, 211);
+.create-task-form .small-label {
+  color: var(--accent-color);
   float: left;
-  font-size: 20px;
+  font-size: 1.25rem;
   margin-left: 5%;
 }
 
-.small-label {
-  color: rgb(43, 171, 211);
-  font-size: 20px;
-  margin-right: 30%;
+.create-task-form .type-label {
+  color: var(--accent-color);
+  font-size: 1.25rem;
 }
-.type-label {
-  color: rgb(43, 171, 211);
-  font-size: 20px;
-}
-.required-label {
+
+.task-required-label {
   position: relative;
   float: left;
-  margin-top: 5%;
   margin-left: 1%;
   color: rgb(201, 43, 40);
-  font-size: 20px;
+  font-size: 1rem;
 }
-.required-star {
+
+.create-task-form .required-star {
   color: rgb(201, 43, 40);
-  font-size: 20px;
 }
-.big-label {
-  color: rgb(43, 171, 211);
+
+.create-task-form .big-label {
+  color: var(--accent-color);
   float: left;
-  font-size: 20px;
+  font-size: 1.25rem;
   margin-left: 2.5%;
 }
-.mult-label {
-  color: rgb(43, 171, 211);
+
+.create-task-form .mult-label {
+  color: var(--accent-color);
   float: left;
-  font-size: 20px;
+  font-size: 1.25rem;
   margin-left: 2.5%;
 }
-.correct-label {
-  color: rgb(43, 171, 211);
+
+.create-task-form .correct-label {
+  color: var(--accent-color);
   padding: 0;
-  font-size: 20px;
+  font-size: 1.25rem;
   position: relative;
   left: 50%;
   transform: translateX(-50%);
   width: auto;
 }
 
-.correct-label {
-  color: rgb(43, 171, 211);
-  padding: 0;
-  font-size: 20px;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  width: auto;
-}
-
-.category-dropdown {
+.create-task-form .category-dropdown {
   height: 40px;
-  min-height: 30px;
   width: 90%;
   border-radius: 10px;
-  background-color: rgb(56, 56, 56);
-  border: 2.5px solid rgb(43, 171, 211);
-  color: rgb(43, 171, 211);
+  background-color: var(--main-shade-color);
+  border: 2.5px solid var(--accent-color);
+  color: var(--accent-color);
+  box-shadow: 0px 3px 8px 1px var(--shadow-color);
 }
 
-.type-dropdown {
+.create-task-form .type-dropdown {
   height: 40px;
-  min-height: 30px;
-  width: 60%;
+  width: 50%;
+  max-width: 350px;
   border-radius: 10px;
-  background-color: rgb(56, 56, 56);
-  border: 2.5px solid rgb(43, 171, 211);
-  color: rgb(43, 171, 211);
+  background-color: var(--main-shade-color);
+  border: 2.5px solid var(--accent-color);
+  color: var(--accent-color);
+  box-shadow: 0px 3px 8px 1px var(--shadow-color);
 }
 
-.big-input {
-  height: 40px;
-  min-height: 30px;
+.create-task-form .big-input {
+  height: 60px;
+  min-height: 60px;
+  max-height: 150px;
   width: 95%;
   border-radius: 10px;
-  background-color: rgb(56, 56, 56);
-  border: 2.5px solid rgb(43, 171, 211);
-  color: rgb(43, 171, 211);
+  background-color: var(--main-shade-color);
+  border: 2.5px solid var(--accent-color);
+  color: var(--accent-color);
 }
 
-.multiple-input {
+.create-task-form .big-input.summary-input {
   height: 40px;
-  min-height: 30px;
+  min-height: 0;
+  max-height: none;
+}
+
+.create-task-form textarea.big-input {
+  overflow: hidden;
+}
+
+.create-task-form .multiple-input {
+  height: 40px;
   border-radius: 10px;
-  background-color: rgb(56, 56, 56);
-  border: 2.5px solid rgb(43, 171, 211);
-  color: rgb(43, 171, 211);
+  background-color: var(--main-shade-color);
+  border: 2.5px solid var(--accent-color);
+  color: var(--accent-color);
 }
 
-.half-input {
-  padding-top: 20px;
-  display: inline-block;
-  margin: 0 auto;
-  min-width: 400px;
-  max-width: 30vw;
-  font-size: 20px;
-}
-
-.full-input {
-  padding-top: 20px;
-  display: inline-block;
-  width: 100%;
-  font-size: 20px;
-  background-color: rgb(56, 56, 56);
-}
-
-.small-input {
+.create-task-form .small-input {
   height: 40px;
-  min-height: 30px;
   width: 90%;
   border-radius: 10px;
-  background-color: rgb(56, 56, 56);
-  border: 2.5px solid rgb(43, 171, 211);
-  color: rgb(43, 171, 211);
+  background-color: var(--main-shade-color);
+  border: 2.5px solid var(--accent-color);
+  color: var(--accent-color);
 }
 
-.main-section {
-  padding-top: 30px;
-}
-
-.reg {
-  margin-top: 10px;
-  color: white;
-}
-
-.answer-delete-button {
+.create-task-form .answer-delete-button {
   color: rgb(201, 43, 40);
   border: 1px solid rgb(201, 43, 40);
   border-radius: 5px;
 }
 
-.multiple-checkbox {
-  background-color: rgb(56, 56, 56);
+.create-task-form .multiple-checkbox {
+  background-color: var(--main-shade-color);
   border-radius: 10px;
-  color: rgb(43, 171, 211);
+  color: var(--accent-color);
   font-size: 30px;
-  margin-left: 40px;
 }

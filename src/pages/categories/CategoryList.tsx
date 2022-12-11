@@ -10,11 +10,14 @@ import GetCatogories from './GetCategories';
 import './CategoryList.css';
 import Content from '../../components/Content';
 import CategoryCreation from './category-creation/CategoryCreation';
+import CategoryEdit from './CategoryEdit';
 
 function CategoryList() {
   const categoriesResGet = GetCatogories();
 
   const [showModal, setShowModal] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [editId, setEditId] = useState('');
   const [categoriesRes, setCategoriesRes] = useState(categoriesResGet);
 
   const handleAdd = (task: any) => {
@@ -22,6 +25,18 @@ function CategoryList() {
     CategoryResCopy.push(task);
     setCategoriesRes(CategoryResCopy);
     console.log(categoriesRes);
+  };
+
+  const handleEdit = (id: string, title: string, description: string) => {
+    setCategoriesRes(
+      categoriesRes.map((category) => {
+        if (category.id === id) {
+          category.title = title;
+          category.description = description;
+        }
+        return category;
+      })
+    );
   };
 
   const categoriesData = useMemo(
@@ -67,7 +82,10 @@ function CategoryList() {
         <GridActionsCellItem
           className="category-action-button"
           icon={<EditIcon />}
-          onClick={() => console.log(`Edit category with id ${params.id}`)}
+          onClick={() => {
+            setEditId(params.id.toString());
+            setShowEdit(true);
+          }}
           label="Edit"
         />,
         <GridActionsCellItem
@@ -99,6 +117,16 @@ function CategoryList() {
           Create
         </button>
       </div>
+      {showEdit && (
+        <CategoryEdit
+          show={showEdit}
+          setShow={setShowEdit}
+          id={editId}
+          title={categoriesRes.find((category) => category.id === editId)!.title}
+          description={categoriesRes.find((category) => category.id === editId)!.description}
+          handleEdit={handleEdit}
+        />
+      )}
       <div className="categories-table-wrapper">
         <StyledDataGrid
           headerHeight={70}
