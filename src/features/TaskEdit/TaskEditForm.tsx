@@ -6,10 +6,6 @@ import MultipleAnswer from './MultipleAnswer';
 import { Container, Row, Col } from 'react-grid-system';
 import { taskCancelled } from '@reduxjs/toolkit/dist/listenerMiddleware/exceptions';
 
-//
-//  TODO: Redagavimo metu gali keistis atsakymų kiekis. Kuriant PUT API gali prireikti sukurti naujas "answer" eiles. Nauji atsakymai yra su id = -1
-//
-
 const loadData = JSON.parse(JSON.stringify(jsonData));
 interface User {
   id: Number;

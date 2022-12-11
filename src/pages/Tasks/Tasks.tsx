@@ -129,21 +129,21 @@ function Tasks() {
   };
   const handleModify = (task: FullTaskData) => {
     let tempTasks = [...tasks];
-    for (let i = 0; i < tasks.length; i++) {
-      if (tempTasks[i].id === task.id) {
-        tempTasks[i].author = task.user.name;
-        tempTasks[i].id = task.id;
-        tempTasks[i].title = task.title;
-        tempTasks[i].description = task.description;
-        tempTasks[i].summary = formatDescription(task.summary);
-        tempTasks[i].creationDate = task.creationDate;
-        tempTasks[i].score = task.score;
-        tempTasks[i].category = task.category;
+    console.log(tempTasks[1]);
+    debugger;
+    const findIndexOfBoth = tempTasks.findIndex(({ id }) => id === task.id);
+    // console.log(found!);
 
-        setTasks(tempTasks);
-        break;
-      }
-    }
+    tempTasks[findIndexOfBoth].author = task.user.name;
+    tempTasks[findIndexOfBoth].id = task.id;
+    tempTasks[findIndexOfBoth].title = task.title;
+    tempTasks[findIndexOfBoth].description = task.description;
+    tempTasks[findIndexOfBoth].summary = formatDescription(task.summary);
+    tempTasks[findIndexOfBoth].creationDate = task.creationDate;
+    tempTasks[findIndexOfBoth].score = task.score;
+    tempTasks[findIndexOfBoth].category = task.category;
+
+    setTasks(tempTasks);
   };
 
   const columns: GridColumns = [
