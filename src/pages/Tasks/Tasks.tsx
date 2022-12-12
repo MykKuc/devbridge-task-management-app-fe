@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import {
   GridActionsCellItem,
   GridColumnHeaderParams,
@@ -62,10 +62,26 @@ function Tasks() {
   }, []);
 
   const handleAdd = (event: any, task: any) => {
-    const tasksCopy = [...tasks];
-    task.summary = task.summary == null || task.summary === '' ? formatDescription(task.description) : task.summary;
-    tasksCopy.push(task);
-    setTasks(tasksCopy);
+    let intervalId = setInterval(function () {
+      fetch(config.backendURL + '/tasks/')
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            return [];
+          }
+        })
+        .then((data: TaskData[]) => {
+          if (data.length !== 0) {
+            data = data.map((t) => ({
+              ...t,
+              summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
+            }));
+          }
+          setTasks(data);
+          clearInterval(intervalId);
+        });
+    }, 250);
   };
 
   const formatDescription = (description: String) => {

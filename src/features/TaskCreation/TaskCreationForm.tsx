@@ -74,7 +74,6 @@ function TaskCreationForm(props: Props) {
       summary: summary,
       answers: answer,
     };
-    console.log(task);
     try {
       fetch(config.backendURL + '/tasks/', {
         method: 'POST',
@@ -82,7 +81,7 @@ function TaskCreationForm(props: Props) {
         headers: { 'Content-Type': 'application/json' },
       }).then((response) => {
         if (response.status === 201) {
-          console.log('Task created successfully');
+          props.handleAdd();
           props.close();
         } else if (response.status === 401) {
           console.error('Unauthorized while creating task');
