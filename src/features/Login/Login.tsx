@@ -5,8 +5,6 @@ import Content from '../../components/Content';
 import config from '../../config';
 import bcrypt from 'bcryptjs';
 
-const generatedSalt = bcrypt.genSaltSync(10);
-
 function Login() {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -22,10 +20,10 @@ function Login() {
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    const hashedPassword = bcrypt.hashSync(logins.password, generatedSalt);
+
     const loginRequestBody = {
       email: logins.email,
-      password: hashedPassword,
+      password: logins.password,
     };
     console.log(config.backend + '/users/login');
     fetch(config.backend + '/users/login', {
