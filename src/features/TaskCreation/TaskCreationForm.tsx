@@ -21,6 +21,10 @@ function TaskCreationForm(props: Props) {
   const [type, setType] = React.useState('');
   const [answer, setAnswer] = React.useState(initialAnswer);
 
+  const [titleValidation, setTitleValidation] = React.useState('');
+  const [descriptionValidation, setDescriptionValidation] = React.useState('');
+  const [summaryValidation, setSummaryValidation] = React.useState('');
+
   const [showTextAnswer, setShowTextAnswer] = React.useState(true);
   const [showMultipleAnswer, setShowMultipleAnswer] = React.useState(false);
 
@@ -67,6 +71,10 @@ function TaskCreationForm(props: Props) {
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
+    setTitleValidation('');
+    setDescriptionValidation('');
+    setSummaryValidation('');
+
     const task = {
       title: title,
       categoryId: category.id,
@@ -83,12 +91,18 @@ function TaskCreationForm(props: Props) {
         if (response.status === 201) {
           props.handleAdd();
           props.close();
-        } else if (response.status === 401) {
-          console.error('Unauthorized while creating task');
-        } else if (response.status === 403) {
-          console.error('Forbidden while creating task');
-        } else if (response.status === 404) {
-          console.error('Not found while creating task');
+        } else if (response.status === 400) {
+          response.json().then((responseData) => {
+            if (responseData.title !== undefined) {
+              setTitleValidation(responseData.title);
+            }
+            if (responseData.description !== undefined) {
+              setDescriptionValidation(responseData.description);
+            }
+            if (responseData.summary !== undefined) {
+              setSummaryValidation(responseData.summary);
+            }
+          });
         } else {
           console.error('Unexpected error while creating task');
         }
@@ -109,6 +123,7 @@ function TaskCreationForm(props: Props) {
         <Container>
           <Row align="end" style={{ marginBottom: '10px' }}>
             <Col className="input-column">
+              {titleValidation !== '' ? <label style={{ color: 'red' }}>{titleValidation}</label> : ''}
               <label className="small-label">
                 Title<label className="required-star">*</label>
               </label>
@@ -144,6 +159,7 @@ function TaskCreationForm(props: Props) {
           </Row>
           <Row align="center" style={{ marginBottom: '10px' }}>
             <Col className="input-column">
+              {descriptionValidation !== '' ? <label style={{ color: 'red' }}>{descriptionValidation}</label> : ''}
               <label className="big-label">
                 Description<label className="required-star">*</label>
               </label>
@@ -159,6 +175,7 @@ function TaskCreationForm(props: Props) {
           </Row>
           <Row align="center" style={{ marginBottom: '10px' }}>
             <Col className="input-column">
+              {summaryValidation !== '' ? <label style={{ color: 'red' }}>{summaryValidation}</label> : ''}
               <label className="big-label">Summary</label>
               <input
                 className="big-input summary-input"
