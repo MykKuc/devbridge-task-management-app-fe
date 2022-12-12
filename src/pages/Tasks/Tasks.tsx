@@ -129,16 +129,18 @@ function Tasks() {
   };
   const handleModify = (task: FullTaskData) => {
     let tempTasks = [...tasks];
-    const findIndexOfBoth = tempTasks.findIndex(({ id }) => id === task.id);
+    const taskToUpdate = tempTasks.find((t) => t.id === task.id);
 
-    tempTasks[findIndexOfBoth].author = task.user.name;
-    tempTasks[findIndexOfBoth].id = task.id;
-    tempTasks[findIndexOfBoth].title = task.title;
-    tempTasks[findIndexOfBoth].description = task.description;
-    tempTasks[findIndexOfBoth].summary = formatDescription(task.summary);
-    tempTasks[findIndexOfBoth].creationDate = task.creationDate;
-    tempTasks[findIndexOfBoth].score = task.score;
-    tempTasks[findIndexOfBoth].category = task.category;
+    if (taskToUpdate !== undefined) {
+      taskToUpdate.author = task.user.name;
+      taskToUpdate.id = task.id;
+      taskToUpdate.title = task.title;
+      taskToUpdate.description = task.description;
+      taskToUpdate.summary = formatDescription(task.summary);
+      taskToUpdate.creationDate = task.creationDate;
+      taskToUpdate.score = task.score;
+      taskToUpdate.category = task.category;
+    }
 
     setTasks(tempTasks);
   };
