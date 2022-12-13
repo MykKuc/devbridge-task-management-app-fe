@@ -3,7 +3,6 @@ import './Login.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Content from '../../components/Content';
 import config from '../../config';
-import bcrypt from 'bcryptjs';
 
 function Login() {
   const [error, setError] = useState<string | null>(null);
@@ -45,7 +44,7 @@ function Login() {
       .then((body) => {
         sessionStorage.setItem('token', `${body.accessToken}`);
         //Redirecting to some other page after login.
-        window.location.href = 'tasks';
+        navigate('/tasks');
       })
       .catch((error) => console.log(error));
   };
