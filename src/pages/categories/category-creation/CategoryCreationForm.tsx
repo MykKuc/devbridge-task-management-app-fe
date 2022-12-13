@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import './CategoryCreationForm.css';
+import './CategoryForm.css';
 import { Container, Row, Col } from 'react-grid-system';
 
 interface Props {
@@ -41,14 +41,14 @@ const CategoryCreationForm = (props: Props) => {
   };
 
   return (
-    <>
+    <div className="category-form-wrapper">
       <label className="required-label">required*</label>
 
-      <form className="create-category-form" onSubmit={handleSubmit}>
+      <form className="category-form" onSubmit={handleSubmit}>
         <Container>
           <Row align="center" style={{ marginBottom: '10px' }}>
             <Col className="input-column">
-              <label className="big-label">
+              <label className="input-label">
                 Title<label className="required-star">*</label>
               </label>
               <input
@@ -64,7 +64,7 @@ const CategoryCreationForm = (props: Props) => {
           </Row>
           <Row align="center" style={{ marginBottom: '10px' }}>
             <Col className="input-column">
-              <label className="big-label">
+              <label className="input-label">
                 Description<label className="required-star">*</label>
               </label>
               <textarea
@@ -77,7 +77,7 @@ const CategoryCreationForm = (props: Props) => {
               />
             </Col>
           </Row>
-          <Row className="category-creation-buttons" align="center" justify="center">
+          <Row className="category-buttons" align="center" justify="center">
             <button type="submit" className="button-primary">
               Save
             </button>
@@ -87,7 +87,7 @@ const CategoryCreationForm = (props: Props) => {
           </Row>
         </Container>
       </form>
-    </>
+    </div>
   );
 };
 

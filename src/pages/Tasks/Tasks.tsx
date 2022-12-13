@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   GridActionsCellItem,
   GridColumnHeaderParams,
@@ -18,11 +18,36 @@ import './tasks.css';
 import Content from '../../components/Content';
 import TaskCreation from '../../features/TaskCreation/TaskCreation';
 import { useNavigate } from 'react-router-dom';
+import TaskEdit from '../../features/TaskEdit/TaskEdit';
+import DeleteConfirmation from './DeleteTask/DeleteConfirmation';
 import config from '../../config';
+
+interface User {
+  id: Number;
+  name: String;
+}
 
 interface Category {
   id: Number;
   name: String;
+}
+
+interface Answer {
+  id: Number;
+  text: String;
+  correct: boolean;
+}
+
+interface FullTaskData {
+  id: Number;
+  title: String;
+  description: String;
+  summary: String;
+  creationDate: Date;
+  score: Number;
+  user: User;
+  category: Category;
+  answers: Answer[];
 }
 
 interface TaskData {
@@ -39,8 +64,13 @@ interface TaskData {
 function Tasks() {
   const [tasks, setTasks] = useState<TaskData[]>([]);
   const [showModal, setShow] = useState(false);
+  const [showModifyModal, setShowModifyModal] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(0);
   const [listChanged, setListChanged] = useState(true);
+
   const navigate = useNavigate();
+  const [showDelete, setShowDelete] = useState(false);
+  const [deleteId, setDeleteId] = useState(-1);
 
   useEffect(() => {
     fetch(config.backendURL + '/tasks/')
@@ -63,8 +93,51 @@ function Tasks() {
       });
   }, [listChanged]);
 
+  const handleDelete = (id: any) => {
+    const url = config.backendURL + '/tasks/' + id;
+    fetch(url, {
+      method: 'DELETE',
+      mode: 'cors',
+    }).then(() => {
+      fetch(config.backendURL + '/tasks/')
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            return [];
+          }
+        })
+        .then((data: TaskData[]) => {
+          if (data.length !== 0) {
+            data = data.map((t) => ({
+              ...t,
+              summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
+            }));
+          }
+          setTasks(data);
+        });
+    });
+  };
+
   const formatDescription = (description: String) => {
     return description.length > 100 ? description.substring(0, 97) + '...' : description;
+  };
+  const handleModify = (task: FullTaskData) => {
+    let tempTasks = [...tasks];
+    const taskToUpdate = tempTasks.find((t) => t.id === task.id);
+
+    if (taskToUpdate !== undefined) {
+      taskToUpdate.author = task.user.name;
+      taskToUpdate.id = task.id;
+      taskToUpdate.title = task.title;
+      taskToUpdate.description = task.description;
+      taskToUpdate.summary = formatDescription(task.summary);
+      taskToUpdate.creationDate = task.creationDate;
+      taskToUpdate.score = task.score;
+      taskToUpdate.category = task.category;
+    }
+
+    setTasks(tempTasks);
   };
 
   const columns: GridColumns = [
@@ -132,13 +205,19 @@ function Tasks() {
         <GridActionsCellItem
           className="task-action-button"
           icon={<EditIcon />}
-          onClick={() => console.log(`Edit task with id ${params.id}`)}
+          onClick={() => {
+            setSelectedTask(params.id as number);
+            setShowModifyModal(true);
+          }}
           label="Edit"
         />,
         <GridActionsCellItem
           className="task-action-button"
           icon={<DeleteIcon />}
-          onClick={() => console.log(`Delete task with id ${params.id}`)}
+          onClick={() => {
+            setDeleteId(Number(params.id));
+            setShowDelete(true);
+          }}
           label="Delete"
         />,
       ],
@@ -152,12 +231,28 @@ function Tasks() {
 
   return (
     <Content name={'Tasks'}>
+      <TaskEdit
+        show={showModifyModal}
+        close={() => {
+          setShowModifyModal(false);
+        }}
+        handleModify={handleModify}
+        id={selectedTask}
+      />
       <TaskCreation
         show={showModal}
         close={() => {
           setShow(false);
         }}
         setListChanged={setListChanged}
+      />
+      <DeleteConfirmation
+        show={showDelete}
+        close={() => {
+          setShowDelete(false);
+        }}
+        handleDelete={handleDelete}
+        id={deleteId}
       />
       <div className="button-wrapper">
         <button

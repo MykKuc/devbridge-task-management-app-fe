@@ -1,0 +1,25 @@
+.confirm-task-delete {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.delete-task-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-task-column > label {
+  align-self: flex-start;
+}
+
+.delete-task-label {
+  color: var(--accent-color);
+  font-size: 1.5rem;
+}
+
+.task-delete-buttons {
+  padding-top: 3vh;
+  gap: 20px;
+}
