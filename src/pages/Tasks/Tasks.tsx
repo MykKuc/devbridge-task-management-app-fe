@@ -39,6 +39,7 @@ interface TaskData {
 function Tasks() {
   const [tasks, setTasks] = useState<TaskData[]>([]);
   const [showModal, setShow] = useState(false);
+  const [listChanged, setListChanged] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -58,31 +59,9 @@ function Tasks() {
           }));
         }
         setTasks(data);
+        setListChanged(false);
       });
-  }, []);
-
-  const handleAdd = (event: any, task: any) => {
-    let intervalId = setInterval(function () {
-      fetch(config.backendURL + '/tasks/')
-        .then((response) => {
-          if (response.status === 200) {
-            return response.json();
-          } else {
-            return [];
-          }
-        })
-        .then((data: TaskData[]) => {
-          if (data.length !== 0) {
-            data = data.map((t) => ({
-              ...t,
-              summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
-            }));
-          }
-          setTasks(data);
-          clearInterval(intervalId);
-        });
-    }, 250);
-  };
+  }, [listChanged]);
 
   const formatDescription = (description: String) => {
     return description.length > 100 ? description.substring(0, 97) + '...' : description;
@@ -178,7 +157,7 @@ function Tasks() {
         close={() => {
           setShow(false);
         }}
-        handleAdd={handleAdd}
+        setListChanged={setListChanged}
       />
       <div className="button-wrapper">
         <button

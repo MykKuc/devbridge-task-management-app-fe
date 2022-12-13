@@ -4,7 +4,7 @@ import TaskCreationForm from './TaskCreationForm';
 interface Props {
   show: boolean;
   close: () => void;
-  handleAdd: any;
+  setListChanged: Function;
 }
 const TaskCreation = (props: Props) => {
   return (
@@ -16,7 +16,7 @@ const TaskCreation = (props: Props) => {
         height="70vh"
         bootstrapColumnBreaks="col-xxl-6 col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12"
       >
-        <TaskCreationForm handleAdd={props.handleAdd} close={props.close} />
+        <TaskCreationForm setListChanged={props.setListChanged} close={props.close} />
       </EmptyModal>
     </>
   );

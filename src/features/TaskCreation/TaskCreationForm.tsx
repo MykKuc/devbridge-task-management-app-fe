@@ -9,7 +9,7 @@ import config from '../../config';
 const loadData = JSON.parse(JSON.stringify(jsonData));
 
 interface Props {
-  handleAdd: any;
+  setListChanged: Function;
   close: () => void;
 }
 function TaskCreationForm(props: Props) {
@@ -89,7 +89,7 @@ function TaskCreationForm(props: Props) {
         headers: { 'Content-Type': 'application/json' },
       }).then((response) => {
         if (response.status === 201) {
-          props.handleAdd();
+          props.setListChanged(true);
           props.close();
         } else if (response.status === 400) {
           response.json().then((responseData) => {
