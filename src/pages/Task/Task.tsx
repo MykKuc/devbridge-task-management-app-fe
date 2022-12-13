@@ -48,7 +48,11 @@ const Task = () => {
   };
   const taskName = task?.title ?? 'Task';
   useEffect(() => {
-    fetch(url)
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
       .then((response) => {
         if (response.status === 200) {
           return response.json();
