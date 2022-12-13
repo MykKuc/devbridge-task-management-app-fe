@@ -2,7 +2,7 @@ import log from 'loglevel';
 
 // Production configuration (used when app is bundled via 'npm run build')
 const prod = {
-  backend: 'https://admission-tool.devbstaging.com/api',
+  backend: 'https://admission-toolbe.devbstaging.com/api',
   logLevel: 'error',
 };
 
