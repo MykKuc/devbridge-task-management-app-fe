@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import './TaskEdit.css';
+import { Col, Container, Row } from 'react-grid-system';
 import jsonData from './categories.json';
-import TextAnswer from './TextAnswer';
 import MultipleAnswer from './MultipleAnswer';
-import { Container, Row, Col } from 'react-grid-system';
-import { taskCancelled } from '@reduxjs/toolkit/dist/listenerMiddleware/exceptions';
+import './TaskEdit.css';
+import TextAnswer from './TextAnswer';
 
 const loadData = JSON.parse(JSON.stringify(jsonData));
 interface User {

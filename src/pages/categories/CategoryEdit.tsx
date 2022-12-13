@@ -1,50 +1,76 @@
 import * as React from 'react';
 import EmptyModal from 'components/EmptyModal';
-import { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react';
 import 'components/EmptyModal.css';
 import './category-creation/CategoryForm.css';
 import { Col, Container, Row } from 'react-grid-system';
+import config from '../../config';
 
-export default function CategoryEdit({
-  show,
-  setShow,
-  id,
-  title,
-  description,
-  handleEdit,
-}: {
+interface CategoryEditData {
+  id: Number;
+  name: String;
+  description: String;
+}
+
+interface Props {
   show: boolean;
-  setShow: Function;
-  id: string;
-  title: string;
-  description: string;
-  handleEdit: Function;
-}) {
-  const [titleInput, setTitleInput] = useState(title);
-  const [descriptionInput, setDescriptionInput] = useState(description);
+  close: () => void;
+  id: number;
+  handleEdit: any;
+}
 
-  const handleClose = () => {
-    setShow(false);
+export default function CategoryEdit(props: Props) {
+  const [category, setCategory] = useState<CategoryEditData>();
+
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+
+  useEffect(() => {
+    fetch(`${config.backendURL}/categories/${props.id}`)
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+        }
+      })
+      .then((data) => {
+        setCategory(data);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (category !== undefined) {
+      setTitle(category?.name as string);
+      setDescription(category?.description as string);
+    }
+  }, [category]);
+
+  const handleTitleChange = (title: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(title.target.value);
   };
 
-  function saveCategory() {
-    //SET NEW VALUES TO DATABASE INSTEAD:
-    handleEdit(id, titleInput, descriptionInput);
-    setShow(false);
-  }
+  const handleDescriptionChange = (description: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(description.target.value);
+  };
 
   function handleSubmit(e: any) {
     e.preventDefault();
-    saveCategory();
-    setShow(false);
+    if (category !== undefined) {
+      const newCategory: CategoryEditData = {
+        id: category.id,
+        name: title,
+        description: description,
+      };
+      props.handleEdit(newCategory);
+    }
+    props.close();
   }
 
   return (
     <div>
       <EmptyModal
-        show={show}
-        close={handleClose}
+        show={props.show}
+        close={props.close}
         title={'Edit Category'}
         height="40vh"
         bootstrapColumnBreaks="col-xxl-5 col-xl-6 col-lg-7 col-md-9 col-sm-11 col-12"
@@ -65,8 +91,8 @@ export default function CategoryEdit({
                     name="title"
                     placeholder="Title"
                     required
-                    onChange={(e) => setTitleInput(e.target.value)}
-                    value={titleInput}
+                    onChange={handleTitleChange}
+                    value={title}
                   />
                 </Col>
               </Row>
@@ -80,8 +106,8 @@ export default function CategoryEdit({
                     name="description"
                     placeholder="Description"
                     required
-                    onChange={(e) => setDescriptionInput(e.target.value)}
-                    value={descriptionInput}
+                    onChange={handleDescriptionChange}
+                    value={description}
                   />
                 </Col>
               </Row>
@@ -89,7 +115,7 @@ export default function CategoryEdit({
                 <button type="submit" className="button-primary">
                   Save
                 </button>
-                <button onClick={handleClose} className="button-secondary">
+                <button onClick={props.close} className="button-secondary">
                   Cancel
                 </button>
               </Row>
@@ -100,12 +126,3 @@ export default function CategoryEdit({
     </div>
   );
 }
-
-CategoryEdit.propTypes = {
-  show: PropTypes.bool.isRequired,
-  setShow: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  handleEdit: PropTypes.func.isRequired,
-};

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GridActionsCellItem, GridColumns, GridRowParams } from '@mui/x-data-grid';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
@@ -6,53 +6,70 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import StyledDataGrid from '../../components/StyledDataGrid';
 import CustomPagination from '../../components/Pagination';
-import GetCatogories from './GetCategories';
 import './CategoryList.css';
 import Content from '../../components/Content';
 import CategoryCreation from './category-creation/CategoryCreation';
 import CategoryEdit from './CategoryEdit';
+import config from '../../config';
+
+interface Category {
+  id: Number;
+  name: String;
+  description: String;
+  creationDate: Date;
+  author: String;
+}
+
+interface CategoryEditData {
+  id: Number;
+  name: String;
+  description: String;
+}
 
 function CategoryList() {
-  const categoriesResGet = GetCatogories();
+  const [categories, setCategories] = useState<Category[]>([]);
 
   const [showModal, setShowModal] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
-  const [editId, setEditId] = useState('');
-  const [categoriesRes, setCategoriesRes] = useState(categoriesResGet);
+  const [editId, setEditId] = useState(0);
 
-  const handleAdd = (task: any) => {
-    const CategoryResCopy = [...categoriesRes];
-    CategoryResCopy.push(task);
-    setCategoriesRes(CategoryResCopy);
-    console.log(categoriesRes);
-  };
-
-  const handleEdit = (id: string, title: string, description: string) => {
-    setCategoriesRes(
-      categoriesRes.map((category) => {
-        if (category.id === id) {
-          category.title = title;
-          category.description = description;
+  useEffect(() => {
+    fetch(config.backendURL + '/categories/')
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          return [];
         }
-        return category;
       })
-    );
+      .then((data: Category[]) => {
+        setCategories(data);
+      });
+  }, []);
+
+  const handleAdd = (category: any) => {
+    const categoriesCopy = [...categories];
+    categoriesCopy.push(category);
+    setCategories(categoriesCopy);
   };
 
-  const categoriesData = useMemo(
-    () =>
-      categoriesRes.map((t) => ({
-        ...t,
-        actions: null,
-      })),
-    [categoriesRes]
-  );
+  const handleEdit = (category: CategoryEditData) => {
+    let tempCategories = [...categories];
+    const categoryToUpdate = tempCategories.find((c) => c.id === category.id);
+
+    if (categoryToUpdate !== undefined) {
+      categoryToUpdate.name = category.name;
+      categoryToUpdate.description = category.description;
+    }
+
+    setCategories(tempCategories);
+  };
 
   const columns: GridColumns = [
-    { field: 'title', headerName: 'Title', flex: 1, headerAlign: 'left', align: 'left', minWidth: 100 },
+    { field: 'name', headerName: 'Title', flex: 1, headerAlign: 'left', align: 'left', minWidth: 100 },
     { field: 'description', headerName: 'Description', flex: 3, headerAlign: 'left', align: 'left', minWidth: 300 },
     {
-      field: 'creator',
+      field: 'author',
       headerName: 'Creator',
       sortable: false,
       flex: 1,
@@ -61,7 +78,7 @@ function CategoryList() {
       minWidth: 95,
     },
     {
-      field: 'date',
+      field: 'creationDate',
       headerName: 'Date',
       type: 'date',
       valueGetter: ({ value }) => value && new Date(value),
@@ -83,7 +100,7 @@ function CategoryList() {
           className="category-action-button"
           icon={<EditIcon />}
           onClick={() => {
-            setEditId(params.id.toString());
+            setEditId(params.id as number);
             setShowEdit(true);
           }}
           label="Edit"
@@ -120,10 +137,10 @@ function CategoryList() {
       {showEdit && (
         <CategoryEdit
           show={showEdit}
-          setShow={setShowEdit}
+          close={() => {
+            setShowEdit(false);
+          }}
           id={editId}
-          title={categoriesRes.find((category) => category.id === editId)!.title}
-          description={categoriesRes.find((category) => category.id === editId)!.description}
           handleEdit={handleEdit}
         />
       )}
@@ -135,7 +152,7 @@ function CategoryList() {
           disableColumnMenu
           disableSelectionOnClick
           columns={columns}
-          rows={categoriesData}
+          rows={categories}
           components={{
             Pagination: CustomPagination,
           }}

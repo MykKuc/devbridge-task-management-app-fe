@@ -26,10 +26,10 @@ const CategoryCreationForm = (props: Props) => {
     var current_date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     const category = {
       id: 50,
-      title: categoryTitle,
+      name: categoryTitle,
       description: description,
-      creator: 'Default',
-      date: current_date,
+      creationDate: current_date,
+      author: 'Default',
     };
     console.log(category);
     props.handleAdd(category);
