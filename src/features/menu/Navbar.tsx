@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import { NavLink } from 'react-router-dom';
 import ProfileIcon from './assets/profile-icon-white.png';
+import LogoutIcon from './assets/logout-icon.png';
 import Logo from '../../logo_filled.svg';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import './navbar.css';
@@ -39,6 +40,15 @@ export default function Navbar() {
               <img src={ProfileIcon} alt="profile" className="px-1 pb-1" style={{ fontSize: 30 }} />
             </NavLink>
           </div>
+          {sessionStorage.getItem('token') !== null ? (
+            <div className="nav-item">
+              <NavLink className="nav-link" to="/logout">
+                <img src={LogoutIcon} alt="logout" className="px-1 pb-1" style={{ fontSize: 30 }} />
+              </NavLink>
+            </div>
+          ) : (
+            ''
+          )}
         </div>
         <button
           className="navbar-toggler collapsed"

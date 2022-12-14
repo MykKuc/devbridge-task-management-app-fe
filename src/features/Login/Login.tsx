@@ -35,6 +35,7 @@ function Login() {
       .then((response) => {
         if (response.status === 200) {
           setError(null);
+          event.preventDefault();
           return response.json();
         } else {
           setError('Incorrect Username or Password.');
