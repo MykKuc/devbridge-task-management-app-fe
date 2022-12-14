@@ -44,12 +44,6 @@ function CategoryList() {
 
   useEffect(fetchCategories, []);
 
-  const handleAdd = (category: any) => {
-    const categoriesCopy = [...categories];
-    categoriesCopy.push(category);
-    setCategories(categoriesCopy);
-  };
-
   const columns: GridColumns = [
     { field: 'name', headerName: 'Title', flex: 1, headerAlign: 'left', align: 'left', minWidth: 100 },
     { field: 'description', headerName: 'Description', flex: 3, headerAlign: 'left', align: 'left', minWidth: 300 },
@@ -112,7 +106,7 @@ function CategoryList() {
         close={() => {
           setShowModal(false);
         }}
-        handleAdd={handleAdd}
+        fetchCategories={fetchCategories}
       />
       <div className="button-wrapper">
         <button onClick={() => setShowModal(true)} className="button-primary">

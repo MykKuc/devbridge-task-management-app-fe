@@ -7,7 +7,6 @@ import { Col, Container, Row } from 'react-grid-system';
 import config from '../../config';
 
 interface CategoryEditData {
-  id: Number;
   name: String;
   description: String;
 }
@@ -46,12 +45,12 @@ export default function CategoryEdit(props: Props) {
     }
   }, [category]);
 
-  const handleTitleChange = (title: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(title.target.value);
+  const handleTitleChange = (titleInput: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(titleInput.target.value);
   };
 
-  const handleDescriptionChange = (description: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setDescription(description.target.value);
+  const handleDescriptionChange = (descriptionInput: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(descriptionInput.target.value);
   };
 
   const clientValidation = () => {
@@ -90,7 +89,6 @@ export default function CategoryEdit(props: Props) {
       }
 
       const updatedCategory: CategoryEditData = {
-        id: category.id,
         name: title,
         description: description,
       };
