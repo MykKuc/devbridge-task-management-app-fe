@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
-import { Col, Container, Row } from 'react-grid-system';
-import jsonData from './categories.json';
-import MultipleAnswer from './MultipleAnswer';
+import React, { useEffect, useState } from 'react';
 import './TaskEdit.css';
 import TextAnswer from './TextAnswer';
+import MultipleAnswer from './MultipleAnswer';
+import { Container, Row, Col } from 'react-grid-system';
+import config from '../../config';
 
-const loadData = JSON.parse(JSON.stringify(jsonData));
 interface User {
   id: Number;
   name: String;
@@ -45,6 +44,20 @@ interface Props {
   id: number;
 }
 function TaskCreationForm(props: Props) {
+  const [categoriesFromDb, setCategories] = useState<any[]>([]);
+  useEffect(() => {
+    fetch(config.backendURL + '/categories/options', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        Accept: 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setCategories(data))
+      .catch((error) => console.log(error));
+  }, []);
+
   const initialAnswer = [{ id: 0, text: '', correct: true }];
   let url = 'http://localhost:8080/api/tasks/' + props.id;
 
@@ -66,7 +79,11 @@ function TaskCreationForm(props: Props) {
   });
 
   useEffect(() => {
-    fetch(url)
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
       .then((response) => {
         if (response.status === 200) {
           return response.json();
@@ -182,7 +199,7 @@ function TaskCreationForm(props: Props) {
                   name="category"
                   onChange={(event) => handleCategoryChange(event.target.value)}
                 >
-                  {loadData.categories.map((category: any) => {
+                  {categoriesFromDb.map((category: any) => {
                     return (
                       <option key={category.id} value={JSON.stringify(category)}>
                         {category.name}
