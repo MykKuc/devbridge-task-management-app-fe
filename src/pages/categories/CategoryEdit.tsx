@@ -95,7 +95,6 @@ export default function CategoryEdit(props: Props) {
 
       fetch(`${config.backendURL}/categories/${props.id}`, {
         method: 'PUT',
-        mode: 'cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedCategory),
       })

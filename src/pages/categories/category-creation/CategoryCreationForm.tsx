@@ -61,7 +61,6 @@ const CategoryCreationForm = (props: Props) => {
 
     fetch(`${config.backendURL}/categories/`, {
       method: 'POST',
-      mode: 'cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newCategory),
     })
