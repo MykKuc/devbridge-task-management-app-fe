@@ -4,6 +4,7 @@ import jsonData from './categories.json';
 import TextAnswer from './TextAnswer';
 import MultipleAnswer from './MultipleAnswer';
 import { Container, Row, Col } from 'react-grid-system';
+import config from '../../config';
 
 interface Props {
   handleAdd: any;
@@ -13,9 +14,10 @@ function TaskCreationForm(props: Props) {
   // Fetch categories from the backend.
   const [categoriesFromDb, setCategories] = useState<any[]>([]);
   useEffect(() => {
-    fetch('https://admission-tool.devbstaging.com/api/categories/options', {
+    fetch(config.backendURL + '/categories/options', {
       method: 'GET',
       headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         Accept: 'application/json',
       },
     })

@@ -3,6 +3,7 @@ import './TaskEdit.css';
 import TextAnswer from './TextAnswer';
 import MultipleAnswer from './MultipleAnswer';
 import { Container, Row, Col } from 'react-grid-system';
+import config from '../../config';
 import { taskCancelled } from '@reduxjs/toolkit/dist/listenerMiddleware/exceptions';
 
 interface User {
@@ -46,9 +47,10 @@ interface Props {
 function TaskCreationForm(props: Props) {
   const [categoriesFromDb, setCategories] = useState<any[]>([]);
   useEffect(() => {
-    fetch('https://admission-tool.devbstaging.com/api/categories/options', {
+    fetch(config.backendURL + '/categories/options', {
       method: 'GET',
       headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         Accept: 'application/json',
       },
     })
