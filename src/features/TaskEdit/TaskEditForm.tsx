@@ -143,10 +143,7 @@ function TaskCreationForm(props: Props) {
       title: title,
       category: category,
       description: description,
-      user: task?.user,
       answers: answer,
-      creationDate: today,
-      score: task?.score,
       summary: summary,
     };
     console.log(newTask);
