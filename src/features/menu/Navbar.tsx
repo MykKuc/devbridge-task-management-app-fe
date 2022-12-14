@@ -40,7 +40,7 @@ export default function Navbar() {
               <img src={ProfileIcon} alt="profile" className="px-1 pb-1" style={{ fontSize: 30 }} />
             </NavLink>
           </div>
-          {sessionStorage.getItem('token') !== null ? (
+          {sessionStorage.getItem('token') !== null || sessionStorage.getItem('token') !== '' ? (
             <div className="nav-item">
               <NavLink className="nav-link" to="/logout">
                 <img src={LogoutIcon} alt="logout" className="px-1 pb-1" style={{ fontSize: 30 }} />

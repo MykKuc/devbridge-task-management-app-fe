@@ -10,9 +10,9 @@ export default function Logout() {
   useEffect(() => {
     if (ftw !== null) {
       fetch(config.backendURL + '/users/logout/', {
-		method: 'PUT',
-        headers: {  
-          Authorization: 'Bearer ' + ftw.toString(),
+        method: 'PUT',
+        headers: {
+          Authorization: 'Bearer ' + ftw,
         },
       })
         .then((response) => {
