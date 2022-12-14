@@ -4,7 +4,12 @@ import config from '../../config';
 
 function Home() {
   const [show, setShow] = useState(false);
-  fetch(config.backendURL + '/ok').then((response) => {
+  fetch(config.backendURL + '/ok', {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+    },
+  }).then((response) => {
     console.log(response);
     if (response.status == 200) {
       setShow(true);

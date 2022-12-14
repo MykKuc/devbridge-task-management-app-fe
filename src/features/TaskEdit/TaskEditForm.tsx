@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './TaskEdit.css';
-import jsonData from './categories.json';
 import TextAnswer from './TextAnswer';
 import MultipleAnswer from './MultipleAnswer';
 import { Container, Row, Col } from 'react-grid-system';
@@ -79,7 +78,11 @@ function TaskCreationForm(props: Props) {
   });
 
   useEffect(() => {
-    fetch(url)
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
       .then((response) => {
         if (response.status === 200) {
           return response.json();

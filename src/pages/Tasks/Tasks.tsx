@@ -72,7 +72,11 @@ function Tasks() {
   const [deleteId, setDeleteId] = useState(-1);
 
   useEffect(() => {
-    fetch(config.backendURL + '/tasks/')
+    fetch(config.backendURL + '/tasks/', {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
       .then((response) => {
         if (response.status === 200) {
           return response.json();
@@ -101,10 +105,17 @@ function Tasks() {
   const handleDelete = (id: any) => {
     const url = config.backendURL + '/tasks/' + id;
     fetch(url, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
       method: 'DELETE',
       mode: 'cors',
     }).then(() => {
-      fetch(config.backendURL + '/tasks/')
+      fetch(config.backendURL + '/tasks/', {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        },
+      })
         .then((response) => {
           if (response.status === 200) {
             return response.json();
@@ -129,21 +140,20 @@ function Tasks() {
   };
   const handleModify = (task: FullTaskData) => {
     let tempTasks = [...tasks];
-    for (let i = 0; i < tasks.length; i++) {
-      if (tempTasks[i].id === task.id) {
-        tempTasks[i].author = task.user.name;
-        tempTasks[i].id = task.id;
-        tempTasks[i].title = task.title;
-        tempTasks[i].description = task.description;
-        tempTasks[i].summary = formatDescription(task.summary);
-        tempTasks[i].creationDate = task.creationDate;
-        tempTasks[i].score = task.score;
-        tempTasks[i].category = task.category;
+    const taskToUpdate = tempTasks.find((t) => t.id === task.id);
 
-        setTasks(tempTasks);
-        break;
-      }
+    if (taskToUpdate !== undefined) {
+      taskToUpdate.author = task.user.name;
+      taskToUpdate.id = task.id;
+      taskToUpdate.title = task.title;
+      taskToUpdate.description = task.description;
+      taskToUpdate.summary = formatDescription(task.summary);
+      taskToUpdate.creationDate = task.creationDate;
+      taskToUpdate.score = task.score;
+      taskToUpdate.category = task.category;
     }
+
+    setTasks(tempTasks);
   };
 
   const columns: GridColumns = [
