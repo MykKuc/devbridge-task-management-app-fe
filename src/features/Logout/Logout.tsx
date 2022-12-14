@@ -5,20 +5,18 @@ import config from '../../config';
 export default function Logout() {
   const navigate = useNavigate();
   const [logoutRequest, setLogoutRequest] = useState(true);
-  const ftw = sessionStorage.getItem('token');
 
   useEffect(() => {
-    if (ftw !== null) {
+    if (sessionStorage.getItem('token') !== null) {
       fetch(config.backendURL + '/users/logout/', {
         method: 'PUT',
         headers: {
-          Authorization: 'Bearer ' + ftw,
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       })
         .then((response) => {
-          if (response.status === 200) {
+          if (response.status === 204) {
             console.debug('logout successful');
-            sessionStorage.setItem('token', '');
             setLogoutRequest(false);
           } else {
             console.error('logout failed');
@@ -26,9 +24,10 @@ export default function Logout() {
           }
         })
         .then(() => {
-          sessionStorage.setItem('token', '');
+          sessionStorage.removeItem('token');
           setLogoutRequest(false);
           navigate('/');
+          window.location.reload();
         });
     }
   }, [logoutRequest]);

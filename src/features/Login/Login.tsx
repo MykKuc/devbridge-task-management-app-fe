@@ -12,6 +12,10 @@ function Login() {
     password: '',
   });
 
+  if (sessionStorage.getItem('token') !== null) {
+    navigate('/');
+  }
+
   // Handle inputs onChange to sync input value with local state
   const handleInputChange = (event: { target: { name: string; value: string } }) => {
     setLogins({ ...logins, [event.target.name]: event.target.value });
@@ -35,7 +39,6 @@ function Login() {
       .then((response) => {
         if (response.status === 200) {
           setError(null);
-          event.preventDefault();
           return response.json();
         } else {
           setError('Incorrect Username or Password.');
@@ -46,6 +49,7 @@ function Login() {
         sessionStorage.setItem('token', `${body.accessToken}`);
         //Redirecting to some other page after login.
         navigate('/tasks');
+        window.location.reload();
       })
       .catch((error) => console.log(error));
   };

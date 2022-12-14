@@ -35,12 +35,17 @@ export default function Navbar() {
           </li>
         </ul>
         <div className="navbar-login-wrapper d-none d-xl-flex">
-          <div className="nav-item">
-            <NavLink className="nav-link" to="/login">
-              <img src={ProfileIcon} alt="profile" className="px-1 pb-1" style={{ fontSize: 30 }} />
-            </NavLink>
-          </div>
-          {sessionStorage.getItem('token') !== null || sessionStorage.getItem('token') !== '' ? (
+          {sessionStorage.getItem('token') === null ? (
+            <div className="nav-item">
+              <NavLink className="nav-link" to="/login">
+                <img src={ProfileIcon} alt="profile" className="px-1 pb-1" style={{ fontSize: 30 }} />
+              </NavLink>
+            </div>
+          ) : (
+            ''
+          )}
+
+          {sessionStorage.getItem('token') !== null ? (
             <div className="nav-item">
               <NavLink className="nav-link" to="/logout">
                 <img src={LogoutIcon} alt="logout" className="px-1 pb-1" style={{ fontSize: 30 }} />
