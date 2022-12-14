@@ -16,7 +16,7 @@ interface Props {
   show: boolean;
   close: () => void;
   id: number;
-  handleEdit: any;
+  fetchCategories: () => void;
 }
 
 export default function CategoryEdit(props: Props) {
@@ -24,6 +24,7 @@ export default function CategoryEdit(props: Props) {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [errors, setErrors] = useState({ title: '', description: '' });
 
   useEffect(() => {
     fetch(`${config.backendURL}/categories/${props.id}`)
@@ -53,17 +54,76 @@ export default function CategoryEdit(props: Props) {
     setDescription(description.target.value);
   };
 
+  const clientValidation = () => {
+    let valid = true;
+
+    let errorsTemp = { title: '', description: '' };
+
+    if (title === '') {
+      errorsTemp.title = 'Please fill out this field.';
+      valid = false;
+    }
+
+    if (description === '') {
+      errorsTemp.description = 'Please fill out this field.';
+      valid = false;
+    }
+
+    setErrors(errorsTemp);
+
+    return valid;
+  };
+
   function handleSubmit(e: any) {
     e.preventDefault();
-    if (category !== undefined) {
-      const newCategory: CategoryEditData = {
+
+    if (category === undefined) {
+      props.close();
+      return;
+    }
+
+    if (category.name === title && category.description === description) {
+      props.close();
+    } else {
+      if (!clientValidation()) {
+        return;
+      }
+
+      const updatedCategory: CategoryEditData = {
         id: category.id,
         name: title,
         description: description,
       };
-      props.handleEdit(newCategory);
+
+      fetch(`${config.backendURL}/categories/${props.id}`, {
+        method: 'PUT',
+        mode: 'cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedCategory),
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            props.fetchCategories();
+            props.close();
+          } else {
+            response.json().then((errorLog) => {
+              if (response.status === 400) {
+                let errorsTemp = { title: '', description: '' };
+                if (Object.hasOwn(errorLog, 'name')) errorsTemp.title = errorLog.name;
+
+                if (Object.hasOwn(errorLog, 'description')) errorsTemp.description = errorLog.description;
+
+                if (Object.hasOwn(errorLog, 'message')) errorsTemp.title = errorLog.message;
+
+                setErrors(errorsTemp);
+              } else {
+                console.error('Unexpected error while updating category: ', errorLog);
+              }
+            });
+          }
+        })
+        .catch((error) => console.error('Network error while updating category: ', error));
     }
-    props.close();
   }
 
   return (
@@ -78,7 +138,7 @@ export default function CategoryEdit(props: Props) {
         <div className="category-form-wrapper">
           <label className="required-label">required*</label>
 
-          <form className="category-form" onSubmit={handleSubmit}>
+          <form className="category-form" onSubmit={handleSubmit} noValidate>
             <Container>
               <Row align="center" style={{ marginBottom: '10px' }}>
                 <Col className="input-column">
@@ -90,10 +150,10 @@ export default function CategoryEdit(props: Props) {
                     type="text"
                     name="title"
                     placeholder="Title"
-                    required
                     onChange={handleTitleChange}
                     value={title}
                   />
+                  {errors.title !== '' ? <label className="error-label">{errors.title}</label> : ''}
                 </Col>
               </Row>
               <Row align="center" style={{ marginBottom: '10px' }}>
@@ -105,10 +165,10 @@ export default function CategoryEdit(props: Props) {
                     className="big-input"
                     name="description"
                     placeholder="Description"
-                    required
                     onChange={handleDescriptionChange}
                     value={description}
                   />
+                  {errors.description !== '' ? <label className="error-label">{errors.description}</label> : ''}
                 </Col>
               </Row>
               <Row className="category-buttons" align="center" justify="center">

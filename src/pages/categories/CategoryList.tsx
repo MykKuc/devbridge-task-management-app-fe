@@ -11,6 +11,7 @@ import Content from '../../components/Content';
 import CategoryCreation from './category-creation/CategoryCreation';
 import CategoryEdit from './CategoryEdit';
 import config from '../../config';
+import CustomNoRowsOverlay from 'components/CustomNoRowsOverlay';
 
 interface Category {
   id: Number;
@@ -20,12 +21,6 @@ interface Category {
   author: String;
 }
 
-interface CategoryEditData {
-  id: Number;
-  name: String;
-  description: String;
-}
-
 function CategoryList() {
   const [categories, setCategories] = useState<Category[]>([]);
 
@@ -33,7 +28,7 @@ function CategoryList() {
   const [showEdit, setShowEdit] = useState(false);
   const [editId, setEditId] = useState(0);
 
-  useEffect(() => {
+  const fetchCategories = () => {
     fetch(config.backendURL + '/categories/')
       .then((response) => {
         if (response.status === 200) {
@@ -45,24 +40,14 @@ function CategoryList() {
       .then((data: Category[]) => {
         setCategories(data);
       });
-  }, []);
+  };
+
+  useEffect(fetchCategories, []);
 
   const handleAdd = (category: any) => {
     const categoriesCopy = [...categories];
     categoriesCopy.push(category);
     setCategories(categoriesCopy);
-  };
-
-  const handleEdit = (category: CategoryEditData) => {
-    let tempCategories = [...categories];
-    const categoryToUpdate = tempCategories.find((c) => c.id === category.id);
-
-    if (categoryToUpdate !== undefined) {
-      categoryToUpdate.name = category.name;
-      categoryToUpdate.description = category.description;
-    }
-
-    setCategories(tempCategories);
   };
 
   const columns: GridColumns = [
@@ -141,7 +126,7 @@ function CategoryList() {
             setShowEdit(false);
           }}
           id={editId}
-          handleEdit={handleEdit}
+          fetchCategories={fetchCategories}
         />
       )}
       <div className="categories-table-wrapper">
@@ -155,6 +140,10 @@ function CategoryList() {
           rows={categories}
           components={{
             Pagination: CustomPagination,
+            NoRowsOverlay: CustomNoRowsOverlay,
+          }}
+          componentsProps={{
+            noRowsOverlay: { message: 'No categories yet!' },
           }}
           initialState={{
             sorting: {
