@@ -18,12 +18,36 @@ import './tasks.css';
 import Content from '../../components/Content';
 import TaskCreation from '../../features/TaskCreation/TaskCreation';
 import { useNavigate } from 'react-router-dom';
+import TaskEdit from '../../features/TaskEdit/TaskEdit';
 import DeleteConfirmation from './DeleteTask/DeleteConfirmation';
 import config from '../../config';
+
+interface User {
+  id: Number;
+  name: String;
+}
 
 interface Category {
   id: Number;
   name: String;
+}
+
+interface Answer {
+  id: Number;
+  text: String;
+  correct: boolean;
+}
+
+interface FullTaskData {
+  id: Number;
+  title: String;
+  description: String;
+  summary: String;
+  creationDate: Date;
+  score: Number;
+  user: User;
+  category: Category;
+  answers: Answer[];
 }
 
 interface TaskData {
@@ -40,12 +64,19 @@ interface TaskData {
 function Tasks() {
   const [tasks, setTasks] = useState<TaskData[]>([]);
   const [showModal, setShow] = useState(false);
+  const [showModifyModal, setShowModifyModal] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(0);
+
   const navigate = useNavigate();
   const [showDelete, setShowDelete] = useState(false);
   const [deleteId, setDeleteId] = useState(-1);
 
   useEffect(() => {
-    fetch(config.backendURL + '/tasks/')
+    fetch(config.backendURL + '/tasks/', {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
       .then((response) => {
         if (response.status === 200) {
           return response.json();
@@ -74,10 +105,17 @@ function Tasks() {
   const handleDelete = (id: any) => {
     const url = config.backendURL + '/tasks/' + id;
     fetch(url, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
       method: 'DELETE',
       mode: 'cors',
     }).then(() => {
-      fetch(config.backendURL + '/tasks/')
+      fetch(config.backendURL + '/tasks/', {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        },
+      })
         .then((response) => {
           if (response.status === 200) {
             return response.json();
@@ -99,6 +137,23 @@ function Tasks() {
 
   const formatDescription = (description: String) => {
     return description.length > 100 ? description.substring(0, 97) + '...' : description;
+  };
+  const handleModify = (task: FullTaskData) => {
+    let tempTasks = [...tasks];
+    const taskToUpdate = tempTasks.find((t) => t.id === task.id);
+
+    if (taskToUpdate !== undefined) {
+      taskToUpdate.author = task.user.name;
+      taskToUpdate.id = task.id;
+      taskToUpdate.title = task.title;
+      taskToUpdate.description = task.description;
+      taskToUpdate.summary = formatDescription(task.summary);
+      taskToUpdate.creationDate = task.creationDate;
+      taskToUpdate.score = task.score;
+      taskToUpdate.category = task.category;
+    }
+
+    setTasks(tempTasks);
   };
 
   const columns: GridColumns = [
@@ -166,7 +221,10 @@ function Tasks() {
         <GridActionsCellItem
           className="task-action-button"
           icon={<EditIcon />}
-          onClick={() => console.log(`Edit task with id ${params.id}`)}
+          onClick={() => {
+            setSelectedTask(params.id as number);
+            setShowModifyModal(true);
+          }}
           label="Edit"
         />,
         <GridActionsCellItem
@@ -189,6 +247,14 @@ function Tasks() {
 
   return (
     <Content name={'Tasks'}>
+      <TaskEdit
+        show={showModifyModal}
+        close={() => {
+          setShowModifyModal(false);
+        }}
+        handleModify={handleModify}
+        id={selectedTask}
+      />
       <TaskCreation
         show={showModal}
         close={() => {
