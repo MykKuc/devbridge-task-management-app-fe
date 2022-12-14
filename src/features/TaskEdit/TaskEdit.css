@@ -1,0 +1,209 @@
+.outer-div {
+  width: 100%;
+  text-align: center;
+}
+.create-task-page {
+  display: inline-block;
+  margin: 0 auto;
+}
+.create-task-form {
+  padding-right: 10%;
+  padding-left: 10%;
+}
+.header {
+  height: 40px;
+  font-weight: bold;
+  color: white;
+  min-height: 30px;
+  background-color: rgb(43, 171, 211);
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  font-size: 19pt;
+}
+
+.create-btn {
+  height: 50px;
+  min-height: 30px;
+  width: 200px;
+  min-width: 66px;
+  position: relative;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border-radius: 50px;
+  font-size: 15pt;
+  color: white;
+  background-color: rgb(43, 171, 211);
+  border: rgb(43, 171, 211);
+  filter: drop-shadow(1px 5px 5px rgba(0, 0, 0, 0.25));
+}
+
+.add-answer-button {
+  height: 50px;
+  min-height: 30px;
+  width: 50px;
+  min-width: 30px;
+  position: relative;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border-radius: 50px;
+  font-size: 15pt;
+  color: white;
+  background-color: rgb(43, 171, 211);
+  border: rgb(43, 171, 211);
+  filter: drop-shadow(1px 5px 5px rgba(0, 0, 0, 0.25));
+}
+
+.small-label {
+  color: rgb(43, 171, 211);
+  float: left;
+  font-size: 20px;
+  margin-left: 5%;
+}
+
+.small-label {
+  color: rgb(43, 171, 211);
+  font-size: 20px;
+  margin-right: 30%;
+}
+.type-label {
+  color: rgb(43, 171, 211);
+  font-size: 20px;
+}
+.required-label {
+  position: relative;
+  float: left;
+  margin-top: 5%;
+  margin-left: 1%;
+  color: rgb(201, 43, 40);
+  font-size: 20px;
+}
+.required-star {
+  color: rgb(201, 43, 40);
+  font-size: 20px;
+}
+.big-label {
+  color: rgb(43, 171, 211);
+  float: left;
+  font-size: 20px;
+  margin-left: 2.5%;
+}
+.mult-label {
+  color: rgb(43, 171, 211);
+  float: left;
+  font-size: 20px;
+  margin-left: 2.5%;
+}
+.correct-label {
+  color: rgb(43, 171, 211);
+  padding: 0;
+  font-size: 20px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+}
+
+.correct-label {
+  color: rgb(43, 171, 211);
+  padding: 0;
+  font-size: 20px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+}
+
+.category-dropdown {
+  height: 40px;
+  min-height: 30px;
+  width: 90%;
+  border-radius: 10px;
+  background-color: rgb(56, 56, 56);
+  border: 2.5px solid rgb(43, 171, 211);
+  color: rgb(43, 171, 211);
+}
+
+.type-dropdown {
+  height: 40px;
+  min-height: 30px;
+  width: 60%;
+  border-radius: 10px;
+  background-color: rgb(56, 56, 56);
+  border: 2.5px solid rgb(43, 171, 211);
+  color: rgb(43, 171, 211);
+}
+
+.big-input {
+  height: 40px;
+  min-height: 30px;
+  width: 95%;
+  border-radius: 10px;
+  background-color: rgb(56, 56, 56);
+  border: 2.5px solid rgb(43, 171, 211);
+  color: rgb(43, 171, 211);
+}
+
+.multiple-input {
+  height: 40px;
+  min-height: 30px;
+  border-radius: 10px;
+  background-color: rgb(56, 56, 56);
+  border: 2.5px solid rgb(43, 171, 211);
+  color: rgb(43, 171, 211);
+}
+
+.half-input {
+  padding-top: 20px;
+  display: inline-block;
+  margin: 0 auto;
+  min-width: 400px;
+  max-width: 30vw;
+  font-size: 20px;
+}
+
+.full-input {
+  padding-top: 20px;
+  display: inline-block;
+  width: 100%;
+  font-size: 20px;
+  background-color: rgb(56, 56, 56);
+}
+
+.small-input {
+  height: 40px;
+  min-height: 30px;
+  width: 90%;
+  border-radius: 10px;
+  background-color: rgb(56, 56, 56);
+  border: 2.5px solid rgb(43, 171, 211);
+  color: rgb(43, 171, 211);
+}
+
+.main-section {
+  padding-top: 30px;
+}
+
+.reg {
+  margin-top: 10px;
+  color: white;
+}
+
+.answer-delete-button {
+  color: rgb(201, 43, 40);
+  border: 1px solid rgb(201, 43, 40);
+  border-radius: 5px;
+}
+
+.multiple-checkbox {
+  background-color: rgb(56, 56, 56);
+  border-radius: 10px;
+  color: rgb(43, 171, 211);
+  font-size: 30px;
+  margin-left: 40px;
+}

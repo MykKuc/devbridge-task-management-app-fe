@@ -1,17 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './TaskCreation.css';
 import jsonData from './categories.json';
 import TextAnswer from './TextAnswer';
 import MultipleAnswer from './MultipleAnswer';
 import { Container, Row, Col } from 'react-grid-system';
-
-const loadData = JSON.parse(JSON.stringify(jsonData));
+import config from '../../config';
 
 interface Props {
   handleAdd: any;
   close: () => void;
 }
 function TaskCreationForm(props: Props) {
+  // Fetch categories from the backend.
+  const [categoriesFromDb, setCategories] = useState<any[]>([]);
+  useEffect(() => {
+    fetch(config.backendURL + '/categories/options', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        Accept: 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setCategories(data))
+      .catch((error) => console.log(error));
+  }, []);
+
   const initialAnswer = [{ text: '', correct: true }];
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
@@ -110,7 +124,7 @@ function TaskCreationForm(props: Props) {
                 name="category"
                 onChange={(event) => handleCategoryChange(event.target.value)}
               >
-                {loadData.categories.map((category: any) => {
+                {categoriesFromDb.map((category: any) => {
                   return (
                     <option key={category.id} value={JSON.stringify(category)}>
                       {category.name}

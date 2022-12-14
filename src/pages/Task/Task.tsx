@@ -3,6 +3,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import './Task.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import Content from '../../components/Content';
+import TaskEdit from '../../features/TaskEdit/TaskEdit';
 import config from '../../config';
 
 interface User {
@@ -38,12 +39,20 @@ const Task = () => {
   const navigate = useNavigate();
 
   const [task, setTask] = useState<TaskData>();
+  const [showModifyModal, setShowModifyModal] = useState(false);
 
   const url = config.backendURL + '/tasks/' + params.id;
 
+  const handleModify = (newTask: TaskData) => {
+    setTask(newTask);
+  };
   const taskName = task?.title ?? 'Task';
   useEffect(() => {
-    fetch(url)
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
       .then((response) => {
         if (response.status === 200) {
           return response.json();
@@ -128,10 +137,16 @@ const Task = () => {
               </div>
               <div className=" separation" />
               <div className="d-flex flex-row around justify-content-between py-1 ">
-                <button type="button" className=" btn btn-primary rounded-pill " style={{ width: '100px' }}>
+                <button
+                  type="button"
+                  className=" btn btn-primary rounded-pill "
+                  style={{ width: '100px' }}
+                  onClick={() => setShowModifyModal(true)}
+                >
                   {' '}
                   Edit
                 </button>
+
                 <button type="button" className=" btn btn-danger rounded-pill" style={{ width: '100px' }}>
                   {' '}
                   Delete
@@ -140,6 +155,14 @@ const Task = () => {
             </div>
           </div>
         </div>
+        <TaskEdit
+          show={showModifyModal}
+          close={() => {
+            setShowModifyModal(false);
+          }}
+          handleModify={handleModify}
+          id={params.id !== undefined ? parseInt(params.id) : 0}
+        />
       </Content>
     </>
   );
