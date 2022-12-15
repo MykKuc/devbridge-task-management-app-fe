@@ -32,6 +32,7 @@ interface TaskData {
   user: User;
   category: Category;
   answers: Answer[];
+  isDisabled: boolean;
 }
 
 const Task = () => {
@@ -61,7 +62,11 @@ const Task = () => {
         }
       })
       .then((data) => {
-        setTask(data);
+        const updatedData = {
+          ...data,
+          isDisabled: sessionStorage.getItem('current_user') !== data.user.name && sessionStorage.getItem('current_user_role') !== 'ADMIN'
+        };
+        setTask(updatedData);
       });
   }, []);
   return (
@@ -142,18 +147,15 @@ const Task = () => {
                   className=" btn btn-primary rounded-pill "
                   style={{ width: '100px' }}
                   onClick={() => {
-                    if (task?.user.name === sessionStorage.getItem('current_user')) {
-                      setShowModifyModal(true);
-                    } else {
-                      console.log('Not the same author.');
-                    }
+                    setShowModifyModal(true);
                   }}
+                  disabled={task?.isDisabled}
                 >
                   {' '}
                   Edit
                 </button>
 
-                <button type="button" className=" btn btn-danger rounded-pill" style={{ width: '100px' }}>
+                <button type="button" className=" btn btn-danger rounded-pill" style={{ width: '100px' }} disabled={task?.isDisabled}>
                   {' '}
                   Delete
                 </button>
