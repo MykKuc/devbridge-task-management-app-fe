@@ -69,6 +69,7 @@ function Tasks() {
   const [showModal, setShow] = useState(false);
   const [showModifyModal, setShowModifyModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState(0);
+  const [listChanged, setListChanged] = useState(true);
 
   const navigate = useNavigate();
   const [showDelete, setShowDelete] = useState(false);
@@ -96,8 +97,9 @@ function Tasks() {
           }));
         }
         setTasks(data);
+        setListChanged(false);
       });
-  }, []);
+  }, [listChanged]);
 
   const showMyTasks = (_event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
     fetch(`${config.backendURL}/tasks?onlyMine=${checked}`, {
@@ -121,13 +123,6 @@ function Tasks() {
         }
         setTasks(data);
       });
-  };
-
-  const handleAdd = (event: any, task: any) => {
-    const tasksCopy = [...tasks];
-    task.summary = task.summary == null || task.summary === '' ? formatDescription(task.description) : task.summary;
-    tasksCopy.push(task);
-    setTasks(tasksCopy);
   };
 
   const handleDelete = (id: any) => {
@@ -241,7 +236,6 @@ function Tasks() {
           });
       });
     }
-    //setTasks(taskToUpdate);
   };
 
   const handleUpdate = (id: any) => {};
@@ -354,7 +348,7 @@ function Tasks() {
         close={() => {
           setShow(false);
         }}
-        handleAdd={handleAdd}
+        setListChanged={setListChanged}
       />
       <DeleteConfirmation
         show={showDelete}
@@ -408,5 +402,4 @@ function Tasks() {
     </Content>
   );
 }
-
 export default Tasks;

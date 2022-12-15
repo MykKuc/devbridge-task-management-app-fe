@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './TaskCreation.css';
-import jsonData from './categories.json';
 import TextAnswer from './TextAnswer';
 import MultipleAnswer from './MultipleAnswer';
 import { Container, Row, Col } from 'react-grid-system';
 import config from '../../config';
 
 interface Props {
-  handleAdd: any;
+  setListChanged: Function;
   close: () => void;
 }
-function TaskCreationForm(props: Props) {
+export default function TaskCreationForm(props: Props) {
   // Fetch categories from the backend.
-  const [categoriesFromDb, setCategories] = useState<any[]>([]);
+  const [categories, setCategories] = React.useState<any[]>([]);
   useEffect(() => {
     fetch(config.backendURL + '/categories/options', {
       method: 'GET',
@@ -22,17 +21,23 @@ function TaskCreationForm(props: Props) {
       },
     })
       .then((response) => response.json())
-      .then((data) => setCategories(data))
+      .then((data) => {
+        setCategories(data);
+        setCategory(data[0]?.id)
+      })
       .catch((error) => console.log(error));
   }, []);
-
   const initialAnswer = [{ text: '', correct: true }];
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [summary, setSummary] = React.useState('');
-  const [category, setCategory] = React.useState(jsonData.categories[0]);
+  const [category, setCategory] = React.useState('');
   const [type, setType] = React.useState('');
   const [answer, setAnswer] = React.useState(initialAnswer);
+
+  const [titleValidation, setTitleValidation] = React.useState('');
+  const [descriptionValidation, setDescriptionValidation] = React.useState('');
+  const [summaryValidation, setSummaryValidation] = React.useState('');
 
   const [showTextAnswer, setShowTextAnswer] = React.useState(true);
   const [showMultipleAnswer, setShowMultipleAnswer] = React.useState(false);
@@ -44,7 +49,8 @@ function TaskCreationForm(props: Props) {
 
   const handleCategoryChange = (category: string) => {
     const parsedCat = JSON.parse(category);
-    setCategory(parsedCat);
+    const categoryId = categories.find((c) => c.name === parsedCat)?.id;
+    setCategory(categoryId);
   };
 
   const handleTypeChange = (type: React.SetStateAction<string>) => {
@@ -78,20 +84,54 @@ function TaskCreationForm(props: Props) {
   };
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
-    const today = new Date().toLocaleDateString();
+    event.preventDefault();
+
+    setTitleValidation('');
+    setDescriptionValidation('');
+    setSummaryValidation('');
+
     const task = {
-      id: 100,
       title: title,
-      category: category,
+      categoryId: category,
       description: description,
-      author: 'Default',
-      answer: answer,
-      creationDate: today,
-      score: 0,
+      summary: summary,
+      answers: answer,
     };
-    console.log(task);
-    props.handleAdd(event, task);
-    props.close();
+    try {
+      fetch(config.backendURL + '/tasks/', {
+        method: 'POST',
+        body: JSON.stringify(task),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+        },
+      }).then((response) => {
+        if (response.status === 201) {
+          props.setListChanged(true);
+          props.close();
+        } else if (response.status === 400) {
+          response.json().then((responseData) => {
+            if (responseData.title !== undefined) {
+              setTitleValidation(responseData.title);
+            }
+            if (responseData.description !== undefined) {
+              setDescriptionValidation(responseData.description);
+            }
+            if (responseData.summary !== undefined) {
+              setSummaryValidation(responseData.summary);
+            }
+          });
+        } else {
+          console.error('Unexpected error while creating task');
+        }
+      });
+    } catch (e) {
+      if (typeof e === 'string') {
+        console.error(e.toUpperCase());
+      } else if (e instanceof Error) {
+        console.error(e.message);
+      }
+    }
   };
 
   return (
@@ -101,6 +141,7 @@ function TaskCreationForm(props: Props) {
         <Container>
           <Row align="end" style={{ marginBottom: '10px' }}>
             <Col className="input-column">
+              {titleValidation !== '' ? <label style={{ color: 'red' }}>{titleValidation}</label> : ''}
               <label className="small-label">
                 Title<label className="required-star">*</label>
               </label>
@@ -124,7 +165,7 @@ function TaskCreationForm(props: Props) {
                 name="category"
                 onChange={(event) => handleCategoryChange(event.target.value)}
               >
-                {categoriesFromDb.map((category: any) => {
+                {categories.map((category: any) => {
                   return (
                     <option key={category.id} value={JSON.stringify(category)}>
                       {category.name}
@@ -136,6 +177,7 @@ function TaskCreationForm(props: Props) {
           </Row>
           <Row align="center" style={{ marginBottom: '10px' }}>
             <Col className="input-column">
+              {descriptionValidation !== '' ? <label style={{ color: 'red' }}>{descriptionValidation}</label> : ''}
               <label className="big-label">
                 Description<label className="required-star">*</label>
               </label>
@@ -151,6 +193,7 @@ function TaskCreationForm(props: Props) {
           </Row>
           <Row align="center" style={{ marginBottom: '10px' }}>
             <Col className="input-column">
+              {summaryValidation !== '' ? <label style={{ color: 'red' }}>{summaryValidation}</label> : ''}
               <label className="big-label">Summary</label>
               <input
                 className="big-input summary-input"
@@ -200,5 +243,3 @@ function TaskCreationForm(props: Props) {
     </>
   );
 }
-
-export default TaskCreationForm;
