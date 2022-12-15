@@ -89,6 +89,7 @@ function Tasks() {
           data = data.map((t) => ({
             ...t,
             summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
+            isDisabled: sessionStorage.getItem('current_user') !== t.author && sessionStorage.getItem('current_user_role') !== 'ADMIN'
           }));
         }
         setTasks(data);
@@ -222,27 +223,21 @@ function Tasks() {
           className="task-action-button"
           icon={<EditIcon />}
           onClick={() => {
-            if (tasks.find((t) => t.id === params.id)?.author === sessionStorage.getItem('current_user')) {
-              setSelectedTask(params.id as number);
-              setShowModifyModal(true);
-            } else {
-              console.log('Not the same author.');
-            }
+            setSelectedTask(params.id as number);
+            setShowModifyModal(true);
           }}
           label="Edit"
+          disabled={params.row.isDisabled}
         />,
         <GridActionsCellItem
           className="task-action-button"
           icon={<DeleteIcon />}
           onClick={() => {
-            if (tasks.find((t) => t.id === params.id)?.author === sessionStorage.getItem('current_user')) {
-              setDeleteId(Number(params.id));
-              setShowDelete(true);
-            } else {
-              console.log('Not the same author.');
-            }
+            setDeleteId(Number(params.id));
+            setShowDelete(true);
           }}
           label="Delete"
+          disabled={params.row.isDisabled}
         />,
       ],
       sortable: false,

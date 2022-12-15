@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { GridActionsCellItem, GridColumns, GridRowParams } from '@mui/x-data-grid';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 
 import StyledDataGrid from '../../components/StyledDataGrid';
 import CustomPagination from '../../components/Pagination';
@@ -80,26 +79,10 @@ function CategoryList() {
           className="category-action-button"
           icon={<EditIcon />}
           onClick={() => {
-            if (categories.find((c) => c.id === params.id)?.author === sessionStorage.getItem('current_user')) {
-              setEditId(params.id as number);
-              setShowEdit(true);
-            } else {
-              console.log('Not the same Author.');
-            }
+            setEditId(params.id as number);
+            setShowEdit(true);
           }}
           label="Edit"
-        />,
-        <GridActionsCellItem
-          className="category-action-button"
-          icon={<DeleteIcon />}
-          onClick={() => {
-            if (categories.find((c) => c.id === params.id)?.author === sessionStorage.getItem('current_user')) {
-              console.log(`Delete category with id ${params.id}`);
-            } else {
-              console.log('Not the same Author.');
-            }
-          }}
-          label="Delete"
         />,
       ],
       sortable: false,
