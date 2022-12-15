@@ -141,7 +141,13 @@ const Task = () => {
                   type="button"
                   className=" btn btn-primary rounded-pill "
                   style={{ width: '100px' }}
-                  onClick={() => setShowModifyModal(true)}
+                  onClick={() => {
+                    if (task?.user.name === sessionStorage.getItem('current_user')) {
+                      setShowModifyModal(true);
+                    } else {
+                      console.log('Not the same author.');
+                    }
+                  }}
                 >
                   {' '}
                   Edit

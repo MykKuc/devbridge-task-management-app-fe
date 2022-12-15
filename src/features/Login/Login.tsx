@@ -43,7 +43,19 @@ function Login() {
       })
       .then((body) => {
         sessionStorage.setItem('token', `${body.accessToken}`);
+        // After loging in fetch data of logged in user.
+        fetch('http://localhost:8080/api/users/me', {
+          method: 'GET',
+          headers: {
+            Authorization: `${sessionStorage.getItem('token')}`,
+            Accept: 'application/json',
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => sessionStorage.setItem('current_user', data.name));
         //Redirecting to some other page after login.
+        const user = sessionStorage.getItem('current_user');
+        console.log(user);
         navigate('/tasks');
       })
       .catch((error) => console.log(error));

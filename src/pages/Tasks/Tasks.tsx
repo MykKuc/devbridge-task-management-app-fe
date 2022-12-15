@@ -222,8 +222,12 @@ function Tasks() {
           className="task-action-button"
           icon={<EditIcon />}
           onClick={() => {
-            setSelectedTask(params.id as number);
-            setShowModifyModal(true);
+            if (tasks[(params.id as number) - 1].author === sessionStorage.getItem('current_user')) {
+              setSelectedTask(params.id as number);
+              setShowModifyModal(true);
+            } else {
+              console.log('Not the same author.');
+            }
           }}
           label="Edit"
         />,
@@ -231,8 +235,12 @@ function Tasks() {
           className="task-action-button"
           icon={<DeleteIcon />}
           onClick={() => {
-            setDeleteId(Number(params.id));
-            setShowDelete(true);
+            if (tasks[(params.id as number) - 1].author === sessionStorage.getItem('current_user')) {
+              setDeleteId(Number(params.id));
+              setShowDelete(true);
+            } else {
+              console.log('Not the same author.');
+            }
           }}
           label="Delete"
         />,
