@@ -1,7 +1,7 @@
 {
   "categories": [
-    { "id": 1, "name": "JAVA" },
-    { "id": 2, "name": "C#" },
+    { "id": 101, "name": "C#" },
+    { "id": 102, "name": "Java" },
     { "id": 3, "name": "Logic" },
     { "id": 4, "name": "OOP" },
     { "id": 5, "name": "Database" },

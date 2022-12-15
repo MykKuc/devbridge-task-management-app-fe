@@ -34,6 +34,7 @@ interface TaskData {
   category: Category;
   answers: Answer[];
   voted: boolean;
+  isDisabled: boolean;
 }
 
 const Task = () => {
@@ -92,7 +93,13 @@ const Task = () => {
         }
       })
       .then((data) => {
-        setTask(data);
+        const updatedData = {
+          ...data,
+          isDisabled:
+            sessionStorage.getItem('current_user') !== data.user.name &&
+            sessionStorage.getItem('current_user_role') !== 'ADMIN',
+        };
+        setTask(updatedData);
       });
   }, []);
   return (
@@ -178,13 +185,21 @@ const Task = () => {
                   type="button"
                   className=" btn btn-primary rounded-pill "
                   style={{ width: '100px' }}
-                  onClick={() => setShowModifyModal(true)}
+                  onClick={() => {
+                    setShowModifyModal(true);
+                  }}
+                  disabled={task?.isDisabled}
                 >
                   {' '}
                   Edit
                 </button>
 
-                <button type="button" className=" btn btn-danger rounded-pill" style={{ width: '100px' }}>
+                <button
+                  type="button"
+                  className=" btn btn-danger rounded-pill"
+                  style={{ width: '100px' }}
+                  disabled={task?.isDisabled}
+                >
                   {' '}
                   Delete
                 </button>

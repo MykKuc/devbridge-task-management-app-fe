@@ -69,6 +69,7 @@ function Tasks() {
   const [showModal, setShow] = useState(false);
   const [showModifyModal, setShowModifyModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState(0);
+  const [listChanged, setListChanged] = useState(true);
 
   const navigate = useNavigate();
   const [showDelete, setShowDelete] = useState(false);
@@ -95,11 +96,15 @@ function Tasks() {
           data = data.map((t) => ({
             ...t,
             summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
+            isDisabled:
+              sessionStorage.getItem('current_user') !== t.author &&
+              sessionStorage.getItem('current_user_role') !== 'ADMIN',
           }));
         }
         setTasks(data);
+        setListChanged(false);
       });
-  }, []);
+  }, [listChanged]);
 
   const filter = (onlyMine: boolean, categoryId: Number) => {
     let url = `${config.backendURL}/tasks?onlyMine=${onlyMine}`;
@@ -142,13 +147,6 @@ function Tasks() {
       .then((data) => setCategories(data))
       .catch((error) => console.log(error));
   }, []);
-
-  const handleAdd = (event: any, task: any) => {
-    const tasksCopy = [...tasks];
-    task.summary = task.summary == null || task.summary === '' ? formatDescription(task.description) : task.summary;
-    tasksCopy.push(task);
-    setTasks(tasksCopy);
-  };
 
   const handleDelete = (id: any) => {
     const url = config.backendURL + '/tasks/' + id;
@@ -261,7 +259,6 @@ function Tasks() {
           });
       });
     }
-    //setTasks(taskToUpdate);
   };
 
   const handleUpdate = (id: any) => {};
@@ -338,6 +335,7 @@ function Tasks() {
             setShowModifyModal(true);
           }}
           label="Edit"
+          disabled={params.row.isDisabled}
         />,
         <GridActionsCellItem
           className="task-action-button"
@@ -347,6 +345,7 @@ function Tasks() {
             setShowDelete(true);
           }}
           label="Delete"
+          disabled={params.row.isDisabled}
         />,
       ],
       sortable: false,
@@ -372,7 +371,7 @@ function Tasks() {
         close={() => {
           setShow(false);
         }}
-        handleAdd={handleAdd}
+        setListChanged={setListChanged}
       />
       <DeleteConfirmation
         show={showDelete}
@@ -453,5 +452,4 @@ function Tasks() {
     </Content>
   );
 }
-
 export default Tasks;
