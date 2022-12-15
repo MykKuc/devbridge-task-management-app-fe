@@ -6,7 +6,6 @@ import Content from '../../components/Content';
 import TaskEdit from '../../features/TaskEdit/TaskEdit';
 import config from '../../config';
 import { IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
 
 interface User {
   id: Number;
@@ -55,7 +54,7 @@ const Task = () => {
     if (task?.voted) {
       fetch(url, {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
         },
         method: 'DELETE',
         mode: 'cors',
@@ -63,7 +62,7 @@ const Task = () => {
         const url = config.backendURL + '/tasks/' + params.id;
         fetch(url, {
           headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+            Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
           },
         })
           .then((response) => {
@@ -80,7 +79,7 @@ const Task = () => {
     } else {
       fetch(url, {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
         },
         method: 'POST',
         mode: 'cors',
@@ -88,7 +87,7 @@ const Task = () => {
         const url = config.backendURL + '/tasks/' + params.id;
         fetch(url, {
           headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+            Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
           },
         })
           .then((response) => {

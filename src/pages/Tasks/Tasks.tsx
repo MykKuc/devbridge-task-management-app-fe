@@ -142,14 +142,14 @@ function Tasks() {
     if (voted) {
       fetch(url, {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
         },
         method: 'DELETE',
         mode: 'cors',
       }).then(() => {
         fetch(config.backendURL + '/tasks/', {
           headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+            Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
           },
         })
           .then((response) => {
@@ -172,14 +172,14 @@ function Tasks() {
     } else {
       fetch(url, {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
         },
         method: 'POST',
         mode: 'cors',
       }).then(() => {
         fetch(config.backendURL + '/tasks/', {
           headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+            Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
           },
         })
           .then((response) => {
