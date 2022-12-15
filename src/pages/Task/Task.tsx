@@ -5,6 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Content from '../../components/Content';
 import TaskEdit from '../../features/TaskEdit/TaskEdit';
 import config from '../../config';
+import { IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface User {
   id: Number;
@@ -32,6 +34,7 @@ interface TaskData {
   user: User;
   category: Category;
   answers: Answer[];
+  voted: boolean;
 }
 
 const Task = () => {
@@ -46,6 +49,62 @@ const Task = () => {
   const handleModify = (newTask: TaskData) => {
     setTask(newTask);
   };
+
+  const handleLike = () => {
+    const url = config.backendURL + '/vote/' + task?.id;
+    if (task?.voted) {
+      fetch(url, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        },
+        method: 'DELETE',
+        mode: 'cors',
+      }).then(() => {
+        const url = config.backendURL + '/tasks/' + params.id;
+        fetch(url, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          },
+        })
+          .then((response) => {
+            if (response.status === 200) {
+              return response.json();
+            } else {
+              navigate('/*');
+            }
+          })
+          .then((data) => {
+            setTask(data);
+          });
+      });
+    } else {
+      fetch(url, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        },
+        method: 'POST',
+        mode: 'cors',
+      }).then(() => {
+        const url = config.backendURL + '/tasks/' + params.id;
+        fetch(url, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          },
+        })
+          .then((response) => {
+            if (response.status === 200) {
+              return response.json();
+            } else {
+              navigate('/*');
+            }
+          })
+          .then((data) => {
+            setTask(data);
+          });
+      });
+    }
+  };
+
   const taskName = task?.title ?? 'Task';
   useEffect(() => {
     fetch(url, {
@@ -113,8 +172,14 @@ const Task = () => {
             }}
           >
             <div className="row justify-content-center text-center" style={{ width: '250px' }}>
-              <div style={{ color: 'white' }}>
-                <ThumbUpIcon />
+              <div>
+                <IconButton disabled={sessionStorage.getItem('token') === ''} onClick={() => handleLike()}>
+                  {task?.voted ? (
+                    <ThumbUpIcon style={{ color: '#2babd3' }} />
+                  ) : (
+                    <ThumbUpIcon style={{ color: 'white' }} />
+                  )}
+                </IconButton>
               </div>
               <p style={{ textAlign: 'center' }}>{task?.score.toString()}</p>
               <div className=" separation" />
