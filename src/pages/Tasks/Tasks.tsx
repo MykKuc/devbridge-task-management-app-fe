@@ -178,18 +178,47 @@ function Tasks() {
     const taskToUpdate = tempTasks.find((t) => t.id === task.id);
 
     if (taskToUpdate !== undefined) {
-      taskToUpdate.author = task.user.name;
-      taskToUpdate.id = task.id;
-      taskToUpdate.title = task.title;
-      taskToUpdate.description = task.description;
-      taskToUpdate.summary = formatDescription(task.summary);
-      taskToUpdate.creationDate = task.creationDate;
-      taskToUpdate.score = task.score;
-      taskToUpdate.category = task.category;
-    }
+      const updateTaskRequest = {
+        id: task?.id,
+        title: task.title,
+        categoryId: task.category.id,
+        description: task.description,
+        answers: task.answers,
+        summary: task.summary,
+      };
 
-    setTasks(tempTasks);
+      const url = config.backendURL + '/tasks/' + task.id;
+      fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+        },
+        body: JSON.stringify(updateTaskRequest),
+      }).then(() => {
+        fetch(config.backendURL + '/tasks/')
+          .then((response) => {
+            if (response.status === 200) {
+              return response.json();
+            } else {
+              return [];
+            }
+          })
+          .then((data: TaskData[]) => {
+            if (data.length !== 0) {
+              data = data.map((t) => ({
+                ...t,
+                summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
+              }));
+            }
+            setTasks(data);
+          });
+      });
+    }
+    //setTasks(taskToUpdate);
   };
+
+  const handleUpdate = (id: any) => {};
 
   const columns: GridColumns = [
     {
