@@ -24,8 +24,7 @@ export default function Logout() {
           }
         })
         .then(() => {
-          sessionStorage.removeItem('token');
-          setLogoutRequest(false);
+          sessionStorage.setItem('token', '');
           navigate('/');
           window.location.reload();
         });

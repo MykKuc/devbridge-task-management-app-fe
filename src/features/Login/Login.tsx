@@ -12,7 +12,7 @@ function Login() {
     password: '',
   });
 
-  if (sessionStorage.getItem('token') !== null) {
+  if (sessionStorage.getItem('token') !== '') {
     navigate('/');
   }
 

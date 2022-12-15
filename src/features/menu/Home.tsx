@@ -4,6 +4,9 @@ import config from '../../config';
 
 function Home() {
   const [show, setShow] = useState(false);
+  if (sessionStorage.getItem('token') === null) {
+    sessionStorage.setItem('token', '');
+  }
   fetch(config.backendURL + '/ok', {
     method: 'GET',
     headers: {
