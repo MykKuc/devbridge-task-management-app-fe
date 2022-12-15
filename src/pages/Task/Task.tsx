@@ -50,7 +50,7 @@ const Task = () => {
   useEffect(() => {
     fetch(url, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
       },
     })
       .then((response) => {

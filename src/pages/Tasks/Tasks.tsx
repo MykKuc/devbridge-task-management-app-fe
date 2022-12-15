@@ -75,7 +75,7 @@ function Tasks() {
   useEffect(() => {
     fetch(config.backendURL + '/tasks/', {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
       },
     })
       .then((response) => {
@@ -99,7 +99,7 @@ function Tasks() {
   const showMyTasks = (_event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
     fetch(`${config.backendURL}/tasks?onlyMine=${checked}`, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
       },
     })
       .then((response) => {
@@ -131,14 +131,14 @@ function Tasks() {
     const url = config.backendURL + '/tasks/' + id;
     fetch(url, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
       },
       method: 'DELETE',
       mode: 'cors',
     }).then(() => {
       fetch(config.backendURL + '/tasks/', {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
         },
       })
         .then((response) => {
