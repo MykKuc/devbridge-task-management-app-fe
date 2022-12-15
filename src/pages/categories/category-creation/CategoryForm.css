@@ -66,3 +66,8 @@
 .category-form .category-buttons {
   gap: 10px;
 }
+
+.category-form .error-label {
+  color: rgb(201, 43, 40);
+  margin-left: 2.5%;
+}

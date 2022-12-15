@@ -73,7 +73,11 @@ function Tasks() {
   const [deleteId, setDeleteId] = useState(-1);
 
   useEffect(() => {
-    fetch(config.backendURL + '/tasks/')
+    fetch(config.backendURL + '/tasks/', {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
       .then((response) => {
         if (response.status === 200) {
           return response.json();
@@ -96,10 +100,17 @@ function Tasks() {
   const handleDelete = (id: any) => {
     const url = config.backendURL + '/tasks/' + id;
     fetch(url, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
       method: 'DELETE',
       mode: 'cors',
     }).then(() => {
-      fetch(config.backendURL + '/tasks/')
+      fetch(config.backendURL + '/tasks/', {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        },
+      })
         .then((response) => {
           if (response.status === 200) {
             return response.json();
@@ -290,5 +301,4 @@ function Tasks() {
     </Content>
   );
 }
-
 export default Tasks;

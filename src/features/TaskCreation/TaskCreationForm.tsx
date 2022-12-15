@@ -12,7 +12,21 @@ interface Props {
   setListChanged: Function;
   close: () => void;
 }
-function TaskCreationForm(props: Props) {
+export default function TaskCreationForm(props: Props) {
+  // Fetch categories from the backend.
+  const [categoriesFromDb, setCategories] = React.useState<any[]>([]);
+  useEffect(() => {
+    fetch(config.backendURL + '/categories/options', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        Accept: 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setCategories(data))
+      .catch((error) => console.log(error));
+  }, []);
   const initialAnswer = [{ text: '', correct: true }];
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
@@ -147,7 +161,7 @@ function TaskCreationForm(props: Props) {
                 name="category"
                 onChange={(event) => handleCategoryChange(event.target.value)}
               >
-                {loadData.categories.map((category: any) => {
+                {categoriesFromDb.map((category: any) => {
                   return (
                     <option key={category.id} value={JSON.stringify(category)}>
                       {category.name}
@@ -225,5 +239,3 @@ function TaskCreationForm(props: Props) {
     </>
   );
 }
-
-export default TaskCreationForm;
