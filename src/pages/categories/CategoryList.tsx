@@ -29,7 +29,7 @@ function CategoryList() {
   const [editId, setEditId] = useState(0);
 
   const fetchCategories = () => {
-    fetch('http://localhost:8080/api/categories/')
+    fetch(config.backendURL + '/categories/')
       .then((response) => {
         if (response.status === 200) {
           return response.json();
@@ -80,7 +80,7 @@ function CategoryList() {
           className="category-action-button"
           icon={<EditIcon />}
           onClick={() => {
-            if (categories[(params.id as number) - 1].author === sessionStorage.getItem('current_user')) {
+            if (categories.find((c) => c.id === params.id)?.author === sessionStorage.getItem('current_user')) {
               setEditId(params.id as number);
               setShowEdit(true);
             } else {
@@ -93,7 +93,7 @@ function CategoryList() {
           className="category-action-button"
           icon={<DeleteIcon />}
           onClick={() => {
-            if (categories[(params.id as number) - 1].author === sessionStorage.getItem('current_user')) {
+            if (categories.find((c) => c.id === params.id)?.author === sessionStorage.getItem('current_user')) {
               console.log(`Delete category with id ${params.id}`);
             } else {
               console.log('Not the same Author.');

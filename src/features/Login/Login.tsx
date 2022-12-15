@@ -43,11 +43,10 @@ function Login() {
       })
       .then((body) => {
         sessionStorage.setItem('token', `${body.accessToken}`);
-        // After loging in fetch data of logged in user.
-        fetch('http://localhost:8080/api/users/me', {
+        fetch(config.backendURL + '/users/me', {
           method: 'GET',
           headers: {
-            Authorization: `${sessionStorage.getItem('token')}`,
+            Authorization: `${sessionStorage.getItem('token') ?? ''}`,
             Accept: 'application/json',
           },
         })

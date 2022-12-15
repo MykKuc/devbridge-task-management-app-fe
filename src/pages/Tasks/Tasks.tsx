@@ -222,7 +222,7 @@ function Tasks() {
           className="task-action-button"
           icon={<EditIcon />}
           onClick={() => {
-            if (tasks[(params.id as number) - 1].author === sessionStorage.getItem('current_user')) {
+            if (tasks.find((t) => t.id === params.id)?.author === sessionStorage.getItem('current_user')) {
               setSelectedTask(params.id as number);
               setShowModifyModal(true);
             } else {
@@ -235,7 +235,7 @@ function Tasks() {
           className="task-action-button"
           icon={<DeleteIcon />}
           onClick={() => {
-            if (tasks[(params.id as number) - 1].author === sessionStorage.getItem('current_user')) {
+            if (tasks.find((t) => t.id === params.id)?.author === sessionStorage.getItem('current_user')) {
               setDeleteId(Number(params.id));
               setShowDelete(true);
             } else {

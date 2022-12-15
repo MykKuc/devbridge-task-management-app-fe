@@ -59,7 +59,7 @@ function TaskCreationForm(props: Props) {
   }, []);
 
   const initialAnswer = [{ id: 0, text: '', correct: true }];
-  let url = 'http://localhost:8080/api/tasks/' + props.id;
+  let url = config.backendURL + '/tasks/' + props.id;
 
   const [task, setTask] = React.useState<TaskData>();
 
