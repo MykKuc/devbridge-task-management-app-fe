@@ -92,6 +92,7 @@ function Tasks() {
           data = data.map((t) => ({
             ...t,
             summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
+            isDisabled: sessionStorage.getItem('current_user') !== t.author && sessionStorage.getItem('current_user_role') !== 'ADMIN'
           }));
         }
         setTasks(data);
@@ -317,6 +318,7 @@ function Tasks() {
             setShowModifyModal(true);
           }}
           label="Edit"
+          disabled={params.row.isDisabled}
         />,
         <GridActionsCellItem
           className="task-action-button"
@@ -326,6 +328,7 @@ function Tasks() {
             setShowDelete(true);
           }}
           label="Delete"
+          disabled={params.row.isDisabled}
         />,
       ],
       sortable: false,

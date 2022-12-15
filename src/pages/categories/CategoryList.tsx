@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { GridActionsCellItem, GridColumns, GridRowParams } from '@mui/x-data-grid';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 
 import StyledDataGrid from '../../components/StyledDataGrid';
 import CustomPagination from '../../components/Pagination';
@@ -34,6 +33,7 @@ function CategoryList() {
         if (response.status === 200) {
           return response.json();
         } else {
+          console.log('Failed to fetch.');
           return [];
         }
       })
@@ -83,12 +83,6 @@ function CategoryList() {
             setShowEdit(true);
           }}
           label="Edit"
-        />,
-        <GridActionsCellItem
-          className="category-action-button"
-          icon={<DeleteIcon />}
-          onClick={() => console.log(`Delete category with id ${params.id}`)}
-          label="Delete"
         />,
       ],
       sortable: false,
