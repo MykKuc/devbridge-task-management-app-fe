@@ -95,7 +95,9 @@ const Task = () => {
       .then((data) => {
         const updatedData = {
           ...data,
-          isDisabled: sessionStorage.getItem('current_user') !== data.user.name && sessionStorage.getItem('current_user_role') !== 'ADMIN'
+          isDisabled:
+            sessionStorage.getItem('current_user') !== data.user.name &&
+            sessionStorage.getItem('current_user_role') !== 'ADMIN',
         };
         setTask(updatedData);
       });
@@ -192,7 +194,12 @@ const Task = () => {
                   Edit
                 </button>
 
-                <button type="button" className=" btn btn-danger rounded-pill" style={{ width: '100px' }} disabled={task?.isDisabled}>
+                <button
+                  type="button"
+                  className=" btn btn-danger rounded-pill"
+                  style={{ width: '100px' }}
+                  disabled={task?.isDisabled}
+                >
                   {' '}
                   Delete
                 </button>

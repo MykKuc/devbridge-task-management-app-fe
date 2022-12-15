@@ -52,8 +52,8 @@ function Login() {
         })
           .then((response) => response.json())
           .then((data) => {
-            sessionStorage.setItem('current_user', data.name)
-            sessionStorage.setItem('current_user_role', data.role)
+            sessionStorage.setItem('current_user', data.name);
+            sessionStorage.setItem('current_user_role', data.role);
           });
         //Redirecting to some other page after login.
         const user = sessionStorage.getItem('current_user');

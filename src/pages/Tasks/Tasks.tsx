@@ -75,6 +75,9 @@ function Tasks() {
   const [showDelete, setShowDelete] = useState(false);
   const [deleteId, setDeleteId] = useState(-1);
 
+  const [showMyTasks, setShowMyTasks] = useState(false);
+  const [categoryIdFilter, setCategoryIdFilter] = useState(0);
+
   useEffect(() => {
     fetch(config.backendURL + '/tasks/', {
       headers: {
@@ -93,7 +96,9 @@ function Tasks() {
           data = data.map((t) => ({
             ...t,
             summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
-            isDisabled: sessionStorage.getItem('current_user') !== t.author && sessionStorage.getItem('current_user_role') !== 'ADMIN'
+            isDisabled:
+              sessionStorage.getItem('current_user') !== t.author &&
+              sessionStorage.getItem('current_user_role') !== 'ADMIN',
           }));
         }
         setTasks(data);
@@ -101,8 +106,12 @@ function Tasks() {
       });
   }, [listChanged]);
 
-  const showMyTasks = (_event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-    fetch(`${config.backendURL}/tasks?onlyMine=${checked}`, {
+  const filter = (onlyMine: boolean, categoryId: Number) => {
+    let url = `${config.backendURL}/tasks?onlyMine=${onlyMine}`;
+    if (categoryId !== 0) {
+      url += `&categoryId=${categoryId}`;
+    }
+    fetch(url, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
       },
@@ -124,6 +133,20 @@ function Tasks() {
         setTasks(data);
       });
   };
+
+  const [categories, setCategories] = useState<Category[]>([]);
+  useEffect(() => {
+    fetch(config.backendURL + '/categories/options', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+        Accept: 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setCategories(data))
+      .catch((error) => console.log(error));
+  }, []);
 
   const handleDelete = (id: any) => {
     const url = config.backendURL + '/tasks/' + id;
@@ -360,11 +383,38 @@ function Tasks() {
       />
       <div className="task-button-wrapper">
         {sessionStorage.getItem('token') != null && (
-          <div className="my-tasks-checkbox-wrapper">
-            <label className="my-tasks-label" htmlFor="show-my-tasks">
-              My Tasks
-            </label>
-            <CheckBox name="show-my-tasks" id="show-my-tasks" onChange={showMyTasks} />
+          <div className="filter-wrapper">
+            <label htmlFor="show-my-tasks">My Tasks</label>
+            <CheckBox
+              name="show-my-tasks"
+              id="show-my-tasks"
+              value={showMyTasks}
+              onChange={(_event, checked: boolean) => {
+                filter(checked, categoryIdFilter);
+                setShowMyTasks(checked);
+              }}
+            />
+            <select
+              name="category"
+              id="category-filter"
+              value={categoryIdFilter}
+              onChange={(event) => {
+                let categoryId = Number(event.target.value);
+                filter(showMyTasks, categoryId);
+                setCategoryIdFilter(categoryId);
+              }}
+            >
+              <option key="select" value="0">
+                Category
+              </option>
+              {categories.map((category: any) => {
+                return (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                );
+              })}
+            </select>
           </div>
         )}
         <button

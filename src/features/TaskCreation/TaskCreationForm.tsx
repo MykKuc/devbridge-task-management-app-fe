@@ -23,7 +23,7 @@ export default function TaskCreationForm(props: Props) {
       .then((response) => response.json())
       .then((data) => {
         setCategories(data);
-        setCategory(data[0]?.id)
+        setCategory(data[0]?.id);
       })
       .catch((error) => console.log(error));
   }, []);
