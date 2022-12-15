@@ -4,7 +4,6 @@ import TextAnswer from './TextAnswer';
 import MultipleAnswer from './MultipleAnswer';
 import { Container, Row, Col } from 'react-grid-system';
 import config from '../../config';
-import { taskCancelled } from '@reduxjs/toolkit/dist/listenerMiddleware/exceptions';
 
 interface User {
   id: Number;
