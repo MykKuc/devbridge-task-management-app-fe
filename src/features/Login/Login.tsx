@@ -46,9 +46,10 @@ function Login() {
       })
       .then((body) => {
         sessionStorage.setItem('token', `${body.accessToken}`);
-        localStorage.setItem('isLoggedIn', 'true');
         //Redirecting to some other page after login.
-        if (toggleDark !== undefined) toggleDark(true);
+        if (toggleDark !== undefined) {
+          toggleDark(true);
+        }
         navigate('/tasks');
       })
       .catch((error) => console.log(error));

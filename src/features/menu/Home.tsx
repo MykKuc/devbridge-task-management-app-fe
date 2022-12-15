@@ -7,7 +7,7 @@ function Home() {
   fetch(config.backendURL + '/ok', {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
     },
   }).then((response) => {
     console.log(response);

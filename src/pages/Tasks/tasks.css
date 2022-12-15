@@ -1,8 +1,27 @@
-.button-wrapper {
+.task-button-wrapper {
+  position: relative;
   display: flex;
   justify-content: flex-end;
   padding-bottom: 20px;
   min-width: 800px;
+}
+
+.task-button-wrapper .my-tasks-checkbox-wrapper {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.my-tasks-checkbox-wrapper .my-tasks-label {
+  color: var(--accent-color);
+  font-size: 1.1rem;
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+.my-tasks-checkbox-wrapper .Mui-checked {
+  color: var(--accent-color) !important;
 }
 
 .tasks-table-wrapper {
