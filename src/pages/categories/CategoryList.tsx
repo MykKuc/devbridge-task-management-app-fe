@@ -29,11 +29,12 @@ function CategoryList() {
   const [editId, setEditId] = useState(0);
 
   const fetchCategories = () => {
-    fetch(config.backendURL + '/categories/')
+    fetch('http://localhost:8080/api/categories/')
       .then((response) => {
         if (response.status === 200) {
           return response.json();
         } else {
+          console.log('Failed to fetch.');
           return [];
         }
       })
@@ -79,15 +80,25 @@ function CategoryList() {
           className="category-action-button"
           icon={<EditIcon />}
           onClick={() => {
-            setEditId(params.id as number);
-            setShowEdit(true);
+            if (categories[(params.id as number) - 1].author === sessionStorage.getItem('current_user')) {
+              setEditId(params.id as number);
+              setShowEdit(true);
+            } else {
+              console.log('Not the same Author.');
+            }
           }}
           label="Edit"
         />,
         <GridActionsCellItem
           className="category-action-button"
           icon={<DeleteIcon />}
-          onClick={() => console.log(`Delete category with id ${params.id}`)}
+          onClick={() => {
+            if (categories[(params.id as number) - 1].author === sessionStorage.getItem('current_user')) {
+              console.log(`Delete category with id ${params.id}`);
+            } else {
+              console.log('Not the same Author.');
+            }
+          }}
           label="Delete"
         />,
       ],
