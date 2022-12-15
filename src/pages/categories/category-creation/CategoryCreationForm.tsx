@@ -2,49 +2,97 @@ import React from 'react';
 import { useState } from 'react';
 import './CategoryForm.css';
 import { Container, Row, Col } from 'react-grid-system';
+import config from '../../../config';
+
+interface CategoryCreateData {
+  name: String;
+  description: String;
+}
 
 interface Props {
-  handleAdd: any;
   close: () => void;
+  fetchCategories: () => void;
 }
 
 const CategoryCreationForm = (props: Props) => {
-  const [categoryTitle, setCategoryTitle] = useState('');
+  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [errors, setErrors] = useState({ title: '', description: '' });
 
-  const handleTitleChange = (title: React.ChangeEvent<HTMLInputElement>) => {
-    setCategoryTitle(title.target.value);
+  const handleTitleChange = (titleInput: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(titleInput.target.value);
   };
 
-  const handleDescriptionChange = (description: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setDescription(description.target.value);
+  const handleDescriptionChange = (descriptionInput: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(descriptionInput.target.value);
+  };
+
+  const clientValidation = () => {
+    let valid = true;
+
+    let errorsTemp = { title: '', description: '' };
+
+    if (title === '') {
+      errorsTemp.title = 'Please fill out this field.';
+      valid = false;
+    }
+
+    if (description === '') {
+      errorsTemp.description = 'Please fill out this field.';
+      valid = false;
+    }
+
+    setErrors(errorsTemp);
+
+    return valid;
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const date = new Date();
-    var current_date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-    const category = {
-      id: 50,
-      title: categoryTitle,
-      description: description,
-      creator: 'Default',
-      date: current_date,
-    };
-    console.log(category);
-    props.handleAdd(category);
-    props.close();
-  };
 
-  const handleCancel = () => {
-    props.close();
+    if (!clientValidation()) {
+      return;
+    }
+
+    const newCategory: CategoryCreateData = {
+      name: title,
+      description: description,
+    };
+
+    fetch(`${config.backendURL}/categories/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newCategory),
+    })
+      .then((response) => {
+        if (response.status === 201) {
+          props.fetchCategories();
+          props.close();
+        } else {
+          response.json().then((errorLog) => {
+            if (response.status === 400) {
+              let errorsTemp = { title: '', description: '' };
+              if (Object.hasOwn(errorLog, 'name')) errorsTemp.title = errorLog.name;
+
+              if (Object.hasOwn(errorLog, 'description')) errorsTemp.description = errorLog.description;
+
+              if (Object.hasOwn(errorLog, 'message')) errorsTemp.title = errorLog.message;
+
+              setErrors(errorsTemp);
+            } else {
+              console.error('Unexpected error while updating category: ', errorLog);
+            }
+          });
+        }
+      })
+      .catch((error) => console.error('Network error while updating category: ', error));
   };
 
   return (
     <div className="category-form-wrapper">
       <label className="required-label">required*</label>
 
-      <form className="category-form" onSubmit={handleSubmit}>
+      <form className="category-form" onSubmit={handleSubmit} noValidate>
         <Container>
           <Row align="center" style={{ marginBottom: '10px' }}>
             <Col className="input-column">
@@ -56,10 +104,10 @@ const CategoryCreationForm = (props: Props) => {
                 type="text"
                 name="title"
                 placeholder="Title"
-                required
                 onChange={handleTitleChange}
-                value={categoryTitle}
+                value={title}
               />
+              {errors.title !== '' ? <label className="error-label">{errors.title}</label> : ''}
             </Col>
           </Row>
           <Row align="center" style={{ marginBottom: '10px' }}>
@@ -71,17 +119,17 @@ const CategoryCreationForm = (props: Props) => {
                 className="big-input"
                 name="description"
                 placeholder="Description"
-                required
                 onChange={handleDescriptionChange}
                 value={description}
               />
+              {errors.description !== '' ? <label className="error-label">{errors.description}</label> : ''}
             </Col>
           </Row>
           <Row className="category-buttons" align="center" justify="center">
             <button type="submit" className="button-primary">
               Save
             </button>
-            <button onClick={handleCancel} className="button-secondary">
+            <button onClick={props.close} className="button-secondary">
               Cancel
             </button>
           </Row>
