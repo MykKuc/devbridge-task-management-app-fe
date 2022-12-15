@@ -48,6 +48,7 @@ interface FullTaskData {
   user: User;
   category: Category;
   answers: Answer[];
+  voted: boolean;
 }
 
 interface TaskData {
@@ -59,6 +60,7 @@ interface TaskData {
   score: Number;
   author: String;
   category: Category;
+  voted: boolean;
 }
 
 function Tasks() {
@@ -114,6 +116,39 @@ function Tasks() {
       fetch(config.backendURL + '/tasks/', {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            return [];
+          }
+        })
+        .then((data: TaskData[]) => {
+          if (data.length !== 0) {
+            data = data.map((t) => ({
+              ...t,
+              summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
+            }));
+          }
+          setTasks(data);
+        });
+    });
+  };
+
+  const handleLike = (id: any, voted: boolean) => {
+    const url = config.backendURL + '/vote/' + id;
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+      },
+      method: voted ? 'DELETE' : 'POST',
+      mode: 'cors',
+    }).then(() => {
+      fetch(config.backendURL + '/tasks/', {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
         },
       })
         .then((response) => {
@@ -237,8 +272,10 @@ function Tasks() {
       getActions: (params: GridRowParams) => [
         <GridActionsCellItem
           className="task-action-button"
-          icon={<ThumbUpIcon />}
-          onClick={() => console.log(`Like task with id ${params.id}`)}
+          icon={params.row.voted ? <ThumbUpIcon style={{ backgroundColor: 'white' }} /> : <ThumbUpIcon />}
+          disabled={sessionStorage.getItem('token') === ''}
+          hidden={sessionStorage.getItem('token') === ''}
+          onClick={() => handleLike(params.id, params.row.voted)}
           label="Like"
         />,
         <GridActionsCellItem
