@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './Login.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Content from '../../components/Content';
 import config from '../../config';
+import ThemeContext from '../menu/LoginContext';
 
 function Login() {
   const [error, setError] = useState<string | null>(null);
@@ -12,9 +13,7 @@ function Login() {
     password: '',
   });
 
-  if (sessionStorage.getItem('token') !== '') {
-    navigate('/');
-  }
+  const { dark, toggleDark } = useContext(ThemeContext);
 
   // Handle inputs onChange to sync input value with local state
   const handleInputChange = (event: { target: { name: string; value: string } }) => {
@@ -47,9 +46,10 @@ function Login() {
       })
       .then((body) => {
         sessionStorage.setItem('token', `${body.accessToken}`);
+        localStorage.setItem('isLoggedIn', 'true');
         //Redirecting to some other page after login.
+        if (toggleDark !== undefined) toggleDark(true);
         navigate('/tasks');
-        window.location.reload();
       })
       .catch((error) => console.log(error));
   };

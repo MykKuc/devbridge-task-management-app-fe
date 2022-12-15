@@ -13,23 +13,26 @@ import Register from './features/register/Register';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Task from './pages/Task/Task';
+import { ThemeProvider } from 'features/menu/LoginContext';
 
 function App() {
   return (
-    <div className="App">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/task/:id" element={<Task />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/logout" element={<Logout />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="*" element={<PageNotFound />} />
-        <Route path="/tasks" element={<Tasks />} />
-        <Route path="categories" element={<CategoryList />} />
-      </Routes>
-      <Footer />
-    </div>
+    <ThemeProvider>
+      <div className="App">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/task/:id" element={<Task />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="*" element={<PageNotFound />} />
+          <Route path="/tasks" element={<Tasks />} />
+          <Route path="categories" element={<CategoryList />} />
+        </Routes>
+        <Footer />
+      </div>
+    </ThemeProvider>
   );
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import { NavLink } from 'react-router-dom';
@@ -7,8 +7,30 @@ import LogoutIcon from './assets/logout-icon.png';
 import Logo from '../../logo_filled.svg';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import './navbar.css';
+import ThemeContext from './LoginContext';
 
 export default function Navbar() {
+  const { dark, toggleDark } = useContext(ThemeContext);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  //let token = sessionStorage.getItem("token");
+  useEffect(() => {
+    if (sessionStorage.getItem('token') === null) {
+      setIsLoggedIn(false);
+    } else {
+      setIsLoggedIn(true);
+    }
+    console.log('e');
+  }, [dark]);
+  /*setInterval(function(){
+    if(sessionStorage.getItem("token") === null){
+      setIsLoggedIn(false);
+    }
+    else{
+      setIsLoggedIn(true);
+    }
+console.log("e");
+  },1000);*/
   return (
     <div className="navbar-container">
       <nav className="navbar navbar-expand-xl navbar-dark">
@@ -35,24 +57,20 @@ export default function Navbar() {
           </li>
         </ul>
         <div className="navbar-login-wrapper d-none d-xl-flex">
-          {sessionStorage.getItem('token') === '' ? (
+          {isLoggedIn ? (
             <div className="nav-item">
-              <NavLink className="nav-link" to="/login">
-                <img src={ProfileIcon} alt="profile" className="px-1 pb-1" style={{ fontSize: 30 }} />
-              </NavLink>
-            </div>
-          ) : (
-            ''
-          )}
-
-          {sessionStorage.getItem('token') !== '' ? (
-            <div className="nav-item">
-              <NavLink className="nav-link" to="/logout">
+              <NavLink className="nav-link" to="/logout" onClick={() => {}}>
                 <img src={LogoutIcon} alt="logout" className="px-1 pb-1" style={{ fontSize: 30 }} />
               </NavLink>
             </div>
           ) : (
-            ''
+            <div className="nav-item">
+              <div style={{ border: '1 px solid' }}>
+                <NavLink className="nav-link" to="/login">
+                  <img src={ProfileIcon} alt="profile" className="px-1 pb-1" style={{ fontSize: 30 }} />
+                </NavLink>
+              </div>
+            </div>
           )}
         </div>
         <button
