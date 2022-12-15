@@ -49,7 +49,7 @@ function TaskCreationForm(props: Props) {
     fetch(config.backendURL + '/categories/options', {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
         Accept: 'application/json',
       },
     })
@@ -76,12 +76,12 @@ function TaskCreationForm(props: Props) {
   useEffect(() => {
     type === 'text' ? setShowTextAnswer(true) : setShowTextAnswer(false);
     type === 'multiple' ? setShowMultipleAnswer(true) : setShowMultipleAnswer(false);
-  });
+  }, [type]);
 
   useEffect(() => {
     fetch(url, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
       },
     })
       .then((response) => {
@@ -155,10 +155,7 @@ function TaskCreationForm(props: Props) {
       title: title,
       category: category,
       description: description,
-      user: task?.user,
       answers: answer,
-      creationDate: today,
-      score: task?.score,
       summary: summary,
     };
     console.log(newTask);
