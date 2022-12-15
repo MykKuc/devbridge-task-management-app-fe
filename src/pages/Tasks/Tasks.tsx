@@ -10,6 +10,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CheckBox from '@mui/material/Checkbox';
 
 import StyledDataGrid from '../../components/StyledDataGrid';
 import CustomPagination from '../../components/Pagination';
@@ -48,6 +49,7 @@ interface FullTaskData {
   user: User;
   category: Category;
   answers: Answer[];
+  voted: boolean;
 }
 
 interface TaskData {
@@ -59,6 +61,7 @@ interface TaskData {
   score: Number;
   author: String;
   category: Category;
+  voted: boolean;
 }
 
 function Tasks() {
@@ -75,7 +78,33 @@ function Tasks() {
   useEffect(() => {
     fetch(config.backendURL + '/tasks/', {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          return [];
+        }
+      })
+      .then((data: TaskData[]) => {
+        if (data.length !== 0) {
+          data = data.map((t) => ({
+            ...t,
+            summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
+            isDisabled: sessionStorage.getItem('current_user') !== t.author && sessionStorage.getItem('current_user_role') !== 'ADMIN'
+          }));
+        }
+        setTasks(data);
+        setListChanged(false);
+      });
+  }, [listChanged]);
+
+  const showMyTasks = (_event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+    fetch(`${config.backendURL}/tasks?onlyMine=${checked}`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
       },
     })
       .then((response) => {
@@ -93,22 +122,54 @@ function Tasks() {
           }));
         }
         setTasks(data);
-        setListChanged(false);
       });
-  }, [listChanged]);
+  };
 
   const handleDelete = (id: any) => {
     const url = config.backendURL + '/tasks/' + id;
     fetch(url, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
       },
       method: 'DELETE',
       mode: 'cors',
     }).then(() => {
       fetch(config.backendURL + '/tasks/', {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            return [];
+          }
+        })
+        .then((data: TaskData[]) => {
+          if (data.length !== 0) {
+            data = data.map((t) => ({
+              ...t,
+              summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
+            }));
+          }
+          setTasks(data);
+        });
+    });
+  };
+
+  const handleLike = (id: any, voted: boolean) => {
+    const url = config.backendURL + '/vote/' + id;
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+      },
+      method: voted ? 'DELETE' : 'POST',
+      mode: 'cors',
+    }).then(() => {
+      fetch(config.backendURL + '/tasks/', {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
         },
       })
         .then((response) => {
@@ -138,18 +199,46 @@ function Tasks() {
     const taskToUpdate = tempTasks.find((t) => t.id === task.id);
 
     if (taskToUpdate !== undefined) {
-      taskToUpdate.author = task.user.name;
-      taskToUpdate.id = task.id;
-      taskToUpdate.title = task.title;
-      taskToUpdate.description = task.description;
-      taskToUpdate.summary = formatDescription(task.summary);
-      taskToUpdate.creationDate = task.creationDate;
-      taskToUpdate.score = task.score;
-      taskToUpdate.category = task.category;
-    }
+      const updateTaskRequest = {
+        id: task?.id,
+        title: task.title,
+        categoryId: task.category.id,
+        description: task.description,
+        answers: task.answers,
+        summary: task.summary,
+      };
 
-    setTasks(tempTasks);
+      const url = config.backendURL + '/tasks/' + task.id;
+      fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+        },
+        body: JSON.stringify(updateTaskRequest),
+      }).then(() => {
+        fetch(config.backendURL + '/tasks/')
+          .then((response) => {
+            if (response.status === 200) {
+              return response.json();
+            } else {
+              return [];
+            }
+          })
+          .then((data: TaskData[]) => {
+            if (data.length !== 0) {
+              data = data.map((t) => ({
+                ...t,
+                summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
+              }));
+            }
+            setTasks(data);
+          });
+      });
+    }
   };
+
+  const handleUpdate = (id: any) => {};
 
   const columns: GridColumns = [
     {
@@ -203,8 +292,10 @@ function Tasks() {
       getActions: (params: GridRowParams) => [
         <GridActionsCellItem
           className="task-action-button"
-          icon={<ThumbUpIcon />}
-          onClick={() => console.log(`Like task with id ${params.id}`)}
+          icon={params.row.voted ? <ThumbUpIcon style={{ backgroundColor: 'white' }} /> : <ThumbUpIcon />}
+          disabled={sessionStorage.getItem('token') === ''}
+          hidden={sessionStorage.getItem('token') === ''}
+          onClick={() => handleLike(params.id, params.row.voted)}
           label="Like"
         />,
         <GridActionsCellItem
@@ -221,6 +312,7 @@ function Tasks() {
             setShowModifyModal(true);
           }}
           label="Edit"
+          disabled={params.row.isDisabled}
         />,
         <GridActionsCellItem
           className="task-action-button"
@@ -230,6 +322,7 @@ function Tasks() {
             setShowDelete(true);
           }}
           label="Delete"
+          disabled={params.row.isDisabled}
         />,
       ],
       sortable: false,
@@ -265,7 +358,15 @@ function Tasks() {
         handleDelete={handleDelete}
         id={deleteId}
       />
-      <div className="button-wrapper">
+      <div className="task-button-wrapper">
+        {sessionStorage.getItem('token') != null && (
+          <div className="my-tasks-checkbox-wrapper">
+            <label className="my-tasks-label" htmlFor="show-my-tasks">
+              My Tasks
+            </label>
+            <CheckBox name="show-my-tasks" id="show-my-tasks" onChange={showMyTasks} />
+          </div>
+        )}
         <button
           className="button-primary"
           onClick={() => {

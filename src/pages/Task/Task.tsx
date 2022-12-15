@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Content from '../../components/Content';
 import TaskEdit from '../../features/TaskEdit/TaskEdit';
 import config from '../../config';
+import { IconButton } from '@mui/material';
 
 interface User {
   id: Number;
@@ -32,6 +33,8 @@ interface TaskData {
   user: User;
   category: Category;
   answers: Answer[];
+  voted: boolean;
+  isDisabled: boolean;
 }
 
 const Task = () => {
@@ -46,11 +49,40 @@ const Task = () => {
   const handleModify = (newTask: TaskData) => {
     setTask(newTask);
   };
+
+  const handleLike = () => {
+    const url = config.backendURL + '/vote/' + task?.id;
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+      },
+      method: task?.voted ? 'DELETE' : 'POST',
+      mode: 'cors',
+    }).then(() => {
+      const url = config.backendURL + '/tasks/' + params.id;
+      fetch(url, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            navigate('/*');
+          }
+        })
+        .then((data) => {
+          setTask(data);
+        });
+    });
+  };
+
   const taskName = task?.title ?? 'Task';
   useEffect(() => {
     fetch(url, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
       },
     })
       .then((response) => {
@@ -61,7 +93,11 @@ const Task = () => {
         }
       })
       .then((data) => {
-        setTask(data);
+        const updatedData = {
+          ...data,
+          isDisabled: sessionStorage.getItem('current_user') !== data.user.name && sessionStorage.getItem('current_user_role') !== 'ADMIN'
+        };
+        setTask(updatedData);
       });
   }, []);
   return (
@@ -78,7 +114,7 @@ const Task = () => {
               <label> Description</label>
               <div className="separation" />
               <div className="overflow-auto " style={{ height: '100px' }}>
-                <p className="text-star overflow-auto"> {task?.description} </p>
+                <p className="text-start overflow-auto"> {task?.description} </p>
               </div>
             </div>
             <div>
@@ -113,8 +149,14 @@ const Task = () => {
             }}
           >
             <div className="row justify-content-center text-center" style={{ width: '250px' }}>
-              <div style={{ color: 'white' }}>
-                <ThumbUpIcon />
+              <div>
+                <IconButton disabled={sessionStorage.getItem('token') === ''} onClick={() => handleLike()}>
+                  {task?.voted ? (
+                    <ThumbUpIcon style={{ color: '#2babd3' }} />
+                  ) : (
+                    <ThumbUpIcon style={{ color: 'white' }} />
+                  )}
+                </IconButton>
               </div>
               <p style={{ textAlign: 'center' }}>{task?.score.toString()}</p>
               <div className=" separation" />
@@ -141,13 +183,16 @@ const Task = () => {
                   type="button"
                   className=" btn btn-primary rounded-pill "
                   style={{ width: '100px' }}
-                  onClick={() => setShowModifyModal(true)}
+                  onClick={() => {
+                    setShowModifyModal(true);
+                  }}
+                  disabled={task?.isDisabled}
                 >
                   {' '}
                   Edit
                 </button>
 
-                <button type="button" className=" btn btn-danger rounded-pill" style={{ width: '100px' }}>
+                <button type="button" className=" btn btn-danger rounded-pill" style={{ width: '100px' }} disabled={task?.isDisabled}>
                   {' '}
                   Delete
                 </button>
