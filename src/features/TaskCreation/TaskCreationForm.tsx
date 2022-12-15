@@ -1,12 +1,9 @@
 import React, { useEffect } from 'react';
 import './TaskCreation.css';
-import jsonData from './categories.json';
 import TextAnswer from './TextAnswer';
 import MultipleAnswer from './MultipleAnswer';
 import { Container, Row, Col } from 'react-grid-system';
 import config from '../../config';
-
-const loadData = JSON.parse(JSON.stringify(jsonData));
 
 interface Props {
   setListChanged: Function;
@@ -14,7 +11,7 @@ interface Props {
 }
 export default function TaskCreationForm(props: Props) {
   // Fetch categories from the backend.
-  const [categoriesFromDb, setCategories] = React.useState<any[]>([]);
+  const [categories, setCategories] = React.useState<any[]>([]);
   useEffect(() => {
     fetch(config.backendURL + '/categories/options', {
       method: 'GET',
@@ -24,14 +21,17 @@ export default function TaskCreationForm(props: Props) {
       },
     })
       .then((response) => response.json())
-      .then((data) => setCategories(data))
+      .then((data) => {
+        setCategories(data);
+        setCategory(data[0]?.id)
+      })
       .catch((error) => console.log(error));
   }, []);
   const initialAnswer = [{ text: '', correct: true }];
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [summary, setSummary] = React.useState('');
-  const [category, setCategory] = React.useState(jsonData.categories[0]);
+  const [category, setCategory] = React.useState('');
   const [type, setType] = React.useState('');
   const [answer, setAnswer] = React.useState(initialAnswer);
 
@@ -49,7 +49,8 @@ export default function TaskCreationForm(props: Props) {
 
   const handleCategoryChange = (category: string) => {
     const parsedCat = JSON.parse(category);
-    setCategory(parsedCat);
+    const categoryId = categories.find((c) => c.name === parsedCat)?.id;
+    setCategory(categoryId);
   };
 
   const handleTypeChange = (type: React.SetStateAction<string>) => {
@@ -91,7 +92,7 @@ export default function TaskCreationForm(props: Props) {
 
     const task = {
       title: title,
-      categoryId: category.id,
+      categoryId: category,
       description: description,
       summary: summary,
       answers: answer,
@@ -100,7 +101,10 @@ export default function TaskCreationForm(props: Props) {
       fetch(config.backendURL + '/tasks/', {
         method: 'POST',
         body: JSON.stringify(task),
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+        },
       }).then((response) => {
         if (response.status === 201) {
           props.setListChanged(true);
@@ -161,7 +165,7 @@ export default function TaskCreationForm(props: Props) {
                 name="category"
                 onChange={(event) => handleCategoryChange(event.target.value)}
               >
-                {categoriesFromDb.map((category: any) => {
+                {categories.map((category: any) => {
                   return (
                     <option key={category.id} value={JSON.stringify(category)}>
                       {category.name}
