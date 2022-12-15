@@ -139,67 +139,35 @@ function Tasks() {
 
   const handleLike = (id: any, voted: boolean) => {
     const url = config.backendURL + '/vote/' + id;
-    if (voted) {
-      fetch(url, {
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+      },
+      method: voted ? 'DELETE' : 'POST',
+      mode: 'cors',
+    }).then(() => {
+      fetch(config.backendURL + '/tasks/', {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
         },
-        method: 'DELETE',
-        mode: 'cors',
-      }).then(() => {
-        fetch(config.backendURL + '/tasks/', {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
-          },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            return [];
+          }
         })
-          .then((response) => {
-            if (response.status === 200) {
-              return response.json();
-            } else {
-              return [];
-            }
-          })
-          .then((data: TaskData[]) => {
-            if (data.length !== 0) {
-              data = data.map((t) => ({
-                ...t,
-                summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
-              }));
-            }
-            setTasks(data);
-          });
-      });
-    } else {
-      fetch(url, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
-        },
-        method: 'POST',
-        mode: 'cors',
-      }).then(() => {
-        fetch(config.backendURL + '/tasks/', {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
-          },
-        })
-          .then((response) => {
-            if (response.status === 200) {
-              return response.json();
-            } else {
-              return [];
-            }
-          })
-          .then((data: TaskData[]) => {
-            if (data.length !== 0) {
-              data = data.map((t) => ({
-                ...t,
-                summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
-              }));
-            }
-            setTasks(data);
-          });
-      });
-    }
+        .then((data: TaskData[]) => {
+          if (data.length !== 0) {
+            data = data.map((t) => ({
+              ...t,
+              summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
+            }));
+          }
+          setTasks(data);
+        });
+    });
   };
 
   const formatDescription = (description: String) => {

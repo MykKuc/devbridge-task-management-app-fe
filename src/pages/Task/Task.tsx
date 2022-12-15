@@ -51,57 +51,30 @@ const Task = () => {
 
   const handleLike = () => {
     const url = config.backendURL + '/vote/' + task?.id;
-    if (task?.voted) {
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+      },
+      method: task?.voted ? 'DELETE' : 'POST',
+      mode: 'cors',
+    }).then(() => {
+      const url = config.backendURL + '/tasks/' + params.id;
       fetch(url, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
         },
-        method: 'DELETE',
-        mode: 'cors',
-      }).then(() => {
-        const url = config.backendURL + '/tasks/' + params.id;
-        fetch(url, {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
-          },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            navigate('/*');
+          }
         })
-          .then((response) => {
-            if (response.status === 200) {
-              return response.json();
-            } else {
-              navigate('/*');
-            }
-          })
-          .then((data) => {
-            setTask(data);
-          });
-      });
-    } else {
-      fetch(url, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
-        },
-        method: 'POST',
-        mode: 'cors',
-      }).then(() => {
-        const url = config.backendURL + '/tasks/' + params.id;
-        fetch(url, {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
-          },
-        })
-          .then((response) => {
-            if (response.status === 200) {
-              return response.json();
-            } else {
-              navigate('/*');
-            }
-          })
-          .then((data) => {
-            setTask(data);
-          });
-      });
-    }
+        .then((data) => {
+          setTask(data);
+        });
+    });
   };
 
   const taskName = task?.title ?? 'Task';
