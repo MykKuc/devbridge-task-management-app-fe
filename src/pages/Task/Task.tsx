@@ -78,7 +78,7 @@ const Task = () => {
               <label> Description</label>
               <div className="separation" />
               <div className="overflow-auto " style={{ height: '100px' }}>
-                <p className="text-star overflow-auto"> {task?.description} </p>
+                <p className="text-start overflow-auto"> {task?.description} </p>
               </div>
             </div>
             <div>

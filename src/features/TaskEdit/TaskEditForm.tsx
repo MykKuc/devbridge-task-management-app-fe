@@ -76,7 +76,7 @@ function TaskCreationForm(props: Props) {
   useEffect(() => {
     type === 'text' ? setShowTextAnswer(true) : setShowTextAnswer(false);
     type === 'multiple' ? setShowMultipleAnswer(true) : setShowMultipleAnswer(false);
-  });
+  }, [type]);
 
   useEffect(() => {
     fetch(url, {

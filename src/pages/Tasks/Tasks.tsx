@@ -10,6 +10,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CheckBox from '@mui/material/Checkbox';
 
 import StyledDataGrid from '../../components/StyledDataGrid';
 import CustomPagination from '../../components/Pagination';
@@ -94,6 +95,30 @@ function Tasks() {
         setTasks(data);
       });
   }, []);
+
+  const showMyTasks = (_event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+    fetch(`${config.backendURL}/tasks?onlyMine=${checked}`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          return [];
+        }
+      })
+      .then((data: TaskData[]) => {
+        if (data.length !== 0) {
+          data = data.map((t) => ({
+            ...t,
+            summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
+          }));
+        }
+        setTasks(data);
+      });
+  };
 
   const handleAdd = (event: any, task: any) => {
     const tasksCopy = [...tasks];
@@ -270,7 +295,15 @@ function Tasks() {
         handleDelete={handleDelete}
         id={deleteId}
       />
-      <div className="button-wrapper">
+      <div className="task-button-wrapper">
+        {sessionStorage.getItem('token') != null && (
+          <div className="my-tasks-checkbox-wrapper">
+            <label className="my-tasks-label" htmlFor="show-my-tasks">
+              My Tasks
+            </label>
+            <CheckBox name="show-my-tasks" id="show-my-tasks" onChange={showMyTasks} />
+          </div>
+        )}
         <button
           className="button-primary"
           onClick={() => {
