@@ -26,7 +26,6 @@ export default function Logout() {
       })
       .then(() => {
         sessionStorage.removeItem('token');
-        localStorage.setItem('isLoggedIn', 'false');
         if (toggleDark !== undefined) {
           toggleDark(false);
         }

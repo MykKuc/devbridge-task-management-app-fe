@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, FC, ReactNode, PropsWithChildren } from 'react';
+import React, { useState } from 'react';
 
 interface IThemeContext {
   dark: boolean;

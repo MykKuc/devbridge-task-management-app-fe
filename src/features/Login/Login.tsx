@@ -46,10 +46,10 @@ function Login() {
       })
       .then((body) => {
         sessionStorage.setItem('token', `${body.accessToken}`);
-        //Redirecting to some other page after login.
         if (toggleDark !== undefined) {
           toggleDark(true);
         }
+        //Redirecting to some other page after login.
         navigate('/tasks');
       })
       .catch((error) => console.log(error));
