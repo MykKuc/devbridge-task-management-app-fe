@@ -6,22 +6,32 @@
   min-width: 800px;
 }
 
-.task-button-wrapper .my-tasks-checkbox-wrapper {
+.task-button-wrapper .filter-wrapper {
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
 }
 
-.my-tasks-checkbox-wrapper .my-tasks-label {
+.filter-wrapper label {
   color: var(--accent-color);
   font-size: 1.1rem;
   font-weight: bold;
   vertical-align: middle;
 }
 
-.my-tasks-checkbox-wrapper .Mui-checked {
+.filter-wrapper .Mui-checked {
   color: var(--accent-color) !important;
+}
+
+#category-filter {
+  width: 150px;
+  border-radius: 10px;
+  background-color: var(--main-shade-color);
+  border: 2.5px solid var(--accent-color);
+  color: var(--accent-color);
+  box-shadow: 0px 3px 8px 1px var(--shadow-color);
+  margin: 9px;
 }
 
 .tasks-table-wrapper {
