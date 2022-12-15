@@ -17,7 +17,7 @@ function TaskCreationForm(props: Props) {
     fetch(config.backendURL + '/categories/options', {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
         Accept: 'application/json',
       },
     })

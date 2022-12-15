@@ -81,7 +81,7 @@ const Task = () => {
   useEffect(() => {
     fetch(url, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
       },
     })
       .then((response) => {
@@ -109,7 +109,7 @@ const Task = () => {
               <label> Description</label>
               <div className="separation" />
               <div className="overflow-auto " style={{ height: '100px' }}>
-                <p className="text-star overflow-auto"> {task?.description} </p>
+                <p className="text-start overflow-auto"> {task?.description} </p>
               </div>
             </div>
             <div>
