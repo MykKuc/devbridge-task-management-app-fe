@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import './TaskEdit.css';
+// import './TaskEdit.css';
+import '../TaskCreation/TaskCreation.css'
 import { Row, Col } from 'react-grid-system';
 
 interface Answer {
