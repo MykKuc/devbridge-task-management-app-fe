@@ -15,7 +15,10 @@ import { Bar } from 'react-chartjs-2';
 
 function Home() {
   const [taskStatistics, setTaskStatistics] = useState<any[]>([]);
+
   ChartJS.register(...registerables);
+  ChartJS.defaults.color = '#fff';
+  ChartJS.defaults.font.size = 25;
 
   //Get the statistics.
   useEffect(() => {
@@ -47,7 +50,7 @@ function Home() {
       },
       title: {
         // Just a title.
-        display: true,
+        display: false,
         text: 'Tasks in Each Category',
       },
     },
@@ -67,7 +70,7 @@ function Home() {
   };
 
   return (
-    <Content name={'Home'} height={'60vh'}>
+    <Content name={'Task Statistics'} height={'60vh'}>
       <Bar options={chartOptions} data={chartData} />
     </Content>
   );
