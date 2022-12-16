@@ -26,7 +26,13 @@ export default function CategoryEdit(props: Props) {
   const [errors, setErrors] = useState({ title: '', description: '' });
 
   useEffect(() => {
-    fetch(`${config.backendURL}/categories/${props.id}`)
+    fetch(`${config.backendURL}/categories/${props.id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+      },
+    })
       .then((response) => {
         if (response.status === 200) {
           return response.json();
@@ -95,7 +101,10 @@ export default function CategoryEdit(props: Props) {
 
       fetch(`${config.backendURL}/categories/${props.id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(updatedCategory),
       })
         .then((response) => {
