@@ -12,7 +12,7 @@ export default function Logout() {
     fetch(config.backendURL + '/users/logout/', {
       method: 'PUT',
       headers: {
-        Authorization: 'Bearer ' + sessionStorage.getItem('token') ?? '',
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
       },
     })
       .then((response) => {
