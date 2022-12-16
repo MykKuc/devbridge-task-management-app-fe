@@ -47,7 +47,47 @@ const Task = () => {
   const url = config.backendURL + '/tasks/' + params.id;
 
   const handleModify = (newTask: TaskData) => {
-    setTask(newTask);
+    const updateTaskRequest = {
+      id: newTask.id,
+      title: newTask.title,
+      categoryId: newTask.category.id,
+      description: newTask.description,
+      answers: newTask.answers,
+      summary: newTask.summary,
+    };
+
+    const url = config.backendURL + '/tasks/' + task?.id;
+    fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+      },
+      body: JSON.stringify(updateTaskRequest),
+    }).then(() => {
+      const url = config.backendURL + '/tasks/' + params.id;
+      fetch(url, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            navigate('/*');
+          }
+        })
+        .then((data) => {
+          const updatedData = {
+            ...data,
+            isDisabled:
+              sessionStorage.getItem('current_user') !== data.user.name &&
+              sessionStorage.getItem('current_user_role') !== 'ADMIN',
+          };
+          setTask(updatedData);
+        });
+    });
   };
 
   const handleLike = () => {
@@ -73,7 +113,13 @@ const Task = () => {
           }
         })
         .then((data) => {
-          setTask(data);
+          const updatedData = {
+            ...data,
+            isDisabled:
+              sessionStorage.getItem('current_user') !== data.user.name &&
+              sessionStorage.getItem('current_user_role') !== 'ADMIN',
+          };
+          setTask(updatedData);
         });
     });
   };

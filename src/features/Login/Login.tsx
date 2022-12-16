@@ -1,9 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import './Login.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Content from '../../components/Content';
 import config from '../../config';
-import ThemeContext from '../menu/LoginContext';
 
 function Login() {
   const [error, setError] = useState<string | null>(null);
@@ -12,7 +11,6 @@ function Login() {
     email: '',
     password: '',
   });
-
   const { dark, toggleDark } = useContext(ThemeContext);
 
   // Handle inputs onChange to sync input value with local state
@@ -46,10 +44,24 @@ function Login() {
       })
       .then((body) => {
         sessionStorage.setItem('token', `${body.accessToken}`);
+        fetch(config.backendURL + '/users/me', {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+            Accept: 'application/json',
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            sessionStorage.setItem('current_user', data.name);
+            sessionStorage.setItem('current_user_role', data.role);
+          });
         if (toggleDark !== undefined) {
           toggleDark(true);
         }
         //Redirecting to some other page after login.
+        const user = sessionStorage.getItem('current_user');
+        console.log(user);
         navigate('/tasks');
       })
       .catch((error) => console.log(error));
