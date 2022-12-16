@@ -1,24 +1,74 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Content from '../../components/Content';
 import config from '../../config';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  registerables,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 
 function Home() {
-  const [show, setShow] = useState(false);
-  fetch(config.backendURL + '/ok', {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+  const [taskStatistics, setTaskStatistics] = useState<any[]>([]);
+  ChartJS.register(...registerables);
+
+  //Get the statistics.
+  useEffect(() => {
+    fetch(config.backendURL + '/tasks/statistics', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setTaskStatistics(data);
+      });
+  }, []);
+
+  // Labels for Horizontal axis. Okay, we got labels.
+  console.log(taskStatistics);
+  const labels = taskStatistics.map((object) => object['category']);
+  const dataValues = taskStatistics.map((object) => object['taskCount']);
+  console.log('Get the values.');
+  console.log(dataValues);
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        // Position of the legend.
+        position: 'top' as const,
+      },
+      title: {
+        // Just a title.
+        display: true,
+        text: 'Tasks in Each Category',
+      },
     },
-  }).then((response) => {
-    console.log(response);
-    if (response.status == 200) {
-      setShow(true);
-    }
-  });
+  };
+
+  const chartData = {
+    labels,
+    datasets: [
+      {
+        // The label.
+        label: 'Tasks',
+        data: labels.map(() => dataValues),
+        //Just a color
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+    ],
+  };
+
   return (
     <Content name={'Home'} height={'60vh'}>
-      <span>Hello world</span>
-      {show && <label>Veikia API</label>}
+      <Bar options={chartOptions} data={chartData} />
     </Content>
   );
 }
