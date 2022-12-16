@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import './TaskEdit.css';
+// import './TaskEdit.css';
+import '../TaskCreation/TaskCreation.css'
 import TextAnswer from './TextAnswer';
 import MultipleAnswer from './MultipleAnswer';
 import { Container, Row, Col } from 'react-grid-system';
@@ -165,11 +166,11 @@ function TaskCreationForm(props: Props) {
 
   return (
     <>
-      <label className="required-label">required*</label>
+      <label className="required-label" style={{color: "rgb(201, 43, 40)"}}>required*</label>
       <div className="create-task-form">
         <form className="task-form" onSubmit={handleSubmit}>
           <Container>
-            <Row align="end" style={{ height: '125px' }}>
+            <Row align="end" style={{ marginBottom: '10px' }}>
               <Col>
                 <label className="small-label">
                   Title<label className="required-star">*</label>
@@ -266,8 +267,8 @@ function TaskCreationForm(props: Props) {
             {showMultipleAnswer && <MultipleAnswer answer={answer} handleMultipleChange={handleMultipleChange} />}
             <Row align="center" style={{ height: '100px' }}>
               <Col>
-                <button className="create-btn" type="submit">
-                  SUBMIT
+                <button className="button-primary" type="submit">
+                  Submit
                 </button>
               </Col>
             </Row>

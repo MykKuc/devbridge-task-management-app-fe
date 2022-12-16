@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CheckBox from '@mui/material/Checkbox';
-import './TaskEdit.css';
+// import './TaskEdit.css';
+import '../TaskCreation/TaskCreation.css'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton } from '@mui/material';
 import { Row, Col } from 'react-grid-system';
@@ -84,12 +85,15 @@ const MultipleAnswer = (props: Props) => {
               />
             </Col>
             <Col md={1}>
-              <IconButton
-                className="answer-delete-button"
-                style={{ float: 'right', marginRight: '2.5%' }}
-                onClick={() => handleDelete(index)}
-                disabled={answers.length <= 2}
-              >
+              {/*<IconButton*/}
+              {/*  className="answer-delete-button"*/}
+              {/*  style={{ float: 'right', marginRight: '2.5%' }}*/}
+              {/*  onClick={() => handleDelete(index)}*/}
+              {/*  disabled={answers.length <= 2}*/}
+              {/*>*/}
+              {/*  <DeleteIcon className="answer-delete-button" />*/}
+              {/*</IconButton>*/}
+              <IconButton style={{ float: 'right' }} onClick={() => handleDelete(index)} disabled={answers.length <= 2}>
                 <DeleteIcon className="answer-delete-button" />
               </IconButton>
             </Col>
@@ -98,8 +102,8 @@ const MultipleAnswer = (props: Props) => {
       })}
       <Row align="center" style={{ height: '60px' }}>
         <Col>
-          <button className="add-answer-button" onClick={addNewAnswer}>
-            +
+          <button className="button-primary add-answer-button" onClick={addNewAnswer}>
+            <span className="material-symbols-outlined">add</span>
           </button>
         </Col>
       </Row>
