@@ -105,11 +105,13 @@ function CategoryList() {
         }}
         fetchCategories={fetchCategories}
       />
-      <div className="button-wrapper">
-        <button onClick={() => setShowModal(true)} className="button-primary">
-          Create
-        </button>
-      </div>
+      {sessionStorage.getItem('token') != null && sessionStorage.getItem('token') != '' && (
+        <div className="button-wrapper">
+          <button onClick={() => setShowModal(true)} className="button-primary">
+            Create
+          </button>
+        </div>
+      )}
       {showEdit && (
         <CategoryEdit
           show={showEdit}

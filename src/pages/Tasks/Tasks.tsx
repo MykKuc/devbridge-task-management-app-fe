@@ -390,8 +390,8 @@ function Tasks() {
         handleDelete={handleDelete}
         id={deleteId}
       />
-      <div className="task-button-wrapper">
-        {sessionStorage.getItem('token') != null && sessionStorage.getItem('token') != '' && (
+      {sessionStorage.getItem('token') != null && sessionStorage.getItem('token') != '' && (
+        <div className="task-button-wrapper">
           <div className="filter-wrapper">
             <label htmlFor="show-my-tasks">My Tasks</label>
             <CheckBox
@@ -425,16 +425,16 @@ function Tasks() {
               })}
             </select>
           </div>
-        )}
-        <button
-          className="button-primary"
-          onClick={() => {
-            setShow(true);
-          }}
-        >
-          Create
-        </button>
-      </div>
+          <button
+            className="button-primary"
+            onClick={() => {
+              setShow(true);
+            }}
+          >
+            Create
+          </button>
+        </div>
+      )}
       <div className="tasks-table-wrapper">
         <StyledDataGrid
           headerHeight={70}
