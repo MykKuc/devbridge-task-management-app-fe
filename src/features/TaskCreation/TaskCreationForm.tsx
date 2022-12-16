@@ -5,6 +5,11 @@ import MultipleAnswer from './MultipleAnswer';
 import { Container, Row, Col } from 'react-grid-system';
 import config from '../../config';
 
+interface Category {
+  id: Number;
+  name: String;
+}
+
 interface Props {
   setListChanged: Function;
   close: () => void;
@@ -23,7 +28,7 @@ export default function TaskCreationForm(props: Props) {
       .then((response) => response.json())
       .then((data) => {
         setCategories(data);
-        setCategory(data[0]?.id);
+        setCategory(data[0]);
       })
       .catch((error) => console.log(error));
   }, []);
@@ -31,7 +36,7 @@ export default function TaskCreationForm(props: Props) {
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [summary, setSummary] = React.useState('');
-  const [category, setCategory] = React.useState('');
+  const [category, setCategory] = React.useState<Category>();
   const [type, setType] = React.useState('');
   const [answer, setAnswer] = React.useState(initialAnswer);
 
@@ -49,8 +54,7 @@ export default function TaskCreationForm(props: Props) {
 
   const handleCategoryChange = (category: string) => {
     const parsedCat = JSON.parse(category);
-    const categoryId = categories.find((c) => c.name === parsedCat)?.id;
-    setCategory(categoryId);
+    setCategory(parsedCat);
   };
 
   const handleTypeChange = (type: React.SetStateAction<string>) => {
@@ -92,7 +96,7 @@ export default function TaskCreationForm(props: Props) {
 
     const task = {
       title: title,
-      categoryId: category,
+      categoryId: category?.id,
       description: description,
       summary: summary,
       answers: answer,

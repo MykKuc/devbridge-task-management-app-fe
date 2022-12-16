@@ -78,6 +78,10 @@ function Tasks() {
   const [showMyTasks, setShowMyTasks] = useState(false);
   const [categoryIdFilter, setCategoryIdFilter] = useState(0);
 
+  const canEdit = (author: String) => {
+    return sessionStorage.getItem('current_user') === author || sessionStorage.getItem('current_user_role') === 'ADMIN';
+  };
+
   useEffect(() => {
     fetch(config.backendURL + '/tasks/', {
       headers: {
@@ -96,9 +100,7 @@ function Tasks() {
           data = data.map((t) => ({
             ...t,
             summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
-            isDisabled:
-              sessionStorage.getItem('current_user') !== t.author &&
-              sessionStorage.getItem('current_user_role') !== 'ADMIN',
+            isDisabled: !canEdit(t.author),
           }));
         }
         setTasks(data);
@@ -128,6 +130,7 @@ function Tasks() {
           data = data.map((t) => ({
             ...t,
             summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
+            isDisabled: !canEdit(t.author),
           }));
         }
         setTasks(data);
@@ -136,16 +139,18 @@ function Tasks() {
 
   const [categories, setCategories] = useState<Category[]>([]);
   useEffect(() => {
-    fetch(config.backendURL + '/categories/options', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
-        Accept: 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => setCategories(data))
-      .catch((error) => console.log(error));
+    if (sessionStorage.getItem('token') != null && sessionStorage.getItem('token') != '') {
+      fetch(config.backendURL + '/categories/options', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+          Accept: 'application/json',
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => setCategories(data))
+        .catch((error) => console.log(error));
+    }
   }, []);
 
   const handleDelete = (id: any) => {
@@ -174,6 +179,7 @@ function Tasks() {
             data = data.map((t) => ({
               ...t,
               summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
+              isDisabled: !canEdit(t.author),
             }));
           }
           setTasks(data);
@@ -207,6 +213,7 @@ function Tasks() {
             data = data.map((t) => ({
               ...t,
               summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
+              isDisabled: !canEdit(t.author),
             }));
           }
           setTasks(data);
@@ -253,6 +260,7 @@ function Tasks() {
               data = data.map((t) => ({
                 ...t,
                 summary: t.summary == null || t.summary === '' ? formatDescription(t.description) : t.summary,
+                isDisabled: !canEdit(t.author),
               }));
             }
             setTasks(data);
@@ -316,8 +324,7 @@ function Tasks() {
         <GridActionsCellItem
           className="task-action-button"
           icon={params.row.voted ? <ThumbUpIcon style={{ backgroundColor: 'white' }} /> : <ThumbUpIcon />}
-          disabled={sessionStorage.getItem('token') === ''}
-          hidden={sessionStorage.getItem('token') === ''}
+          hidden={sessionStorage.getItem('token') == null || sessionStorage.getItem('token') == ''}
           onClick={() => handleLike(params.id, params.row.voted)}
           label="Like"
         />,
@@ -330,6 +337,7 @@ function Tasks() {
         <GridActionsCellItem
           className="task-action-button"
           icon={<EditIcon />}
+          hidden={sessionStorage.getItem('token') == null || sessionStorage.getItem('token') == ''}
           onClick={() => {
             setSelectedTask(params.id as number);
             setShowModifyModal(true);
@@ -340,6 +348,7 @@ function Tasks() {
         <GridActionsCellItem
           className="task-action-button"
           icon={<DeleteIcon />}
+          hidden={sessionStorage.getItem('token') == null || sessionStorage.getItem('token') == ''}
           onClick={() => {
             setDeleteId(Number(params.id));
             setShowDelete(true);
@@ -381,8 +390,8 @@ function Tasks() {
         handleDelete={handleDelete}
         id={deleteId}
       />
-      <div className="task-button-wrapper">
-        {sessionStorage.getItem('token') != null && (
+      {sessionStorage.getItem('token') != null && sessionStorage.getItem('token') != '' && (
+        <div className="task-button-wrapper">
           <div className="filter-wrapper">
             <label htmlFor="show-my-tasks">My Tasks</label>
             <CheckBox
@@ -416,16 +425,16 @@ function Tasks() {
               })}
             </select>
           </div>
-        )}
-        <button
-          className="button-primary"
-          onClick={() => {
-            setShow(true);
-          }}
-        >
-          Create
-        </button>
-      </div>
+          <button
+            className="button-primary"
+            onClick={() => {
+              setShow(true);
+            }}
+          >
+            Create
+          </button>
+        </div>
+      )}
       <div className="tasks-table-wrapper">
         <StyledDataGrid
           headerHeight={70}
