@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-interface IThemeContext {
+interface ILoginContext {
   dark: boolean;
   toggleDark?: (darkState: boolean) => void;
 }
@@ -10,11 +10,11 @@ const defaultState = {
 type Props = {
   children?: JSX.Element;
 };
-const ThemeContext = React.createContext<IThemeContext>(defaultState);
+const LoginContext = React.createContext<ILoginContext>(defaultState);
 
 // ...
 
-export const ThemeProvider = ({ children }: Props) => {
+export const LoginProvider = ({ children }: Props) => {
   const [dark, setDark] = useState(defaultState.dark);
 
   const toggleDark = (darkState: boolean) => {
@@ -22,15 +22,15 @@ export const ThemeProvider = ({ children }: Props) => {
   };
 
   return (
-    <ThemeContext.Provider
+    <LoginContext.Provider
       value={{
         dark,
         toggleDark,
       }}
     >
       {children}
-    </ThemeContext.Provider>
+    </LoginContext.Provider>
   );
 };
 
-export default ThemeContext;
+export default LoginContext;

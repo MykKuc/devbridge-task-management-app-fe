@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './Login.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Content from '../../components/Content';
 import config from '../../config';
+import LoginContext from '../menu/LoginContext';
 
 function Login() {
   const [error, setError] = useState<string | null>(null);
@@ -11,7 +12,7 @@ function Login() {
     email: '',
     password: '',
   });
-  const { dark, toggleDark } = useContext(ThemeContext);
+  const { dark, toggleDark } = useContext(LoginContext);
 
   // Handle inputs onChange to sync input value with local state
   const handleInputChange = (event: { target: { name: string; value: string } }) => {

@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import config from '../../config';
-import ThemeContext from '../menu/LoginContext';
+import LoginContext from '../menu/LoginContext';
 
 export default function Logout() {
   const navigate = useNavigate();
   const [logoutRequest, setLogoutRequest] = useState(true);
-  const { dark, toggleDark } = useContext(ThemeContext);
+  const { dark, toggleDark } = useContext(LoginContext);
 
   useEffect(() => {
     fetch(config.backendURL + '/users/logout/', {

@@ -7,10 +7,10 @@ import LogoutIcon from './assets/logout-icon.png';
 import Logo from '../../logo_filled.svg';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import './navbar.css';
-import ThemeContext from './LoginContext';
+import LoginContext from './LoginContext';
 
 export default function Navbar() {
-  const { dark, toggleDark } = useContext(ThemeContext);
+  const { dark, toggleDark } = useContext(LoginContext);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   //let token = sessionStorage.getItem("token");

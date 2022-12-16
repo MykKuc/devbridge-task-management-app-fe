@@ -13,11 +13,11 @@ import Register from './features/register/Register';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Task from './pages/Task/Task';
-import { ThemeProvider } from 'features/menu/LoginContext';
+import { LoginProvider } from 'features/menu/LoginContext';
 
 function App() {
   return (
-    <ThemeProvider>
+    <LoginProvider>
       <div className="App">
         <Navbar />
         <Routes>
@@ -32,7 +32,7 @@ function App() {
         </Routes>
         <Footer />
       </div>
-    </ThemeProvider>
+    </LoginProvider>
   );
 }
 
