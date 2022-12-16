@@ -247,7 +247,12 @@ function Tasks() {
         },
         body: JSON.stringify(updateTaskRequest),
       }).then(() => {
-        fetch(config.backendURL + '/tasks/')
+        fetch(config.backendURL + '/tasks/', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${sessionStorage.getItem('token') ?? ''}`,
+          },
+        })
           .then((response) => {
             if (response.status === 200) {
               return response.json();
