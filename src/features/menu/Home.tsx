@@ -62,7 +62,7 @@ function Home() {
       {
         // The label.
         label: 'Tasks',
-        data: labels.map(() => dataValues),
+        data: dataValues,
         //Just a color
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
