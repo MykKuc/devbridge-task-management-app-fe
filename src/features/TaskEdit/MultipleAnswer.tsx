@@ -88,6 +88,7 @@ const MultipleAnswer = (props: Props) => {
                 className="answer-delete-button"
                 style={{ float: 'right', marginRight: '2.5%' }}
                 onClick={() => handleDelete(index)}
+                disabled={answers.length <= 2}
               >
                 <DeleteIcon className="answer-delete-button" />
               </IconButton>
