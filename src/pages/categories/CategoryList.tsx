@@ -38,6 +38,14 @@ function CategoryList() {
         }
       })
       .then((data: Category[]) => {
+        if (data.length !== 0) {
+          data = data.map((c) => ({
+            ...c,
+            isDisabled:
+              sessionStorage.getItem('current_user') !== c.author &&
+              sessionStorage.getItem('current_user_role') !== 'ADMIN',
+          }));
+        }
         setCategories(data);
       });
   };
@@ -71,18 +79,13 @@ function CategoryList() {
       getActions: (params: GridRowParams) => [
         <GridActionsCellItem
           className="category-action-button"
-          icon={<VisibilityIcon />}
-          onClick={() => console.log(`View category with id ${params.id}`)}
-          label="View"
-        />,
-        <GridActionsCellItem
-          className="category-action-button"
           icon={<EditIcon />}
           onClick={() => {
             setEditId(params.id as number);
             setShowEdit(true);
           }}
           label="Edit"
+          disabled={params.row.isDisabled}
         />,
       ],
       sortable: false,
@@ -136,6 +139,11 @@ function CategoryList() {
           initialState={{
             sorting: {
               sortModel: [{ field: 'title', sort: 'desc' }],
+            },
+            columns: {
+              columnVisibilityModel: {
+                actions: !(sessionStorage.getItem('token') == null || sessionStorage.getItem('token') == ''),
+              },
             },
           }}
         />
